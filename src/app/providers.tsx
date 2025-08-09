@@ -1,7 +1,6 @@
 "use client";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { theme } from "@/lib/theme";
 import { CacheProvider } from "@emotion/react";
 import createEmotionCache from "@/lib/createEmotionCache";
 import { ReactNode } from "react";

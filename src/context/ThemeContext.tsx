@@ -6,17 +6,17 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme, greenTheme, redTheme, tealTheme, orangeTheme } from '@/lib/theme';
 
-type ThemeMode = 'light' | 'dark' | 'green'|'red'|'teal'|'orange';
+type ThemeMode = 'teal' | 'dark' | 'green'|'red'|'light'|'orange';
 
 const ThemeContext = createContext({
-  mode: 'light' as ThemeMode,
+  mode: 'teal' as ThemeMode,
   setMode: (mode: ThemeMode) => {},
 });
 
 export const useThemeMode = () => useContext(ThemeContext);
 
 export const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<ThemeMode>('light');
+  const [mode, setMode] = useState<ThemeMode>('teal');
 
   const theme = useMemo(() => {
     switch (mode) {
@@ -26,12 +26,12 @@ export const ThemeContextProvider = ({ children }: { children: React.ReactNode }
         return greenTheme;
         case 'red':
         return redTheme;
-        case 'teal':
-        return tealTheme;
+        case 'light':
+        return lightTheme;
         case 'orange':
         return orangeTheme;
       default:
-        return lightTheme;
+        return tealTheme;
     }
   }, [mode]);
 

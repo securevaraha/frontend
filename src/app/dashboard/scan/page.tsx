@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import {
-  Box, Typography, Button, Dialog, DialogTitle, DialogContent
+  Box, Typography, Button, Dialog, DialogTitle, DialogContent,
+  Paper,
+  useTheme
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ScanTable from './components/ScanTable';
@@ -12,6 +14,7 @@ export default function ScanPage() {
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
   const [editingScan, setEditingScan] = useState<any | null>(null);
+    const theme = useTheme();
 
   const handleSuccess = () => {
     setOpen(false);
@@ -20,24 +23,38 @@ export default function ScanPage() {
   };
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-      <Typography variant="h4" gutterBottom>
-        Scan Management
-      </Typography>
-
-      <Button
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={() => {
-          setEditingScan(null); // Clear existing data for new entry
-          setOpen(true);
+    <Box sx={{ padding: 0 }}>
+            <Paper
+        elevation={1}
+        sx={{
+          p: 2,
+          borderRadius: 2,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
-        Add Scan
-      </Button>
-      </Box>
-
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: 500, color: theme.palette.text.primary }}
+          >
+            Scan Management
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setEditingScan(null);
+              setOpen(true);
+            }}
+            sx={{
+              borderRadius: 2,
+              textTransform: 'none',
+              fontWeight: 500,
+            }}
+          >
+            Add Hospital
+          </Button>
+        </Box>
       <ScanTable
         reload={reload}
         onEdit={(Scan: any) => {
@@ -45,6 +62,7 @@ export default function ScanPage() {
           setOpen(true);
         }}
       />
+      </Paper>
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>{editingScan ? 'Edit Scan' : 'Add Scan'}</DialogTitle>

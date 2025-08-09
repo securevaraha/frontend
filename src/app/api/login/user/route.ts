@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: '30m' }
     );
 
-    return ({ success: true, token: token,  admin_type: user.admin_type });
+    return ({ success: true, token: token,  admin_type: user.admin_type, user:user.username });
   }
 })
 }

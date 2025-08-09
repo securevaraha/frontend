@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from 'react';
 import {
   Table, TableHead, TableRow, TableCell,
@@ -140,7 +141,7 @@ export default function HospitalTable({ reload, onEdit }: HospitalTableProps) {
 
       {/* Table */}
       <Table sx={{
-        border: '1px solid #ccc',
+        border: `2px solid ${theme.palette.primary.main}`,
         borderRadius: 2,
         overflow: 'hidden',
         boxShadow: 1,
