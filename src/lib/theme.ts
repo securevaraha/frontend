@@ -1,80 +1,37 @@
-// lib/theme.ts
-import { createTheme } from "@mui/material";
-
-// 🌞 Light Theme
-export const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#1976d2" }, // Blue
-    secondary: { main: "#9c27b0" }, // Purple
-    background: {
-      default: "#f5f5f5", // Light gray page background
-      paper: "#ffffff",   // Card background
-    },
+export const theme = {
+  primary: {
+    50: '#fdf2f8',
+    100: '#fce7f3',
+    200: '#fbcfe8',
+    300: '#f9a8d4',
+    400: '#f472b6',
+    500: '#ec4899',
+    600: '#db2777',
+    700: '#be185d',
+    800: '#9d174d',
+    900: '#831843'
   },
-});
+  gray: {
+    50: '#f9fafb',
+    100: '#f3f4f6',
+    200: '#e5e7eb',
+    300: '#d1d5db',
+    400: '#9ca3af',
+    500: '#6b7280',
+    600: '#4b5563',
+    700: '#374151',
+    800: '#1f2937',
+    900: '#111827'
+  }
+};
 
-// 🌚 Dark Theme
-export const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: { main: "#90caf9" }, // Light blue
-    secondary: { main: "#f48fb1" }, // Pink
-    background: {
-      default: "#121212", // Dark background
-      paper: "#1e1e1e",   // Card background
-    },
-  },
-});
-
-// 🌿 Green Theme
-export const greenTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#388e3c" }, // Green
-    secondary: { main: "#ff9800" }, // Orange
-    background: {
-      default: "#e8f5e9", // Light green
-      paper: "#ffffff",
-    },
-  },
-});
-
-// ❤️ Red Theme
-export const redTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#d32f2f" }, // Red
-    secondary: { main: "#fdd835" }, // Yellow
-    background: {
-      default: "#ffebee", // Light pink
-      paper: "#ffffff",
-    },
-  },
-});
-
-// 🌊 Teal Theme
-export const tealTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#00796b" }, // Teal
-    secondary: { main: "#ffc107" }, // Amber
-    background: {
-      default: "#e0f2f1", // Light teal
-      paper: "#ffffff",
-    },
-  },
-});
-
-// 🟠 Orange Theme
-export const orangeTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#e64a19" }, // Deep Orange
-    secondary: { main: "#607d8b" }, // Blue Grey
-    background: {
-      default: "#fff3e0", // Light orange
-      paper: "#ffffff",
-    },
-  },
-});
+export const colors = {
+  primary: theme.primary[600],
+  primaryHover: theme.primary[700],
+  primaryLight: theme.primary[50],
+  text: theme.gray[700],
+  textLight: theme.gray[500],
+  border: theme.gray[300],
+  background: '#ffffff',
+  backgroundLight: theme.gray[50]
+};
