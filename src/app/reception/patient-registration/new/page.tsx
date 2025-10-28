@@ -120,6 +120,14 @@ export default function NewPatientRegistration() {
       setIsEditMode(true);
       setEditPatientId(editId);
       fetchPatientData(editId);
+    } else {
+      // For new patient registration, set current time in AM/PM format
+      const now = new Date();
+      const currentTime24 = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      const currentTimeAMPM = formatTimeToAMPM(currentTime24);
+      
+      setFormData(prev => ({ ...prev, time: currentTime24 }));
+      setTimeInSearchTerm(currentTimeAMPM);
     }
 
     // Close dropdowns when clicking outside
@@ -151,6 +159,7 @@ export default function NewPatientRegistration() {
         const currentMinute = today.getMinutes();
         const currentTimeInMinutes = currentHour * 60 + currentMinute;
         
+        // Find the next available time slot (current time or next available)
         const availableSlot = timeSlots.find(slot => {
           const timeMatch = slot.time_slot.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
           if (!timeMatch) return false;
@@ -172,6 +181,12 @@ export default function NewPatientRegistration() {
         if (availableSlot) {
           setFormData(prev => ({ ...prev, time: availableSlot.time_id.toString() }));
           setTimeInSearchTerm(availableSlot.time_slot);
+        } else {
+          // If no future slot available, set current time in AM/PM format
+          const currentTime24 = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+          const currentTimeAMPM = formatTimeToAMPM(currentTime24);
+          setFormData(prev => ({ ...prev, time: currentTime24 }));
+          setTimeInSearchTerm(currentTimeAMPM);
         }
       }
     }
@@ -540,6 +555,8 @@ export default function NewPatientRegistration() {
     const currentHour = today.getHours();
     const currentMinute = today.getMinutes();
     const currentTimeInMinutes = currentHour * 60 + currentMinute;
+    const currentTime24 = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+    const currentTimeAMPM = formatTimeToAMPM(currentTime24);
     
     // Find the first available time slot that is at or after current time
     const availableSlot = timeSlots.find(slot => {
@@ -563,6 +580,10 @@ export default function NewPatientRegistration() {
     if (availableSlot) {
       setFormData(prev => ({ ...prev, time: availableSlot.time_id.toString() }));
       setTimeInSearchTerm(availableSlot.time_slot);
+    } else {
+      // If no available slot found, set current time directly
+      setFormData(prev => ({ ...prev, time: currentTime24 }));
+      setTimeInSearchTerm(currentTimeAMPM);
     }
   };
 
@@ -576,7 +597,7 @@ export default function NewPatientRegistration() {
     setTimeInSearchTerm('');
     setTimeOutSearchTerm('');
     
-    // If selecting today's date, set current time
+    // If selecting today's date, set current time in AM/PM format
     const selectedDate = new Date(value);
     const today = new Date();
     const isToday = selectedDate.toDateString() === today.toDateString();
@@ -584,8 +605,34 @@ export default function NewPatientRegistration() {
     if (isToday) {
       const currentTime = getCurrentTime();
       const currentTimeAMPM = formatTimeToAMPM(currentTime);
-      setFormData(prev => ({ ...prev, time: currentTime }));
-      setTimeInSearchTerm(currentTimeAMPM);
+      
+      // Try to find matching time slot first
+      const matchingSlot = timeSlots.find(slot => {
+        const timeMatch = slot.time_slot.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (!timeMatch) return false;
+        
+        let hour = parseInt(timeMatch[1]);
+        const minute = parseInt(timeMatch[2]);
+        const period = timeMatch[3].toUpperCase();
+        
+        if (period === 'PM' && hour !== 12) {
+          hour += 12;
+        } else if (period === 'AM' && hour === 12) {
+          hour = 0;
+        }
+        
+        const slotTime24 = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        return slotTime24 === currentTime;
+      });
+      
+      if (matchingSlot) {
+        setFormData(prev => ({ ...prev, time: matchingSlot.time_id.toString() }));
+        setTimeInSearchTerm(matchingSlot.time_slot);
+      } else {
+        // Set current time directly in AM/PM format
+        setFormData(prev => ({ ...prev, time: currentTime }));
+        setTimeInSearchTerm(currentTimeAMPM);
+      }
       
       // Auto-calculate time out if estimated time is available
       const estimatedTime = parseInt(formData.est_time) || 0;
@@ -656,7 +703,12 @@ export default function NewPatientRegistration() {
       const isToday = appointmentDate.toDateString() === today.toDateString();
       
       if (isToday) {
-        setTimeout(() => autoSelectCurrentTime(), 100);
+        setTimeout(() => {
+          const currentTime24 = getCurrentTime();
+          const currentTimeAMPM = formatTimeToAMPM(currentTime24);
+          setFormData(prev => ({ ...prev, time: currentTime24 }));
+          setTimeInSearchTerm(currentTimeAMPM);
+        }, 100);
       }
     }
   };
