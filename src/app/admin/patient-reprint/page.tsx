@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Search, Printer, FileText, User, RefreshCw } from 'lucide-react';
 import SuperAdminLayout from '@/components/SuperAdminLayout';
 import DateRangeFilter from '@/components/ui/DateRangeFilter';
-import { formatDate, getCurrentDate } from '@/utils/dateFormat';
+import { formatDate, getCurrentDate, formatTime12Hour } from '@/utils/dateFormat';
 
 interface ScanDetail {
   name: string;
@@ -28,6 +28,8 @@ interface PatientData {
   total_amount: number;
   time_slot: string;
   allot_date?: string;
+  allot_time?: string;
+  allot_time_out?: string;
 }
 
 interface PatientListItem {
@@ -155,6 +157,9 @@ export default function PatientReprint() {
       date: patientData.date,
       allot_date: patientData.allot_date,
       time_slot: patientData.time_slot || '',
+      allot_time: patientData.allot_time || '',
+      allot_time_out: patientData.allot_time_out || '',
+      appointmentTime: `${formatDate(patientData.allot_date || patientData.date)} ${patientData.allot_time ? formatTime12Hour(patientData.allot_time) : ''}-${patientData.allot_time_out ? formatTime12Hour(patientData.allot_time_out) : ''}`,
       scan_names: patientData.scan_details?.map(s => s.name).join(', ') || '',
       amount: patientData.amount || 0,
       amount_reci: patientData.category === 'GEN / Paid' ? (patientData.total_amount || patientData.amount || 0) : 0,
@@ -199,7 +204,7 @@ export default function PatientReprint() {
               <td width="56">Ref. By :</td>
               <td width="482"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.doctor_name}"></span></td>
               <td width="174">Date and Time of Appointment :</td>
-              <td width="316"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.allot_date}"></span></td>
+              <td width="316"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.appointmentTime}"></span></td>
             </tr>
           </table>
           
@@ -234,9 +239,9 @@ export default function PatientReprint() {
           <table>
             <tr>
               <td width="100">For Sum Of Rupees:</td>
-              <td width="733"><span class="form_input_box"><input type="text" class="form_input" value="${numberToWords(receiptData.amount_reci).toUpperCase()} RUPEES ONLY"></span></td>
+              <td width="733"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.category === 'GEN / Paid' ? numberToWords(receiptData.amount_reci).toUpperCase() : 'ZERO'} RUPEES ONLY"></span></td>
               <td width="30"><label>Scan Amount</label><input type="text" value="₹ ${receiptData.total_scan_amount}" style="border:1px solid #5E60AE;"></td>
-              <td width="30"><label>Received Amount</label><input type="text" value="₹ ${receiptData.amount_reci}" style="border:1px solid #5E60AE;"></td>
+              <td width="30"><label>Received Amount</label><input type="text" value="₹ ${receiptData.category === 'GEN / Paid' ? receiptData.amount_reci : 0}" style="border:1px solid #5E60AE;"></td>
             </tr>
           </table>
           
@@ -276,7 +281,7 @@ export default function PatientReprint() {
               <td width="56">Ref. By :</td>
               <td width="482"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.doctor_name}"></span></td>
               <td width="174">Date and Time of Appointment :</td>
-              <td width="316"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.allot_date}"></span></td>
+              <td width="316"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.appointmentTime}"></span></td>
             </tr>
           </table>
           
@@ -311,9 +316,9 @@ export default function PatientReprint() {
           <table>
             <tr>
               <td width="20">For Sum Of Rupees:</td>
-              <td width="550"><span class="form_input_box"><input type="text" class="form_input" value="${numberToWords(receiptData.amount_reci).toUpperCase()} RUPEES ONLY"></span></td>
+              <td width="550"><span class="form_input_box"><input type="text" class="form_input" value="${receiptData.category === 'GEN / Paid' ? numberToWords(receiptData.amount_reci).toUpperCase() : 'ZERO'} RUPEES ONLY"></span></td>
               <td width="30"><label>Scan Amount</label><input type="text" value="₹ ${receiptData.total_scan_amount}" style="border:1px solid #5E60AE;"></td>
-              <td width="30"><label>Received Amount</label><input type="text" value="₹ ${receiptData.amount_reci}" style="border:1px solid #5E60AE;"></td>
+              <td width="30"><label>Received Amount</label><input type="text" value="₹ ${receiptData.category === 'GEN / Paid' ? receiptData.amount_reci : 0}" style="border:1px solid #5E60AE;"></td>
             </tr>
           </table>
           

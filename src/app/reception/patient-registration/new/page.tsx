@@ -77,8 +77,7 @@ export default function NewPatientRegistration() {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [lastPatient, setLastPatient] = useState<{cro: string, patient_name: string} | null>(null);
   const [timeSlots, setTimeSlots] = useState<{time_id: number, time_slot: string}[]>([]);
-  const [isSaved, setIsSaved] = useState(false);
-  const [savedPatientData, setSavedPatientData] = useState<any>(null);
+
   
   const [formData, setFormData] = useState<FormData>({
     date: getCurrentDate(),
@@ -142,19 +141,41 @@ export default function NewPatientRegistration() {
 
   // Auto-set current time when appointment date is today
   useEffect(() => {
-    if (!isEditMode && !formData.time) {
+    if (!isEditMode && timeSlots.length > 0) {
       const today = new Date();
       const appointmentDate = new Date(formData.appoint_date);
       const isToday = appointmentDate.toDateString() === today.toDateString();
       
-      if (isToday) {
-        const currentTime = getCurrentTime();
-        const currentTimeAMPM = formatTimeToAMPM(currentTime);
-        setFormData(prev => ({ ...prev, time: currentTime }));
-        setTimeInSearchTerm(currentTimeAMPM);
+      if (isToday && !formData.time) {
+        const currentHour = today.getHours();
+        const currentMinute = today.getMinutes();
+        const currentTimeInMinutes = currentHour * 60 + currentMinute;
+        
+        const availableSlot = timeSlots.find(slot => {
+          const timeMatch = slot.time_slot.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+          if (!timeMatch) return false;
+          
+          let hour = parseInt(timeMatch[1]);
+          const minute = parseInt(timeMatch[2]);
+          const period = timeMatch[3].toUpperCase();
+          
+          if (period === 'PM' && hour !== 12) {
+            hour += 12;
+          } else if (period === 'AM' && hour === 12) {
+            hour = 0;
+          }
+          
+          const slotTimeInMinutes = hour * 60 + minute;
+          return slotTimeInMinutes >= currentTimeInMinutes;
+        });
+        
+        if (availableSlot) {
+          setFormData(prev => ({ ...prev, time: availableSlot.time_id.toString() }));
+          setTimeInSearchTerm(availableSlot.time_slot);
+        }
       }
     }
-  }, [formData.appoint_date]);
+  }, [formData.appoint_date, timeSlots, isEditMode, formData.time]);
 
   // Auto-calculate time out when time in or estimated time changes
   useEffect(() => {
@@ -776,20 +797,6 @@ export default function NewPatientRegistration() {
   };
 
   const handleSubmit = async (action: string) => {
-    if (action === 'Print') {
-      // Print action - just print using saved data, no API call
-      if (savedPatientData) {
-        printReceipt(savedPatientData);
-        if (toast && typeof toast.info === 'function') {
-          toast.info('Receipt printed successfully!');
-        }
-        setTimeout(() => {
-          window.location.href = '/reception/patient-registration/list';
-        }, 2000);
-      }
-      return;
-    }
-
     try {
       // Prepare data in the format expected by the API
       const submitData = {
@@ -838,11 +845,21 @@ export default function NewPatientRegistration() {
         const result = await response.json();
         const cro = result.data?.cro || (isEditMode ? 'Updated' : 'Registered');
         
-        // Save action - enable print button
-        setIsSaved(true);
-        setSavedPatientData(result.data);
         if (toast && typeof toast.success === 'function') {
           toast.success(`Patient ${isEditMode ? 'updated' : 'registered'} successfully! CRO: ${cro}`);
+        }
+        
+        // For SaveAndPrint action, automatically print receipt
+        if (action === 'SaveAndPrint') {
+          setTimeout(() => {
+            printReceipt(result.data);
+            if (toast && typeof toast.info === 'function') {
+              toast.info('Receipt printed successfully!');
+            }
+            setTimeout(() => {
+              window.location.href = '/reception/patient-registration/list';
+            }, 2000);
+          }, 1000);
         }
       } else {
         const errorData = await response.json().catch(() => ({}));
@@ -1791,22 +1808,11 @@ export default function NewPatientRegistration() {
                 <>
                   <button
                     type="button"
-                    onClick={() => handleSubmit('Save')}
-                    disabled={isSaved}
-                    className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg transition-all duration-200"
+                    onClick={() => handleSubmit('SaveAndPrint')}
+                    className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium shadow-lg transition-all duration-200"
                   >
                     <Check className="h-5 w-5" />
-                    <span>{isSaved ? 'SAVED' : 'SAVE'}</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleSubmit('Print')}
-                    disabled={!isSaved}
-                    className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg transition-all duration-200"
-                    title={isSaved ? 'Print Receipt' : 'Save patient first to enable printing'}
-                  >
-                    <FileText className="h-5 w-5" />
-                    <span>PRINT</span>
+                    <span>SAVE & PRINT</span>
                   </button>
                   <button
                     type="button"
