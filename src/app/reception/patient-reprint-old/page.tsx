@@ -33,6 +33,8 @@ interface Patient {
   scan_names?: string;
   total_scan_amount?: number;
   address?: string;
+  due_amount?: string;
+  time_in?: string;
 }
 
 export default function PatientReprintOld() {
