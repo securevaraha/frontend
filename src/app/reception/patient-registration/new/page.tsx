@@ -1057,7 +1057,7 @@ export default function NewPatientRegistration() {
         <td width="78">Patient Name :</td>
         <td width="650"><span class="form_input_box"><input type="text" class="form_input" value="${formData.pre} ${formData.firstname}"></span></td>
         <td width="33">Age :</td>
-        <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${formData.age}"></span></td>
+        <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${ageWithUnit}"></span></td>
         <td width="36">Gender :</td>
         <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${formData.gender}"></span></td>
       </tr>
@@ -1134,7 +1134,7 @@ export default function NewPatientRegistration() {
         <td width="78">Patient Name:</td>
         <td width="650"><span class="form_input_box"><input type="text" class="form_input" value="${formData.pre} ${formData.firstname}"></span></td>
         <td width="33">Age :</td>
-        <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${formData.age}"></span></td>
+        <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${ageWithUnit}"></span></td>
         <td width="36">Gender</td>
         <td width="144"><span class="form_input_box"><input type="text" class="form_input" value="${formData.gender}"></span></td>
       </tr>
