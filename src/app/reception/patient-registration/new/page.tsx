@@ -925,7 +925,7 @@ export default function NewPatientRegistration() {
               toast.info('Receipt printed successfully!');
             }
             setTimeout(() => {
-              window.location.href = '/reception/patient-registration/list';
+              window.location.href = isEditMode ? '/admin/patient-edit' : '/reception/patient-registration/list';
             }, 2000);
           }, 1000);
         }
