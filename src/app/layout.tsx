@@ -15,9 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CT Scan Management System",
-  description: "Comprehensive CT scan management system",
+  title: "Varaha SDC - Hospital Management System",
+  description: "Varaha SDC - 256 Slice Dual Energy CT Scan Management System for M.D.M Hospital, Jodhpur",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
