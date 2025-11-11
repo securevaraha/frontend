@@ -1004,7 +1004,8 @@ export default function NewPatientRegistration() {
   };
 
   const printReceipt = (patientData: any) => {
-    const currentDate = getCurrentDate();
+    const receiptDate = isEditMode ? formData.date : getCurrentDate();
+    const currentDate = receiptDate;
     const appointmentDate = formData.appoint_date;
     const investigations = selectedScans.map(scan => scan.s_name).join(', ');
     const amountInWords = numberToWords(parseInt(formData.rec_amount || formData.total_amount)).toUpperCase();
