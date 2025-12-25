@@ -250,17 +250,17 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="bg-gradient-to-br from-white to-gray-50 py-12 sm:py-16">
+      <section className="bg-gradient-to-br from-white to-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 px-3 sm:px-4 py-2 rounded-full mb-4 sm:mb-6">
-              <span className="font-semibold text-gray-700 text-sm">Our Specialties</span>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-teal-100 px-4 py-2 rounded-full mb-6">
+              <span className="font-semibold text-gray-700">Our Specialties</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3 sm:mb-4">Advanced Diagnostic Imaging</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive MRI and CT scan services with cutting-edge technology</p>
+            <h2 className="text-4xl font-black text-gray-900 mb-4">Advanced Diagnostic Imaging</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive MRI and CT scan services with cutting-edge technology</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { 
                 title: 'MRI Scans', 
@@ -287,17 +287,17 @@ export default function HomePage() {
                 gradient: 'from-emerald-500 to-teal-600'
               }
             ].map((service, index) => (
-              <div key={index} className="bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                <div className={`bg-gradient-to-br ${service.gradient} p-4 sm:p-6 text-white`}>
-                  <h3 className="text-lg sm:text-xl font-bold mb-2">{service.title}</h3>
+              <div key={index} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                <div className={`bg-gradient-to-br ${service.gradient} p-6 text-white`}>
+                  <h3 className="text-xl font-bold mb-2">{service.title}</h3>
                   <p className="text-white/90 text-sm">{service.desc}</p>
                 </div>
-                <div className="p-4 sm:p-6">
-                  <ul className="space-y-2 mb-4 sm:mb-6">
+                <div className="p-6">
+                  <ul className="space-y-2 mb-6">
                     {service.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                        <div className="w-3 sm:w-4 h-3 sm:h-4 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                          <svg className="w-2 sm:w-2.5 h-2 sm:h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                           </svg>
                         </div>
@@ -305,7 +305,7 @@ export default function HomePage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/website/services" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors text-sm">
+                  <Link href="/website/services" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                     Learn More →
                   </Link>
                 </div>
@@ -375,15 +375,15 @@ export default function HomePage() {
       </section>
 
       {/* Location Section */}
-      <section className="bg-gradient-to-br from-gray-50 to-white py-8 sm:py-12 lg:py-16">
+      <section className="bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3 sm:mb-4 lg:mb-6 text-center lg:text-left">Visit Our Modern Facility</h2>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-4 sm:mb-6 lg:mb-8 text-center lg:text-left">Conveniently located in Jodhpur with easy parking and accessibility.</p>
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4 sm:mb-6">Visit Our Modern Facility</h2>
+              <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">Conveniently located in Jodhpur with easy parking and accessibility.</p>
               
-              <div className="space-y-3 sm:space-y-4 lg:space-y-6">
-                <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4 sm:p-0 p-3 sm:bg-transparent bg-white sm:rounded-none rounded-xl sm:shadow-none shadow-sm sm:border-0 border border-gray-100">
                   <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 sm:w-6 h-5 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -396,7 +396,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="flex items-start gap-3 sm:gap-4 sm:p-0 p-3 sm:bg-transparent bg-white sm:rounded-none rounded-xl sm:shadow-none shadow-sm sm:border-0 border border-gray-100">
                   <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 sm:w-6 h-5 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -408,7 +408,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="flex items-start gap-3 sm:gap-4 sm:p-0 p-3 sm:bg-transparent bg-white sm:rounded-none rounded-xl sm:shadow-none shadow-sm sm:border-0 border border-gray-100">
                   <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 sm:w-6 h-5 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -417,22 +417,22 @@ export default function HomePage() {
                   <div className="min-w-0 flex-1">
                     <h3 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Contact</h3>
                     <div className="space-y-1">
-                      <a href="tel:+917014265848" className="block text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base transition-colors">+91 7014265848</a>
-                      <a href="mailto:techroverteam@gmail.com" className="block text-teal-600 hover:text-teal-700 text-sm sm:text-base transition-colors">techroverteam@gmail.com</a>
+                      <a href="tel:+917014265848" className="block text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base transition-colors sm:text-gray-600 sm:hover:text-gray-600 sm:font-normal">+91 7014265848</a>
+                      <a href="mailto:techroverteam@gmail.com" className="block text-teal-600 hover:text-teal-700 text-sm sm:text-base transition-colors sm:text-gray-600 sm:hover:text-gray-600">techroverteam@gmail.com</a>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-6 sm:mt-8 text-center lg:text-left">
-                <Link href="/website/contact" className="inline-block bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:shadow-xl active:scale-95 transition-all duration-300 touch-manipulation">
+              <div className="mt-6 sm:mt-8">
+                <Link href="/website/contact" className="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold hover:shadow-xl transition-all duration-300 inline-block active:scale-95 sm:active:scale-100 touch-manipulation">
                   Get Directions
                 </Link>
               </div>
             </div>
             
-            <div className="order-1 lg:order-2 bg-gradient-to-br from-blue-100 to-teal-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
-              <div className="h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-blue-200 to-teal-200 rounded-lg sm:rounded-xl mb-4 sm:mb-6 flex items-center justify-center overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-100 to-teal-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mt-8 lg:mt-0">
+              <div className="h-48 sm:h-64 bg-gradient-to-br from-blue-200 to-teal-200 rounded-lg sm:rounded-xl mb-4 sm:mb-6 flex items-center justify-center">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.0123456789!2d73.0123456!3d26.2123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDEyJzQ0LjQiTiA3M8KwMDAnNDQuNCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
                   width="100%" 
@@ -442,13 +442,12 @@ export default function HomePage() {
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Varaha SDC Location"
-                  className="w-full h-full"
                 ></iframe>
               </div>
               <div className="text-center">
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Our Location</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Unit-1: Plot No. 06, Ram Nagar, Sangriya, Jodhpur</p>
-                <Link href="https://maps.google.com/search/Unit-1+Plot+No+06+Ram+Nagar+Sangriya+Jodhpur" target="_blank" className="inline-block bg-gradient-to-r from-blue-600 to-teal-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all duration-300 text-sm sm:text-base touch-manipulation">
+                <Link href="https://maps.google.com/search/Unit-1+Plot+No+06+Ram+Nagar+Sangriya+Jodhpur" target="_blank" className="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold hover:shadow-lg transition-all duration-300 text-sm sm:text-base inline-block active:scale-95 sm:active:scale-100 touch-manipulation">
                   Open in Google Maps
                 </Link>
               </div>
