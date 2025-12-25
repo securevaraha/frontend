@@ -13,11 +13,11 @@ export default function AppointmentPage() {
     preferredTime: ''
   })
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: { [key: string]: string } = {}
     
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required'
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required'
