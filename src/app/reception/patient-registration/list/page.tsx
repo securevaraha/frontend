@@ -91,7 +91,7 @@ export default function PatientList() {
       if (response.ok) {
         toast.success(`Patient sent to ${sendToData.destination} successfully!`);
         setShowSendModal(false);
-        currentDateRange ? fetchPatients(currentDateRange.from, currentDateRange.to) : fetchPatients(); // Refresh list
+        // Refresh list
       }
     } catch (error) {
       toast.error('Error sending patient');
