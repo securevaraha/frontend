@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   description: "Varaha SDC - 256 Slice Dual Energy CT Scan Management System for M.D.M Hospital, Jodhpur",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: '/varaha.png',
+    shortcut: '/varaha.png',
+    apple: '/varaha.png',
   },
 };
 
