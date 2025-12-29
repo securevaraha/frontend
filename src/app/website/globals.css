@@ -18,4 +18,172 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #3b82f6, #06b6d4);
+  border-radius: 4px;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.aspect-w-4 {
+  --tw-aspect-w: 4;
+}
+
+.aspect-h-3 {
+  --tw-aspect-h: 3;
+}
+
+.aspect-h-9 {
+  --tw-aspect-h: 9;
+}
+
+.aspect-h-10 {
+  --tw-aspect-h: 10;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .hero-image {
+    object-position: center center;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-image {
+    object-position: center top;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-image {
+    object-position: center center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 70vh;
+    min-height: 400px;
+  }
+  
+  .aspect-w-16 {
+    padding-bottom: 75%;
+  }
+  
+  .hero-image {
+    object-position: center 30%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 60vh;
+    min-height: 350px;
+  }
+  
+  .aspect-w-4 {
+    padding-bottom: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-section {
+    height: 80vh;
+  }
+  
+  .hero-image {
+    object-position: center 25%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-section {
+    height: 100vh;
+    max-height: 600px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
