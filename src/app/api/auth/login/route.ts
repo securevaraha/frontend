@@ -1,43 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mysql from 'mysql2/promise';
+import { promises as fs } from 'fs';
+import path from 'path';
 
-const dbConfig = {
-  host: process.env.DB_HOST || '198.54.121.225',
-  user: process.env.DB_USER || 'varaosrc_prc',
-  password: process.env.DB_PASSWORD || 'PRC!@#456&*(',
-  database: process.env.DB_NAME || 'varaosrc_hospital_management',
-  port: parseInt(process.env.DB_PORT || '3306'),
-  connectTimeout: 60000
-};
+const ADMIN_FILE = path.join(process.cwd(), 'data', 'admin.json');
 
 export async function POST(request: NextRequest) {
   try {
     const { username, password } = await request.json();
+    const data = await fs.readFile(ADMIN_FILE, 'utf8');
+    const { admin } = JSON.parse(data);
     
-    // Use dynamic API URL
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || 'https://varahasdc.co.in/api';
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password })
-    });
-    
-    const data = await response.json();
-    
-    if (response.ok && data.success) {
-      return NextResponse.json(data);
-    } else {
-      return NextResponse.json({
-        error: data.error || 'Invalid credentials'
-      }, { status: 401 });
+    if (username === admin.username && password === admin.password) {
+      const response = NextResponse.json({ success: true, message: 'Login successful' });
+      response.cookies.set('admin-auth', 'true', {
+        httpOnly: false,
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/'
+      });
+      return response;
     }
     
-  } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json({
-      error: 'Login failed'
-    }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
+  } catch {
+    return NextResponse.json({ success: false, error: 'Login failed' }, { status: 500 });
   }
 }

@@ -1,28 +1,86 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// app/layout.tsx
+
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import "./mobile-responsive.css";
-import { ToastProvider } from '@/context/ToastContext';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "Varaha SDC - Hospital Management System",
-  description: "Varaha SDC - 256 Slice Dual Energy CT Scan Management System for M.D.M Hospital, Jodhpur",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-  icons: {
-    icon: '/varaha.png',
-    shortcut: '/varaha.png',
-    apple: '/varaha.png',
+  title: {
+    default: "Varaha SDC - Advanced Medical Diagnostics",
+    template: "%s | Varaha SDC"
   },
+  description: "Leading medical diagnostic center with Revolution CT 256 slice technology, dual energy imaging, and comprehensive healthcare services. Trusted by medical professionals.",
+  keywords: [
+    "stone processing machinery",
+    "granite cutting machines",
+    "line polishing machines",
+    "handling cranes",
+    "epoxy resin line",
+    "stone machinery manufacturer",
+    "industrial machinery",
+    "Jodhpur machinery",
+    "Radhika Machine Tools"
+  ],
+  authors: [{ name: "Radhika Machine Tools" }],
+  creator: "Radhika Machine Tools",
+  publisher: "Radhika Machine Tools",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    title: 'Varaha SDC - Advanced Medical Diagnostics',
+    description: 'Leading medical diagnostic center with cutting-edge CT technology. Trusted by medical professionals.',
+    siteName: 'Varaha SDC',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Radhika Machine Tools - Stone Processing Machinery',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Varaha SDC - Advanced Medical Diagnostics',
+    description: 'Leading medical diagnostic center with cutting-edge CT technology. Trusted by medical professionals.',
+    images: ['/images/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#059669' },
+    { media: '(prefers-color-scheme: dark)', color: '#047857' },
+  ],
 };
 
 export default function RootLayout({
@@ -31,20 +89,58 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <meta name="theme-color" content="#0ea5e9" />
+        <link rel="icon" href="/Varaha logo@4x 2.png" sizes="any" />
+        <link rel="icon" href="/Varaha logo@4x 2.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/Varaha logo@4x 2.png" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="RMT" />
+        <meta name="application-name" content="Radhika Machine Tools" />
+        <meta name="msapplication-TileColor" content="#059669" />
+        <meta name="theme-color" content="#059669" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+      <body className="antialiased">
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Radhika Machine Tools",
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/radhika-logo.png`,
+              "description": "Leading manufacturer of stone processing machinery including granite cutting machines, line polishing machines, handling cranes, and epoxy resin lines.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Plot No. 06, Ram Nagar, Sangriya",
+                "addressLocality": "Jodhpur",
+                "addressRegion": "Rajasthan",
+                "addressCountry": "IN"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-9983813366",
+                "contactType": "customer service",
+                "email": "rmt.jodhpur@gmail.com"
+              },
+              "sameAs": [
+                "https://www.facebook.com/radhikamachinetools",
+                "https://www.linkedin.com/company/radhika-machine-tools"
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );

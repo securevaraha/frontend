@@ -124,7 +124,7 @@ const Header = () => {
                 href="/contact"
                 className="font-semibold px-6 py-2.5 rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-lg" style={{backgroundColor: '#2E92ED', color: '#ffffff', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
               >
-                Patient Appointment
+                Book Appointment
               </Link>
             </div>
 
@@ -163,45 +163,20 @@ const Header = () => {
               >
                 About Us
               </Link>
-
-              <div className="border-t border-gray-100">
-                <div className="px-6 py-3 flex justify-between items-center">
-                  <Link 
-                    href="/products" 
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-gray-800 hover:text-brand-green-dark font-medium"
-                  >
-                    Products
-                  </Link>
-                  <button
-                    onClick={() => setIsProductsOpen(!isProductsOpen)}
-                    className="p-1 hover:bg-gray-100 rounded"
-                    aria-label="Toggle products menu"
-                  >
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-300 text-gray-600 ${
-                        isProductsOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                {isProductsOpen && (
-                  <div className="bg-gray-50 border-t border-gray-100">
-                    {productCategories.map((category) => (
-                      <Link
-                        key={category.name}
-                        href={category.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="block px-10 py-2.5 text-sm text-gray-700 hover:text-brand-green-dark hover:bg-green-50 transition-colors"
-                      >
-                        {category.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
+              <Link
+                href="/services"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-green-50 hover:text-brand-green-dark transition-colors font-medium"
+              >
+                Services
+              </Link>
+              <Link
+                href="/facilities"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-green-50 hover:text-brand-green-dark transition-colors font-medium"
+              >
+                Facilities
+              </Link>
               <Link
                 href="/contact"
                 onClick={() => setIsMenuOpen(false)}
@@ -216,7 +191,7 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full text-center bg-brand-green-dark text-white font-semibold py-3 rounded-lg hover:bg-brand-green transition-colors"
                 >
-                  Get Quote
+                  Book Appointment
                 </Link>
               </div>
             </div>
