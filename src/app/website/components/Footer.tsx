@@ -1,194 +1,220 @@
-import Link from 'next/link'
+// app/components/Footer.tsx
 
-export default function Footer() {
-  const currentYear = new Date().getFullYear()
+"use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Twitter, Linkedin, Instagram, MapPin, Phone, Mail, Clock } from "lucide-react";
+
+const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-br from-[#0056AE] via-[#00143F] to-[#0056AE] text-white relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Company Info */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <img 
-                src="/Varaha logo@4x 2.png" 
-                alt="Varaha SDC Logo" 
-                className="w-12 h-12 object-contain"
-              />
-              <div>
-                <h3 className="text-2xl font-black text-white">Varaha SDC</h3>
-                <p className="text-blue-300 font-semibold">Advanced Diagnostic Center</p>
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className="relative">
+                <Image
+                  src="/Varaha logo@4x 2.png"
+                  alt="Varaha SDC Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-full ring-2 ring-white/20"
+                />
               </div>
-            </div>
+              <div>
+                <span className="text-xl font-bold text-white block" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  Varaha SDC
+                </span>
+                <span className="text-xs" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                  Advanced Diagnostic Center
+                </span>
+              </div>
+            </Link>
             
-            <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
-              Leading diagnostic imaging center providing state-of-the-art MRI, CT, X-Ray, and Ultrasound services with expert radiologist interpretation and compassionate patient care.
+            <p className="mb-6 leading-relaxed" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+              Engineering excellence in medical diagnostics with cutting-edge
+              technology. Trusted by thousands of patients for accurate diagnosis.
             </p>
             
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Address</p>
-                  <p className="text-gray-300 text-sm">Unit-1: Plot No. 06, Ram Nagar, Sangriya, Jodhpur</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Contact</p>
-                  <Link href="tel:+917014265848" className="text-green-400 hover:text-green-300 transition-colors font-medium">
-                    +91 7014265848
-                  </Link>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-teal-600/20 rounded-lg flex items-center justify-center">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Emergency Care</p>
-                  <p className="text-gray-300 text-sm">Available 24/7</p>
-                </div>
-              </div>
+            <div className="flex space-x-4">
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
+              >
+                <Facebook size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
+              >
+                <Twitter size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
+              >
+                <Linkedin size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
+              >
+                <Instagram size={18} />
+              </Link>
             </div>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-teal-400 rounded-full"></div>
-              Our Services
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/website/services" className="text-gray-300 hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  MRI Imaging
-                </Link>
-              </li>
-              <li>
-                <Link href="/website/services" className="text-gray-300 hover:text-teal-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-teal-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  CT Scans
-                </Link>
-              </li>
-              <li>
-                <Link href="/website/services" className="text-gray-300 hover:text-green-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-green-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Digital X-Ray
-                </Link>
-              </li>
-              <li>
-                <Link href="/website/services" className="text-gray-300 hover:text-purple-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Ultrasound
-                </Link>
-              </li>
-              <li>
-                <Link href="/website/appointment" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Book Appointment
-                </Link>
-              </li>
-            </ul>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <div className="w-1 h-6 bg-gradient-to-b from-teal-400 to-green-400 rounded-full"></div>
+            <h4 className="text-lg font-semibold mb-6" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
               Quick Links
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/website/about" className="text-gray-300 hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full group-hover:scale-125 transition-transform"></div>
+                <Link 
+                  href="/about" 
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/website/facilities" className="text-gray-300 hover:text-teal-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-teal-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Our Facilities
+                <Link
+                  href="/services"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Services
                 </Link>
               </li>
               <li>
-                <Link href="/website/contact" className="text-gray-300 hover:text-green-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-green-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Contact Us
+                <Link
+                  href="/facilities"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Facilities
                 </Link>
               </li>
               <li>
-                <Link href="/website/privacy" className="text-gray-300 hover:text-purple-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/website/terms" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2 group">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full group-hover:scale-125 transition-transform"></div>
-                  Terms of Service
+                <Link
+                  href="/contact"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-700/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm">
-              <p className="text-gray-300">
-                © {currentYear} Varaha SDC. All rights reserved.
-              </p>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-gray-300">Healthcare Excellence</span>
+          {/* Support Links */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              Patient Care
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms-and-conditions"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  FAQ
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              Contact Info
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-1 flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
+                <div style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                  <p className="font-medium text-white mb-1">Location:</p>
+                  <p className="text-sm">Troma Centre, MDM Hospital, Shastri Nagar, Jodhpur, Rajasthan 342001</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                </svg>
-                <span className="text-gray-300">Certified Care</span>
+              
+              <div className="flex items-center gap-3">
+                <Mail className="flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
+                <a 
+                  href="mailto:info@varahasdc.in"
+                  className="transition-colors" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  info@varahasdc.in
+                </a>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Phone className="flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
+                <a 
+                  href="tel:+918233338550"
+                  className="transition-colors" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
+                >
+                  +91 8233338550
+                </a>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Clock className="flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
+                <div style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                  <p className="text-sm">24/7 Emergency Services</p>
+                </div>
               </div>
             </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-gray-300 text-sm">Powered by</span>
-              <a 
-                href="https://www.techrover.co.in/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="group flex items-center gap-2 px-3 py-1 rounded-lg bg-gradient-to-r from-blue-500/10 to-teal-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300"
-              >
-                <div className="w-5 h-5 bg-gradient-to-br from-blue-400 to-teal-400 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                  </svg>
-                </div>
-                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent font-bold text-sm group-hover:from-blue-300 group-hover:to-teal-300 transition-all">
-                  Tech Rover
-                </span>
-              </a>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-12 pt-8 border-t border-white/20">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p className="text-center lg:text-left" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+              &copy; {new Date().getFullYear()} Varaha SDC. All Rights Reserved.
+            </p>
+            <div className="flex items-center gap-6 text-sm" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+              <Link href="/privacy-policy" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+                Privacy
+              </Link>
+              <Link href="/terms-and-conditions" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+                Terms
+              </Link>
+              <Link href="/sitemap" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+                Sitemap
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
+
+export default Footer;

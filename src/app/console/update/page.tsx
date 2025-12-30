@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, RefreshCw, Edit, ArrowLeft, Save } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Search, RefreshCw, Edit, ArrowLeft, Save, Upload, FileText, X } from 'lucide-react';
 import { useToastContext } from '@/context/ToastContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -44,6 +45,10 @@ export default function ConsoleUpdate() {
   const itemsPerPage = 10;
   const [editingRecord, setEditingRecord] = useState<ConsoleRecord | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [reportName, setReportName] = useState('');
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
 
   const formatDate = (dateStr: string) => {
     if (!dateStr || dateStr === '-') return '-';
@@ -177,6 +182,45 @@ export default function ConsoleUpdate() {
     }
   };
 
+  const handleFileUpload = async () => {
+    if (!uploadFile || !reportName.trim() || !editingRecord) {
+      toast.error('Please select a file and enter report name');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('report', uploadFile);
+      formData.append('reportName', reportName.trim());
+      formData.append('cro', editingRecord.c_p_cro);
+      formData.append('patientName', editingRecord.patient_name);
+      formData.append('conId', editingRecord.con_id.toString());
+
+      const response = await fetch('/api/console/upload-report', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        toast.success('Report uploaded successfully');
+        setUploadFile(null);
+        setReportName('');
+        setShowUploadDialog(false);
+        const fileInput = document.getElementById('reportFile') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || 'Failed to upload report');
+      }
+    } catch (error) {
+      console.error('Error uploading report:', error);
+      toast.error('Error uploading report');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleBack = () => {
     router.push('/console/update');
   };
@@ -216,14 +260,25 @@ export default function ConsoleUpdate() {
                 <p className="text-sky-100">CRO: {editingRecord.c_p_cro}</p>
               </div>
             </div>
-            <button
-              onClick={handleUpdate}
-              disabled={saving}
-              className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors disabled:opacity-50"
-            >
-              <Save className={`h-5 w-5 ${saving ? 'animate-spin' : ''}`} />
-              <span>{saving ? 'Saving...' : 'Save Changes'}</span>
-            </button>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleUpdate}
+                disabled={saving}
+                className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors disabled:opacity-50"
+              >
+                <Save className={`h-5 w-5 ${saving ? 'animate-spin' : ''}`} />
+                <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+              </button>
+              {editingRecord.status === 'Complete' && (
+                <button
+                  onClick={() => setShowUploadDialog(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                >
+                  <Upload className="h-5 w-5" />
+                  <span>Upload Report</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -415,6 +470,73 @@ export default function ConsoleUpdate() {
             </div>
           </div>
         </div>
+
+        {/* Upload Dialog */}
+        {showUploadDialog && createPortal(
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" style={{zIndex: 9999}}>
+            <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                  <FileText className="h-5 w-5 text-blue-600" />
+                  <span>Upload Report</span>
+                </h3>
+                <button
+                  onClick={() => setShowUploadDialog(false)}
+                  className="p-1 hover:bg-gray-100 rounded"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Report Name</label>
+                  <input
+                    type="text"
+                    value={reportName}
+                    onChange={(e) => setReportName(e.target.value)}
+                    placeholder="Enter report name (e.g., CT Scan Report, MRI Report)"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Report File</label>
+                  <input
+                    id="reportFile"
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Supported format: PDF only (Max 10MB)</p>
+                </div>
+                {uploadFile && (
+                  <div className="bg-blue-50 p-3 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>Selected file:</strong> {uploadFile.name} ({(uploadFile.size / 1024 / 1024).toFixed(2)} MB)
+                    </p>
+                  </div>
+                )}
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    onClick={() => setShowUploadDialog(false)}
+                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleFileUpload}
+                    disabled={uploading || !uploadFile || !reportName.trim()}
+                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Upload className={`h-4 w-4 ${uploading ? 'animate-spin' : ''}`} />
+                    <span>{uploading ? 'Uploading...' : 'Upload'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
       </div>
     );
   }
@@ -489,13 +611,14 @@ export default function ConsoleUpdate() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Console Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Upload</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center">
+                  <td colSpan={11} className="px-6 py-12 text-center">
                     <div className="flex items-center justify-center space-x-2">
                       <RefreshCw className="h-5 w-5 animate-spin text-sky-500" />
                       <span className="text-gray-500">Loading console records...</span>
@@ -504,7 +627,7 @@ export default function ConsoleUpdate() {
                 </tr>
               ) : filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={11} className="px-6 py-12 text-center text-gray-500">
                     No console records found
                   </td>
                 </tr>
@@ -545,6 +668,30 @@ export default function ConsoleUpdate() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
                       {record.start_time} - {record.stop_time}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.status === 'Complete' ? (
+                        <button
+                          onClick={() => {
+                            const recordToEdit = {
+                              ...record,
+                              date: convertToInputDate(record.date),
+                              scan_date: convertToInputDate(record.scan_date),
+                              allot_date: convertToInputDate(record.allot_date),
+                              added_on: convertToInputDate(record.added_on),
+                              number_film: record.number_film?.toString() || record.number_films?.toString() || ''
+                            };
+                            setEditingRecord(recordToEdit);
+                            setShowUploadDialog(true);
+                          }}
+                          className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                        >
+                          <Upload className="h-4 w-4" />
+                          <span>Upload</span>
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

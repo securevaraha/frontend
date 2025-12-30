@@ -1,194 +1,300 @@
-export default function AboutPage() {
+// app/about/page.tsx
+
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Gem, Lightbulb, Handshake, Target, Heart, Zap, Users, UserCheck } from "lucide-react";
+import { ReactNode } from "react";
+
+// A reusable card for our values
+const ValueCard = ({
+  icon,
+  title,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  children: ReactNode;
+}) => (
+  <div className="bg-white p-6 rounded-lg shadow-md text-center border-t-4" style={{borderColor: '#2E92ED'}}>
+    <div className="flex justify-center items-center mb-4" style={{color: '#0056AE'}}>
+      {icon}
+    </div>
+    <h3 className="text-xl font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>{title}</h3>
+    <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>{children}</p>
+  </div>
+);
+
+export default function AboutUsPage() {
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-teal-50 py-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-200/20 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-200/15 rounded-full animate-float"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h1 className="text-6xl lg:text-7xl font-black text-slate-900 mb-6" style={{fontFamily: 'Orbitron, monospace'}}>
-              About <span className="text-transparent bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text">Varaha</span>
-            </h1>
-            <p className="text-2xl text-slate-600 max-w-3xl mx-auto" style={{fontFamily: 'Exo 2, sans-serif'}}>
-              Pioneering advanced medical imaging technology for better healthcare
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Section */}
-      <section className="py-20 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-5xl font-black text-slate-900 mb-8" style={{fontFamily: 'Orbitron, monospace'}}>
-                Our <span className="text-transparent bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text">Mission</span>
-              </h2>
-              <p className="text-xl text-slate-700 leading-relaxed mb-6" style={{fontFamily: 'Exo 2, sans-serif'}}>
-                Varaha SDC brings advanced technology (256 slice) machine to the city for the first time. 
-                We focus on bringing quality diagnosis by providing best quality services.
-              </p>
-              <p className="text-xl text-slate-700 leading-relaxed" style={{fontFamily: 'Exo 2, sans-serif'}}>
-                Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans 
-                with low dose radiations compared to other machines.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 shadow-2xl">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center">
-                    <div className="text-4xl font-black text-emerald-600 mb-2 animate-pulse-glow">256</div>
-                    <div className="text-sm text-slate-600">Slice Technology</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-black text-blue-600 mb-2 animate-pulse-glow">82%</div>
-                    <div className="text-sm text-slate-600">Less Radiation</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-black text-teal-600 mb-2 animate-pulse-glow">24/7</div>
-                    <div className="text-sm text-slate-600">Emergency Care</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-black text-purple-600 mb-2 animate-pulse-glow">2</div>
-                    <div className="text-sm text-slate-600">Heart Beats</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-teal-900 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-500/10 rounded-full animate-bounce"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-black text-white mb-6" style={{fontFamily: 'Orbitron, monospace'}}>
-              Advanced <span className="text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text">Technology</span>
-            </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto" style={{fontFamily: 'Exo 2, sans-serif'}}>
-              GE Revolution CT 256 slice dual energy provides superior diagnostic capabilities
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-emerald-400/30 hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-black text-white mb-4" style={{fontFamily: 'Orbitron, monospace'}}>High Quality Scans</h3>
-              <p className="text-slate-300" style={{fontFamily: 'Exo 2, sans-serif'}}>Superior image quality with 256 slice technology for precise diagnostics</p>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-blue-400/30 hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-black text-white mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Low Radiation</h3>
-              <p className="text-slate-300" style={{fontFamily: 'Exo 2, sans-serif'}}>Up to 82% dose reduction ensuring patient safety without compromising quality</p>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-purple-400/30 hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-violet-500 rounded-2xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-black text-white mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Fast Scanning</h3>
-              <p className="text-slate-300" style={{fontFamily: 'Exo 2, sans-serif'}}>Complete scans within 2 heartbeats for cardiac imaging excellence</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-teal-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-black text-slate-900 mb-6" style={{fontFamily: 'Orbitron, monospace'}}>
-              Our <span className="text-transparent bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text">Values</span>
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white/80 p-8 rounded-3xl shadow-xl hover:scale-105 transition-all duration-500">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-black text-slate-900 mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Quality</h3>
-                <p className="text-slate-600" style={{fontFamily: 'Exo 2, sans-serif'}}>Uncompromised quality in every scan and service we provide</p>
-              </div>
-            </div>
-            
-            <div className="bg-white/80 p-8 rounded-3xl shadow-xl hover:scale-105 transition-all duration-500">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-black text-slate-900 mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Innovation</h3>
-                <p className="text-slate-600" style={{fontFamily: 'Exo 2, sans-serif'}}>Leading with cutting-edge technology and advanced solutions</p>
-              </div>
-            </div>
-            
-            <div className="bg-white/80 p-8 rounded-3xl shadow-xl hover:scale-105 transition-all duration-500">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-black text-slate-900 mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Care</h3>
-                <p className="text-slate-600" style={{fontFamily: 'Exo 2, sans-serif'}}>Patient-centered approach with compassionate healthcare</p>
-              </div>
-            </div>
-            
-            <div className="bg-white/80 p-8 rounded-3xl shadow-xl hover:scale-105 transition-all duration-500">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-violet-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-black text-slate-900 mb-4" style={{fontFamily: 'Orbitron, monospace'}}>Trust</h3>
-                <p className="text-slate-600" style={{fontFamily: 'Exo 2, sans-serif'}}>Building lasting relationships through reliable healthcare services</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-teal-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-black text-white mb-6" style={{fontFamily: 'Orbitron, monospace'}}>
-            Experience Advanced Medical Imaging
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto" style={{fontFamily: 'Exo 2, sans-serif'}}>
-            Join thousands of patients who trust Varaha SDC for accurate, safe, and fast diagnostic services
+      <motion.section
+        className="relative h-[60vh] w-full flex items-center justify-center text-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <Image
+          src="/images/about-us-bg.png"
+          alt="Radhika Machineries Workshop"
+          fill
+          className="object-cover brightness-50"
+          priority
+        />
+        <div className="relative z-10 text-center p-4">
+          <h1 className="text-5xl md:text-7xl font-extrabold drop-shadow-lg">
+            About Us
+          </h1>
+          <p className="text-lg md:text-xl mt-4 drop-shadow-md">
+            Our Legacy of Precision Engineering
           </p>
-          <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
-            Schedule Your Scan Today
-          </button>
+        </div>
+      </motion.section>
+
+      {/* Introduction Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Leading Medical Diagnostics Since 1998
+          </motion.h2>
+          <motion.p
+            className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Welcome to Varaha SDC, a name synonymous with precision, reliability, and innovation in medical diagnostics. For over two decades, we have been at the forefront of healthcare technology, delivering advanced imaging solutions that empower medical professionals to achieve accurate diagnoses. Our journey began with a simple mission: to provide cutting-edge diagnostic services that exceed the highest medical standards.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Our Core Values Section */}
+      <section className="py-20" style={{backgroundColor: '#F8FBFF'}}>
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+            Our Core Values
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <ValueCard icon={<Gem size={48} />} title="Precision Excellence">
+              Every diagnostic service is delivered with uncompromising accuracy, using state-of-the-art equipment and expert analysis.
+            </ValueCard>
+            <ValueCard
+              icon={<Lightbulb size={48} />}
+              title="Advanced Technology"
+            >
+              We continuously invest in the latest medical imaging technology to provide the most comprehensive diagnostic solutions.
+            </ValueCard>
+            <ValueCard
+              icon={<Handshake size={48} />}
+              title="Patient Care"
+            >
+              Your health is our priority. We provide compassionate care with personalized attention to every patient's needs.
+            </ValueCard>
+            <ValueCard
+              icon={<Target size={48} />}
+              title="Reliable Results"
+            >
+              Our diagnostic services are engineered for accuracy and speed, ensuring timely results for effective treatment planning.
+            </ValueCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Medical Services Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#0056AE] mb-6">
+              Advanced Medical Services
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive healthcare solutions with cutting-edge technology and compassionate care
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <motion.div
+              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-[#2E92ED] overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ y: -10 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-red-600"></div>
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">EMERGENCY CARE</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Immediate medical care available 24 hours a day for emergency patients
+              </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+
+            <motion.div
+              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-[#2E92ED] overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -10 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED]"></div>
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">CARDIAC</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation, providing visual detail about heart function and 3D images
+              </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0056AE]/5 to-[#2E92ED]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+
+            <motion.div
+              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-[#2E92ED] overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ y: -10 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-green-600"></div>
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">DUAL ENERGY</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Dual energy scans provide better quality scans with low dose radiation
+              </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-green-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+
+            <motion.div
+              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-[#2E92ED] overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ y: -10 }}
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-600"></div>
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">COOPERATIVE STAFF</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                We have a cooperative team of staff who is available 24x7 to guide and assist you in the process
+              </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+          </div>
+
+          {/* Doctors Section */}
+          <motion.div
+            className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-blue-100 mb-16"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center justify-center mb-8">
+              <div className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full">
+                <UserCheck className="w-10 h-10 text-white" />
+              </div>
+            </div>
+            <h3 className="text-3xl font-bold text-center text-gray-800 mb-6">EXPERT DOCTORS</h3>
+            <p className="text-xl text-gray-600 text-center max-w-2xl mx-auto leading-relaxed">
+              We have an efficient team of radiologists for reporting, ensuring accurate diagnosis and comprehensive patient care
+            </p>
+          </motion.div>
+
+          {/* Video Section */}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-[#0056AE] mb-4">Experience Our Facility</h3>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Take a virtual tour of our state-of-the-art medical facility and advanced equipment
+              </p>
+            </div>
+            
+            <div className="relative max-w-4xl mx-auto">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#0056AE] to-[#2E92ED] p-2">
+                <div className="relative rounded-2xl overflow-hidden bg-black">
+                  <div className="aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src="https://www.youtube.com/embed/1FWknU5_brc?rel=0&modestbranding=1&showinfo=0"
+                      title="Medical Facility Tour"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="rounded-2xl"
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#2E92ED] rounded-full opacity-60 animate-pulse"></div>
+              <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-[#0056AE] rounded-full opacity-40 animate-pulse" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute top-1/2 -left-8 w-6 h-6 bg-gradient-to-r from-[#2E92ED] to-[#0056AE] rounded-full opacity-50 animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-gradient-to-br from-[#0056AE] to-[#00143F] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Experience Excellence in Healthcare?
+          </h2>
+          <p className="max-w-2xl mx-auto mb-8 text-blue-100">
+            Discover our comprehensive medical services or get in touch with our team to schedule your consultation.
+          </p>
+          <div className="flex justify-center gap-4">
+            <Link
+              href="/products"
+              className="bg-[#2E92ED] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-[#0056AE] transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Our Services
+            </Link>
+            <Link
+              href="/contact"
+              className="bg-transparent border-2 border-[#2E92ED] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2E92ED] transition-all duration-300"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
