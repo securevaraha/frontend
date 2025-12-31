@@ -41,28 +41,16 @@ const Footer = () => {
             </p>
             
             <div className="flex space-x-4">
-              <Link
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
-              >
+              <Link href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#2E92ED]">
                 <Facebook size={18} />
               </Link>
-              <Link
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
-              >
+              <Link href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#2E92ED]">
                 <Twitter size={18} />
               </Link>
-              <Link
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
-              >
+              <Link href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#2E92ED]">
                 <Linkedin size={18} />
               </Link>
-              <Link
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{backgroundColor: 'rgba(46, 146, 237, 0.2)'}} onMouseEnter={(e) => e.target.style.backgroundColor = '#2E92ED'} onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(46, 146, 237, 0.2)'}
-              >
+              <Link href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#2E92ED]">
                 <Instagram size={18} />
               </Link>
             </div>
@@ -75,37 +63,25 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/about" 
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/about" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   About Us
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/services" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   Services
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/facilities"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/facilities" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   Facilities
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/contact" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   Contact
                 </Link>
@@ -120,28 +96,19 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link
-                  href="/privacy-policy"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/privacy-policy" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/terms-and-conditions"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/terms-and-conditions" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/faq"
-                  className="transition-colors duration-300 flex items-center gap-2 group" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <Link href="/faq" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
                   FAQ
                 </Link>
@@ -165,20 +132,14 @@ const Footer = () => {
               
               <div className="flex items-center gap-3">
                 <Mail className="flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
-                <a 
-                  href="mailto:info@varahasdc.in"
-                  className="transition-colors" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <a href="mailto:info@varahasdc.in" className="transition-colors hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   info@varahasdc.in
                 </a>
               </div>
               
               <div className="flex items-center gap-3">
                 <Phone className="flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
-                <a 
-                  href="tel:+918233338550"
-                  className="transition-colors" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}} onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}
-                >
+                <a href="tel:+918233338550" className="transition-colors hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   +91 8233338550
                 </a>
               </div>
@@ -200,13 +161,13 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} Varaha SDC. All Rights Reserved.
             </p>
             <div className="flex items-center gap-6 text-sm" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
-              <Link href="/privacy-policy" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+              <Link href="/privacy-policy" className="transition-colors hover:text-white">
                 Privacy
               </Link>
-              <Link href="/terms-and-conditions" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+              <Link href="/terms-and-conditions" className="transition-colors hover:text-white">
                 Terms
               </Link>
-              <Link href="/sitemap" className="transition-colors" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#B8D4F0'}>
+              <Link href="/sitemap" className="transition-colors hover:text-white">
                 Sitemap
               </Link>
             </div>

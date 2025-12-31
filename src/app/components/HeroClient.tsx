@@ -60,7 +60,7 @@ export default function HeroClient() {
           
           <Link
             href="/contact"
-            className="group bg-transparent border-2 border-white text-white font-semibold py-4 px-8 rounded-full text-lg hover:bg-white transition-all duration-300 flex items-center gap-3 min-w-[200px] justify-center backdrop-blur-sm" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}} onMouseEnter={(e) => e.target.style.color = '#0056AE'} onMouseLeave={(e) => e.target.style.color = '#ffffff'}
+            className="group bg-transparent border-2 border-white text-white font-semibold py-4 px-8 rounded-full text-lg hover:bg-white transition-all duration-300 flex items-center gap-3 min-w-[200px] justify-center backdrop-blur-sm" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}} onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#0056AE'} onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#ffffff'}
           >
             <Play size={18} />
             Book Appointment

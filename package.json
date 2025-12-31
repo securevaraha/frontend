@@ -13,6 +13,7 @@
     "test:ci": "jest --ci --coverage --watchAll=false"
   },
   "dependencies": {
+    "@types/nodemailer": "^7.0.4",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.30.0",
     "framer-motion": "^12.23.26",
@@ -20,6 +21,7 @@
     "mysql2": "^3.6.5",
     "next": "15.5.9",
     "next-auth": "^4.24.5",
+    "nodemailer": "^7.0.12",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.48.2",
