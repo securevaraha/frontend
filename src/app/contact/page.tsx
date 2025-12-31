@@ -160,29 +160,62 @@ export default function ContactPage() {
                   </div>
                 </div>
                 
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target as HTMLFormElement);
+                  const data = {
+                    name: formData.get('name'),
+                    phone: formData.get('phone'),
+                    email: formData.get('email'),
+                    scanType: formData.get('scanType'),
+                    message: formData.get('message')
+                  };
+                  
+                  try {
+                    const response = await fetch('/api/contact', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(data)
+                    });
+                    
+                    if (response.ok) {
+                      alert('Form submitted successfully!');
+                      (e.target as HTMLFormElement).reset();
+                    } else {
+                      alert('Error submitting form');
+                    }
+                  } catch (error) {
+                    alert('Error submitting form');
+                  }
+                }}>
                   <div className="grid md:grid-cols-2 gap-4">
                     <input
+                      name="name"
                       type="text"
                       placeholder="Full Name"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
                     />
                     <input
+                      name="phone"
                       type="tel"
                       placeholder="Phone Number"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
                     />
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <input
+                      name="email"
                       type="email"
                       placeholder="Email Address"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
                     />
-                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm" style={{fontFamily: 'Roboto, sans-serif'}}>
+                    <select name="scanType" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm" style={{fontFamily: 'Roboto, sans-serif'}}>
                       <option>Select Scan Type</option>
                       <option>CT Scan - General</option>
                       <option>CT Scan - Cardiac</option>
@@ -191,6 +224,7 @@ export default function ContactPage() {
                     </select>
                   </div>
                   <textarea
+                    name="message"
                     placeholder="Additional Information (Optional)"
                     rows={3}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"

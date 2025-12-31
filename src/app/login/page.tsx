@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Hospital, User, Lock, Eye, EyeOff, Shield, Stethoscope, UserCheck, Monitor, Sparkles, Package } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Login() {
   const router = useRouter();
@@ -47,7 +48,6 @@ export default function Login() {
       if (response.ok) {
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Route users based on their role from database
         switch(data.user.role) {
           case 'superadmin':
             router.push('/superadmin/dashboard');
@@ -67,7 +67,6 @@ export default function Login() {
           case 'inventory':
             router.push('/inventory/dashboard');
             break;
-
           default:
             router.push('/dashboard');
         }
@@ -82,165 +81,270 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center p-2 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-64 h-64 bg-cyan-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-40 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
-      </div>
-      
-      <div className="relative w-full max-w-4xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-4 items-center">
-          {/* Left Side - Branding */}
-          <div className="text-center lg:text-left space-y-8">
-            <div className="flex items-center justify-center lg:justify-start space-x-4">
-              <div className="relative">
-                <div className="p-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl shadow-md">
-                  <Hospital className="h-10 w-10 text-white" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-700 via-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                  Varaha SDC
-                </h1>
-                <p className="text-gray-500 text-lg font-medium">CT Scan Management System</p>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#0056AE] via-[#2E92ED] to-[#0056AE] flex">
+      {/* Left Side - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 text-white relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0056AE]/20 via-[#2E92ED]/10 to-[#0056AE]/20"></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-20 w-24 h-24 bg-white/5 rounded-full blur-2xl animate-bounce" style={{animationDelay: '1s'}}></div>
+        
+        <div className="relative z-10 text-center max-w-md">
+          {/* Logo Section */}
+          <div className="mb-12 relative">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse"></div>
+              <Image
+                src="/Varaha logo@4x 2.png"
+                alt="Varaha SDC Logo"
+                width={140}
+                height={140}
+                className="relative mx-auto mb-6 rounded-full ring-4 ring-white/40 shadow-2xl transform hover:scale-105 transition-transform duration-300"
+                priority
+              />
             </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="h-5 w-5 text-yellow-500" />
-                <h2 className="text-2xl font-bold text-gray-900">Welcome Back!</h2>
-              </div>
-              <p className="text-gray-600 leading-relaxed max-w-lg">
-                Secure access to CT scan management system.
+            <div className="space-y-2">
+              <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
+                Varaha SDC
+              </h1>
+              <div className="h-1 w-32 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full"></div>
+              <p className="text-xl opacity-90 font-medium" style={{fontFamily: 'Roboto, sans-serif'}}>
+                Advanced CT Scan Management System
               </p>
             </div>
           </div>
+          
+          {/* Features Grid */}
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:rotate-12 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <h3 className="font-bold text-sm mb-1">256 Slice CT</h3>
+              <p className="text-xs opacity-80">Technology</p>
+            </div>
+            
+            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:rotate-12 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <h3 className="font-bold text-sm mb-1">Same Day</h3>
+              <p className="text-xs opacity-80">Service</p>
+            </div>
+            
+            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:rotate-12 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
+                </svg>
+              </div>
+              <h3 className="font-bold text-sm mb-1">24/7 Emergency</h3>
+              <p className="text-xs opacity-80">Care</p>
+            </div>
+            
+            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:rotate-12 transition-transform duration-300">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h2v-2H4v-2h2v-2H4V6h2V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-2h-2v2H4z"/>
+                </svg>
+              </div>
+              <h3 className="font-bold text-sm mb-1">Expert Medical</h3>
+              <p className="text-xs opacity-80">Team</p>
+            </div>
+          </div>
+          
+          {/* Trust Indicators */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span>Trusted by 10,000+ Patients</span>
+            </div>
+            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+              <span>ISO Certified Medical Facility</span>
+            </div>
+            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
+              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+              <span>Award Winning Healthcare</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          {/* Right Side - Login Form */}
-          <div className="w-full max-w-sm mx-auto">
-            <div className="relative">
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-gray-100">
-                <div className="text-center mb-6">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-xl mb-3">
-                    <Lock className="h-6 w-6 text-white" />
+      {/* Right Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="lg:hidden mb-8">
+              <div className="relative inline-block mb-6">
+                <div className="absolute inset-0 bg-[#2E92ED]/20 rounded-full blur-xl animate-pulse"></div>
+                <Image
+                  src="/Varaha logo@4x 2.png"
+                  alt="Varaha SDC Logo"
+                  width={100}
+                  height={100}
+                  className="relative mx-auto rounded-full ring-4 ring-[#2E92ED]/30 shadow-xl"
+                  priority
+                />
+              </div>
+              <h1 className="text-2xl font-bold mb-2 text-white" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
+                Varaha SDC
+              </h1>
+              <p className="text-sm text-gray-600 mb-4" style={{fontFamily: 'Roboto, sans-serif'}}>
+                Advanced CT Scan Management System
+              </p>
+              
+              {/* Mobile Features */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-3 text-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-1">Sign In</h3>
-                  <p className="text-gray-500 text-sm">Enter your credentials to access</p>
+                  <p className="text-xs font-semibold text-blue-800">256 Slice CT</p>
                 </div>
-
-                {/* Enhanced Role Selection */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  {roles.map((role) => {
-                    const IconComponent = role.icon;
-                    return (
-                      <button
-                        key={role.id}
-                        type="button"
-                        onClick={() => handleRoleSelect(role)}
-                        className={`group relative p-2.5 rounded-lg border transition-all duration-200 ${
-                          selectedRole === role.id
-                            ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-md`
-                            : `bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-600 hover:border-gray-300`
-                        }`}
-                      >
-                        <div className="relative z-10">
-                          <IconComponent className="h-5 w-5 mx-auto mb-1" />
-                          <div className="text-xs font-medium">{role.name}</div>
-                        </div>
-                        {selectedRole === role.id && (
-                          <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-
-              <form onSubmit={handleSubmit} className="space-y-3">
-                {error && (
-                  <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
-                    <div className="flex">
-                      <div className="text-red-700 text-sm">{error}</div>
-                    </div>
+                
+                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-3 text-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
                   </div>
-                )}
-
-                {/* Username Field */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-600 block">
-                    Username
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      required
-                      value={formData.username}
-                      onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white text-gray-800 placeholder-gray-400"
-                      placeholder="Enter username"
-                    />
-                  </div>
+                  <p className="text-xs font-semibold text-green-800">Same Day</p>
                 </div>
-
-                {/* Password Field */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-600 block">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      value={formData.password}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                      className="w-full pl-10 pr-12 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white text-gray-800 placeholder-gray-400"
-                      placeholder="Enter password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                      ) : (
-                        <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                      )}
-                    </button>
+                
+                <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-3 text-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
+                    </svg>
                   </div>
+                  <p className="text-xs font-semibold text-red-800">24/7 Care</p>
                 </div>
-
-                {/* Enhanced Submit Button */}
-                <button
-                  type="submit"
-                  disabled={loading || !selectedRole}
-                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2.5 px-4 rounded-lg font-medium hover:from-blue-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  {loading ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Signing in...</span>
-                    </div>
-                  ) : (
-                    <span>Sign In</span>
-                  )}
-                </button>
-              </form>
-
-                {/* Footer */}
-                <div className="mt-4 text-center">
-                  <p className="text-xs text-gray-400">Secure Connection</p>
+                
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-3 text-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h2v-2H4v-2h2v-2H4V6h2V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-2h-2v2H4z"/>
+                    </svg>
+                  </div>
+                  <p className="text-xs font-semibold text-purple-800">Expert Team</p>
                 </div>
               </div>
             </div>
+            <h2 className="text-3xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              Welcome Back
+            </h2>
+            <p className="text-gray-600" style={{fontFamily: 'Roboto, sans-serif'}}>
+              Sign in to access your dashboard
+            </p>
+          </div>
+
+          {/* Role Selection */}
+          <div className="mb-8">
+            <h3 className="text-sm font-medium text-gray-700 mb-4">Select Your Role</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {roles.map((role) => {
+                const IconComponent = role.icon;
+                return (
+                  <button
+                    key={role.id}
+                    type="button"
+                    onClick={() => handleRoleSelect(role)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                      selectedRole === role.id
+                        ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-lg`
+                        : `bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-600 hover:border-gray-300`
+                    }`}
+                  >
+                    <IconComponent className="w-6 h-6 mx-auto mb-2" />
+                    <div className="text-sm font-medium">{role.name}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+                <div className="text-red-700 text-sm">{error}</div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Username
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  required
+                  value={formData.username}
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your username"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || !selectedRole}
+              className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                <span>Sign In to Dashboard</span>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-xs text-gray-500">Secure Medical System Access</p>
           </div>
         </div>
       </div>

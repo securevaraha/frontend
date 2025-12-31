@@ -35,6 +35,7 @@ export default function ConsoleUpdate() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit');
+  const isReportUpload = searchParams.get('reportupload') === 'true';
   const [records, setRecords] = useState<ConsoleRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,6 +50,12 @@ export default function ConsoleUpdate() {
   const [uploading, setUploading] = useState(false);
   const [reportName, setReportName] = useState('');
   const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [uploadingRecordId, setUploadingRecordId] = useState<number | null>(null);
+  
+  // Debug effect
+  useEffect(() => {
+    console.log('showUploadDialog changed to:', showUploadDialog);
+  }, [showUploadDialog]);
 
   const formatDate = (dateStr: string) => {
     if (!dateStr || dateStr === '-') return '-';
@@ -196,6 +203,7 @@ export default function ConsoleUpdate() {
       formData.append('cro', editingRecord.c_p_cro);
       formData.append('patientName', editingRecord.patient_name);
       formData.append('conId', editingRecord.con_id.toString());
+      formData.append('contactNumber', editingRecord.contact_number || '');
 
       const response = await fetch('/api/console/upload-report', {
         method: 'POST',
@@ -203,12 +211,28 @@ export default function ConsoleUpdate() {
       });
 
       if (response.ok) {
-        toast.success('Report uploaded successfully');
+        toast.success('Report uploaded and WhatsApp notification sent successfully');
+        
+        // Update the record with report info
+        await fetch('https://varahasdc.co.in/api/console/update-console', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            con_id: editingRecord.con_id,
+            onWhatsappSent: true,
+            reportFileName: reportName.trim(),
+            reportFilePath: `/uploads/reports/${editingRecord.c_p_cro}_${reportName.trim()}.pdf`
+          })
+        });
+        
         setUploadFile(null);
         setReportName('');
-        setShowUploadDialog(false);
         const fileInput = document.getElementById('reportFile') as HTMLInputElement;
         if (fileInput) fileInput.value = '';
+        
+        // Navigate back to list
+        router.push('/console/update');
+        
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || 'Failed to upload report');
@@ -471,71 +495,78 @@ export default function ConsoleUpdate() {
           </div>
         </div>
 
-        {/* Upload Dialog */}
-        {showUploadDialog && createPortal(
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" style={{zIndex: 9999}}>
-            <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                  <span>Upload Report</span>
-                </h3>
-                <button
-                  onClick={() => setShowUploadDialog(false)}
-                  className="p-1 hover:bg-gray-100 rounded"
-                >
-                  <X className="h-5 w-5" />
-                </button>
+        {/* Report Upload Section - Only show if reportupload=true */}
+        {isReportUpload && editingRecord?.status === 'Complete' && (
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg border-2 border-blue-200">
+            <h3 className="text-lg font-semibold text-blue-900 mb-6 flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                <Upload className="h-4 w-4 text-white" />
               </div>
+              <span>Upload Medical Report</span>
+            </h3>
+            
+            <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Report Name</label>
+                  <label className="block text-sm font-semibold text-blue-800 mb-2">Report Name *</label>
                   <input
                     type="text"
                     value={reportName}
                     onChange={(e) => setReportName(e.target.value)}
-                    placeholder="Enter report name (e.g., CT Scan Report, MRI Report)"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter report name (e.g., CT Scan Report)"
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                   />
                 </div>
+                
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Report File</label>
+                  <label className="block text-sm font-semibold text-blue-800 mb-2">Select PDF Report *</label>
                   <input
                     id="reportFile"
                     type="file"
                     accept=".pdf"
                     onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-dashed border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Supported format: PDF only (Max 10MB)</p>
+                  <p className="text-xs text-blue-600 mt-2">📄 PDF only (Max 10MB)</p>
                 </div>
-                {uploadFile && (
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <p className="text-sm text-blue-800">
-                      <strong>Selected file:</strong> {uploadFile.name} ({(uploadFile.size / 1024 / 1024).toFixed(2)} MB)
-                    </p>
-                  </div>
-                )}
-                <div className="flex space-x-3 pt-4">
-                  <button
-                    onClick={() => setShowUploadDialog(false)}
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleFileUpload}
-                    disabled={uploading || !uploadFile || !reportName.trim()}
-                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Upload className={`h-4 w-4 ${uploading ? 'animate-spin' : ''}`} />
-                    <span>{uploading ? 'Uploading...' : 'Upload'}</span>
-                  </button>
-                </div>
+                
+                <button
+                  onClick={handleFileUpload}
+                  disabled={uploading || !uploadFile || !reportName.trim()}
+                  className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg hover:shadow-xl"
+                >
+                  <Upload className={`h-5 w-5 ${uploading ? 'animate-spin' : ''}`} />
+                  <span>{uploading ? 'Uploading & Sending WhatsApp...' : 'Upload Report & Send WhatsApp'}</span>
+                </button>
               </div>
+              
+              {/* PDF Preview */}
+              {uploadFile && (
+                <div className="bg-white border-2 border-blue-200 rounded-xl p-4">
+                  <h4 className="text-sm font-semibold text-blue-900 mb-3">File Preview</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <FileText className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-blue-900">{uploadFile.name}</p>
+                        <p className="text-xs text-blue-700">{(uploadFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                      </div>
+                    </div>
+                    
+                    <div className="border-2 border-blue-200 rounded-lg overflow-hidden">
+                      <iframe
+                        src={URL.createObjectURL(uploadFile)}
+                        className="w-full h-64"
+                        title="PDF Preview"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>,
-          document.body
+          </div>
         )}
       </div>
     );
@@ -673,18 +704,9 @@ export default function ConsoleUpdate() {
                       {record.status === 'Complete' ? (
                         <button
                           onClick={() => {
-                            const recordToEdit = {
-                              ...record,
-                              date: convertToInputDate(record.date),
-                              scan_date: convertToInputDate(record.scan_date),
-                              allot_date: convertToInputDate(record.allot_date),
-                              added_on: convertToInputDate(record.added_on),
-                              number_film: record.number_film?.toString() || record.number_films?.toString() || ''
-                            };
-                            setEditingRecord(recordToEdit);
-                            setShowUploadDialog(true);
+                            router.push(`/console/update?edit=${record.con_id}&reportupload=true`);
                           }}
-                          className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                          className="inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-sm shadow-md hover:shadow-lg"
                         >
                           <Upload className="h-4 w-4" />
                           <span>Upload</span>

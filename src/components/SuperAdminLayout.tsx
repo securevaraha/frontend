@@ -1,6 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Calendar, Activity, TrendingUp, Calculator, HandCoins } from 'lucide-react';
 
 interface SuperAdminLayoutProps {
   children: ReactNode;
@@ -9,12 +12,45 @@ interface SuperAdminLayoutProps {
   actions?: ReactNode;
 }
 
+const navigation = [
+  { name: 'Dashboard', href: '/superadmin/dashboard', icon: Activity },
+  { name: 'Appointments', href: '/superadmin/appointments', icon: Calendar },
+  { name: 'Patient Reports', href: '/superadmin/patient-report', icon: TrendingUp },
+  { name: 'Revenue Report', href: '/superadmin/revenue-report', icon: Calculator },
+  { name: 'Console Report', href: '/superadmin/con-r-report', icon: HandCoins },
+];
+
 export default function SuperAdminLayout({ children, title, subtitle, actions }: SuperAdminLayoutProps) {
+  const pathname = usePathname();
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Header with Navigation */}
       <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Navigation */}
+          <nav className="flex space-x-8 border-b border-gray-200">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    isActive
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+          
+          {/* Page Header */}
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>

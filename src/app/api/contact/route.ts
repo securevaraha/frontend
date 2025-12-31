@@ -1,49 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-const CONTACTS_FILE = path.join(process.cwd(), 'data', 'contacts.json');
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, phone, message, subject, company } = await request.json();
-    
-    const data = await fs.readFile(CONTACTS_FILE, 'utf8');
-    const { contacts } = JSON.parse(data);
-    
-    // Check if email already exists
-    const existingContact = contacts.find((contact: {email: string}) => contact.email === email);
-    if (existingContact) {
-      return NextResponse.json({ success: false, error: 'Query already exists for this email' }, { status: 400 });
-    }
-    
-    const newContact = {
-      id: Date.now().toString(),
-      name,
-      email,
-      phone,
-      message,
-      subject,
-      company,
-      status: 'pending',
-      createdAt: new Date().toISOString()
-    };
-    
-    contacts.push(newContact);
-    await fs.writeFile(CONTACTS_FILE, JSON.stringify({ contacts }, null, 2));
-    
-    return NextResponse.json({ success: true, message: 'Message sent successfully' });
-  } catch {
-    return NextResponse.json({ success: false, error: 'Failed to send message' }, { status: 500 });
-  }
-}
+    const body = await request.json();
+    const { name, phone, email, scanType, message } = body;
 
-export async function GET() {
-  try {
-    const data = await fs.readFile(CONTACTS_FILE, 'utf8');
-    const { contacts } = JSON.parse(data);
-    return NextResponse.json({ success: true, contacts });
-  } catch {
-    return NextResponse.json({ success: false, contacts: [] });
+    // Basic validation
+    if (!name || !phone || !email) {
+      return NextResponse.json(
+        { error: 'Name, phone, and email are required' },
+        { status: 400 }
+      );
+    }
+
+    // Call your existing API
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+    const response = await fetch(`${API_BASE_URL}/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, email, scanType, message })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return NextResponse.json(
+        { message: 'Contact form submitted successfully' },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: data.error || 'Failed to submit contact form' },
+        { status: response.status }
+      );
+    }
+  } catch (error) {
+    console.error('Contact form error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

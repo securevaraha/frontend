@@ -129,13 +129,22 @@ export default function SuperAdminDashboard() {
 
       <Card className="p-4">
         <h2 className="text-lg font-semibold text-gray-900 mb-3">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
           <a
-            href="/superadmin/patient-report"
+            href="/superadmin/appointments"
             className="flex items-center space-x-2 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
           >
             <div className="p-1.5 rounded bg-blue-500">
               <Activity className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-sm font-medium text-gray-700">Appointments</span>
+          </a>
+          <a
+            href="/superadmin/patient-report"
+            className="flex items-center space-x-2 p-3 rounded-lg border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-colors"
+          >
+            <div className="p-1.5 rounded bg-green-500">
+              <TrendingUp className="h-4 w-4 text-white" />
             </div>
             <span className="text-sm font-medium text-gray-700">Patient Reports</span>
           </a>

@@ -90,17 +90,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="icon" href="/Varaha logo@4x 2.png" sizes="any" />
-        <link rel="icon" href="/Varaha logo@4x 2.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/Varaha logo@4x 2.png" />
+        <link rel="icon" href="/Varaha logo@4x 2.png" type="image/png" sizes="64x64" />
+        <link rel="shortcut icon" href="/Varaha logo@4x 2.png" type="image/png" sizes="64x64" />
+        <link rel="apple-touch-icon" href="/Varaha logo@4x 2.png" sizes="180x180" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="RMT" />
-        <meta name="application-name" content="Radhika Machine Tools" />
-        <meta name="msapplication-TileColor" content="#059669" />
-        <meta name="theme-color" content="#059669" />
+        <meta name="apple-mobile-web-app-title" content="Varaha SDC" />
+        <meta name="application-name" content="Varaha SDC" />
+        <meta name="msapplication-TileColor" content="#0056AE" />
+        <meta name="theme-color" content="#0056AE" />
       </head>
       <body className="antialiased">
         <ClientLayout>{children}</ClientLayout>
