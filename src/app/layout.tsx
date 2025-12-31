@@ -2,8 +2,7 @@
 
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: {
@@ -104,11 +103,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#059669" />
       </head>
       <body className="antialiased">
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <ClientLayout>{children}</ClientLayout>
         
         {/* Structured Data */}
         <script
