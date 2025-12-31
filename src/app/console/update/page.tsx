@@ -28,6 +28,10 @@ interface ConsoleRecord {
   nursing_name: string;
   issue_cd: string;
   remark: string;
+  contact_number?: string;
+  age?: string;
+  gender?: string;
+  scan_type?: string;
 }
 
 export default function ConsoleUpdate() {
