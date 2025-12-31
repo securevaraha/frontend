@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Calendar, Stethoscope, Shield, Zap } from "lucide-react";
 
 export default function ContactPage() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative py-20 text-white overflow-hidden">
+      {/* Compact Hero Section */}
+      <section className="relative py-16 text-white overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/hero.png"
@@ -17,129 +17,250 @@ export default function ContactPage() {
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-6 text-white"
+            className="text-3xl md:text-4xl font-bold mb-4 text-white"
             style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Contact Us
+            Contact Varaha SDC
           </motion.h1>
           <motion.p
-            className="text-xl max-w-2xl mx-auto text-white"
+            className="text-lg max-w-2xl mx-auto text-white"
             style={{fontFamily: 'Roboto, sans-serif'}}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Get in touch with our medical experts for appointments and consultations
+            Advanced CT Imaging • Same Day Service • 24/7 Emergency Care
           </motion.p>
         </div>
       </section>
 
-      {/* Contact Info & Form */}
-      <section className="py-20 bg-white">
+      {/* Quick Contact Cards */}
+      <section className="py-12 bg-gradient-to-br from-blue-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white p-4 rounded-xl shadow-lg text-center hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center mx-auto mb-3">
+                <Phone className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-sm mb-1" style={{color: '#0056AE'}}>Call Now</h3>
+              <p className="text-xs" style={{color: '#586C80'}}>8233338550</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-xl shadow-lg text-center hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Calendar className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-sm mb-1" style={{color: '#0056AE'}}>Same Day</h3>
+              <p className="text-xs" style={{color: '#586C80'}}>No Waiting</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-xl shadow-lg text-center hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-sm mb-1" style={{color: '#0056AE'}}>24/7 Emergency</h3>
+              <p className="text-xs" style={{color: '#586C80'}}>Always Open</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-xl shadow-lg text-center hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-sm mb-1" style={{color: '#0056AE'}}>Fast Reports</h3>
+              <p className="text-xs" style={{color: '#586C80'}}>24 Hours</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Contact Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-8">
             {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                Get In Touch
+            <div className="lg:col-span-1">
+              <h2 className="text-2xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                Visit Our Center
               </h2>
               
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-white" />
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Location</h3>
-                    <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                    <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Address</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
                       Troma Centre, MDM Hospital<br />
                       Shastri Nagar, Jodhpur, Rajasthan 342001
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Phone</h3>
-                    <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>+91 8233338550</p>
+                    <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Phone</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>+91 8233338550</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Email</h3>
-                    <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>info@varahasdc.in</p>
+                    <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Email</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>info@varahasdc.in</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Hours</h3>
-                    <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>24/7 Emergency Services</p>
+                    <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Hours</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>24/7 Emergency Services</p>
                   </div>
+                </div>
+              </div>
+              
+              {/* Services List */}
+              <div className="mt-8 p-4 rounded-xl" style={{backgroundColor: '#F8FBFF'}}>
+                <h3 className="font-bold mb-3 text-sm" style={{color: '#0056AE'}}>Our Services</h3>
+                <div className="space-y-2">
+                  {['256 Slice CT Scan', 'Dual Energy Imaging', 'Cardiac CT', 'Emergency Scans', '3D Reconstruction'].map((service, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-[#2E92ED] rounded-full"></div>
+                      <span className="text-xs" style={{color: '#586C80'}}>{service}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="bg-gray-50 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                Book Appointment
-              </h3>
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-                    style={{fontFamily: 'Roboto, sans-serif'}}
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-                    style={{fontFamily: 'Roboto, sans-serif'}}
-                  />
+            <div className="lg:col-span-2">
+              <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl border border-blue-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center">
+                    <Stethoscope className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      Book Your CT Scan
+                    </h3>
+                    <p className="text-sm" style={{color: '#586C80'}}>Same day service available</p>
+                  </div>
                 </div>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-                  style={{fontFamily: 'Roboto, sans-serif'}}
-                />
-                <select className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]" style={{fontFamily: 'Roboto, sans-serif'}}>
-                  <option>Select Service</option>
-                  <option>CT Scan</option>
-                  <option>MRI</option>
-                  <option>X-Ray</option>
-                  <option>Ultrasound</option>
-                </select>
-                <textarea
-                  placeholder="Additional Message"
-                  rows={4}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-                  style={{fontFamily: 'Roboto, sans-serif'}}
-                ></textarea>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all duration-300"
-                  style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
-                >
-                  Book Appointment
-                </button>
-              </form>
+                
+                <form className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Phone Number"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    />
+                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm" style={{fontFamily: 'Roboto, sans-serif'}}>
+                      <option>Select Scan Type</option>
+                      <option>CT Scan - General</option>
+                      <option>CT Scan - Cardiac</option>
+                      <option>CT Scan - Emergency</option>
+                      <option>Dual Energy CT</option>
+                    </select>
+                  </div>
+                  <textarea
+                    placeholder="Additional Information (Optional)"
+                    rows={3}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                    style={{fontFamily: 'Roboto, sans-serif'}}
+                  ></textarea>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="submit"
+                      className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+                    >
+                      Book Appointment
+                    </button>
+                    <button
+                      type="button"
+                      className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-bold py-3 px-6 rounded-lg hover:bg-[#2E92ED] hover:text-white transition-all duration-300 text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+                    >
+                      Call Now: 8233338550
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-8" style={{backgroundColor: '#F8FBFF'}}>
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Location Info */}
+            <div>
+              <h2 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                Find Us
+              </h2>
+              <div className="bg-white p-6 rounded-xl shadow-lg">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Our Location</h3>
+                    <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                      Troma Centre, MDM Hospital<br />
+                      Shastri Nagar, Jodhpur, Rajasthan 342001
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Side - Map */}
+            <div>
+              <div className="bg-white rounded-xl p-3 shadow-lg">
+                <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3576.8234567890123!2d73.0243!3d26.2389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDE0JzIwLjAiTiA3M8KwMDEnMjcuNSJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{border: 0}}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-lg"
+                  ></iframe>
+                </div>
+              </div>
             </div>
           </div>
         </div>

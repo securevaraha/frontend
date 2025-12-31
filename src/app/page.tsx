@@ -73,7 +73,7 @@ export default async function HomePage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               {/* Features Web */}
-              <div className="relative w-[600px] h-[600px] mx-auto">
+              <div className="relative w-full max-w-[600px] h-[600px] mx-auto">
                 {/* Center Hub */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
                   <div className="w-24 h-24 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center shadow-2xl">
@@ -112,10 +112,10 @@ export default async function HomePage() {
                       }}></div>
                       
                       {/* Feature Card */}
-                      <div className="bg-white rounded-xl p-4 shadow-lg border-2 border-transparent hover:border-[#2E92ED] transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer" style={{minWidth: '140px'}}>
+                      <div className="bg-white rounded-xl p-4 shadow-lg border-2 border-transparent hover:border-[#2E92ED] transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer" style={{minWidth: '160px'}}>
                         <div className="text-center">
                           <div className="w-3 h-3 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-full mx-auto mb-2 group-hover:animate-pulse"></div>
-                          <span className="text-xs font-semibold leading-tight block" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                          <span className="text-sm font-semibold leading-tight block" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
                             {feature}
                           </span>
                         </div>
@@ -618,19 +618,99 @@ export default async function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12" style={{backgroundColor: '#F8FBFF'}}>
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
-            <div>
-              <h2 className="text-2xl font-bold mb-3" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                Ready for Your Scan?
+      <section className="py-16 lg:py-20 relative overflow-hidden" style={{backgroundColor: '#F8FBFF'}}>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-[#2E92ED]/10 to-[#0056AE]/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-br from-[#0056AE]/10 to-[#2E92ED]/10 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white px-6 py-2 rounded-full text-sm font-medium mb-6">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                Get Started Today
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                Ready for Your Advanced CT Scan?
               </h2>
-              <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                Contact us today to schedule your appointment or learn more about our advanced imaging services.
+              <p className="text-lg max-w-3xl mx-auto mb-8" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                Experience the future of medical imaging with our Revolution CT 256 slice technology. Same-day service, 24-hour reports, and expert care.
               </p>
             </div>
-            <div>
-              <HomeContactForm />
+            
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="group p-6 rounded-2xl transition-all duration-300 hover:scale-105" style={{backgroundColor: '#E8F2FF'}}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#2E92ED'}}>
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Same Day Service</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>No waiting - get scanned the same day you register</p>
+                  </div>
+                  
+                  <div className="group p-6 rounded-2xl transition-all duration-300 hover:scale-105" style={{backgroundColor: '#F0F8FF'}}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#0056AE'}}>
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>24 Hour Reports</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>Fast, accurate results within 24 hours</p>
+                  </div>
+                  
+                  <div className="group p-6 rounded-2xl transition-all duration-300 hover:scale-105" style={{backgroundColor: '#F0F8FF'}}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#0056AE'}}>
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Low Radiation</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>Up to 82% less radiation exposure</p>
+                  </div>
+                  
+                  <div className="group p-6 rounded-2xl transition-all duration-300 hover:scale-105" style={{backgroundColor: '#E8F2FF'}}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#2E92ED'}}>
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>24/7 Emergency</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>Round-the-clock emergency services</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a href="/contact" className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    Book Appointment Now
+                  </a>
+                  <a href="tel:8233338550" className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-bold py-4 px-8 rounded-xl text-center hover:bg-[#2E92ED] hover:text-white transition-all duration-300">
+                    Call: 8233338550
+                  </a>
+                </div>
+              </div>
+              
+              <div className="relative">
+                <div className="bg-white rounded-2xl p-8 shadow-2xl border border-blue-100">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Get In Touch</h3>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>Schedule your appointment or ask any questions</p>
+                  </div>
+                  
+                  <HomeContactForm />
+                </div>
+                
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-full animate-bounce"></div>
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-[#2E92ED] to-[#0056AE] rounded-full animate-pulse"></div>
+              </div>
             </div>
           </div>
         </div>

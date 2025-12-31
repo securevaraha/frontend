@@ -249,7 +249,7 @@ export default function AboutUsPage() {
                     <iframe
                       width="100%"
                       height="100%"
-                      src="https://www.youtube.com/embed/1FWknU5_brc?rel=0&modestbranding=1&showinfo=0"
+                      src="https://www.youtube.com/embed/kIF3F0o3LpE?rel=0&modestbranding=1&showinfo=0"
                       title="Medical Facility Tour"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
