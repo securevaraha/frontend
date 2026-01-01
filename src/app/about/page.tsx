@@ -64,17 +64,25 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Leading Medical Diagnostics Since 1998
+            Welcome Varaha SDC CT Scan
           </motion.h2>
-          <motion.p
-            className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}
+          <motion.div
+            className="space-y-6 text-left"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Welcome to Varaha SDC, a name synonymous with precision, reliability, and innovation in medical diagnostics. For over two decades, we have been at the forefront of healthcare technology, delivering advanced imaging solutions that empower medical professionals to achieve accurate diagnoses. Our journey began with a simple mission: to provide cutting-edge diagnostic services that exceed the highest medical standards.
-          </motion.p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time, we at varaha focus on bringing quality diagnosis by providing best quality services. Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines. our advanced technology gives doctors an edge in diagnosing the illness better
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              We provide immediate medical care for emergency patients and our acquiescent staff will be glad to assist you 24x7 and we have an efficient team of radiologist for excellent reporting.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              We focus on bringing quality diagnosis services by providing accurate and timely test results to our valued customers. With a commitment to excellence and a wide range of comprehensive test panels, varaha is your trusted partner in promoting good health and overall well-being. We strive to provide high quality services near you while assuring affordability.
+            </p>
+          </motion.div>
         </div>
       </section>
 

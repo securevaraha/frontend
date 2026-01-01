@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Hospital, User, Lock, Eye, EyeOff, Shield, Stethoscope, UserCheck, Monitor, Sparkles, Package } from 'lucide-react';
+import { Hospital, User, Lock, Eye, EyeOff, Shield, Stethoscope, UserCheck, Monitor, Sparkles, Package, Globe } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Login() {
@@ -23,6 +23,7 @@ export default function Login() {
     { id: 'doctor', name: 'Doctor', icon: Stethoscope, color: 'from-emerald-500 to-emerald-600' },
     { id: 'console', name: 'Console', icon: Monitor, color: 'from-violet-500 to-violet-600' },
     { id: 'inventory', name: 'Inventory', icon: Package, color: 'from-orange-500 to-orange-600' },
+    { id: 'web', name: 'Web Login', icon: Globe, color: 'from-cyan-500 to-cyan-600' },
   ];
 
   const handleRoleSelect = (role: any) => {
@@ -66,6 +67,9 @@ export default function Login() {
             break;
           case 'inventory':
             router.push('/inventory/dashboard');
+            break;
+          case 'web':
+            router.push('/dashboard');
             break;
           default:
             router.push('/dashboard');

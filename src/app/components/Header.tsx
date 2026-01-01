@@ -106,10 +106,10 @@ const Header = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style={{backgroundColor: '#2E92ED'}}></span>
               </Link>
               <Link
-                href="/facilities"
+                href="/dual-energy"
                 className={`transition-colors duration-300 font-medium relative group ${isScrolled ? 'text-gray-800 hover:text-[#0056AE]' : 'text-white hover:text-[#E8F2FF]'}`} style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
               >
-                Facilities
+                Dual Energy
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style={{backgroundColor: '#2E92ED'}}></span>
               </Link>
               <Link
@@ -174,11 +174,11 @@ const Header = () => {
                 Services
               </Link>
               <Link
-                href="/facilities"
+                href="/dual-energy"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-6 py-3 text-gray-800 hover:bg-green-50 hover:text-brand-green-dark transition-colors font-medium"
               >
-                Facilities
+                Dual Energy
               </Link>
               <Link
                 href="/contact"

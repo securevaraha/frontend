@@ -164,11 +164,15 @@ export default function ContactPage() {
                   e.preventDefault();
                   const formData = new FormData(e.target as HTMLFormElement);
                   const data = {
-                    name: formData.get('name'),
-                    phone: formData.get('phone'),
-                    email: formData.get('email'),
-                    scanType: formData.get('scanType'),
-                    message: formData.get('message')
+                    fullName: formData.get('fullName'),
+                    gender: formData.get('gender'),
+                    age: formData.get('age'),
+                    contactNumber: formData.get('contactNumber'),
+                    address: formData.get('address'),
+                    scan: formData.get('scan'),
+                    appointmentDate: formData.get('appointmentDate'),
+                    scheduleTime: formData.get('scheduleTime'),
+                    additionalInformation: formData.get('additionalInformation')
                   };
                   
                   try {
@@ -179,57 +183,115 @@ export default function ContactPage() {
                     });
                     
                     if (response.ok) {
-                      alert('Form submitted successfully!');
+                      alert('Appointment booked successfully! We will contact you soon.');
                       (e.target as HTMLFormElement).reset();
                     } else {
-                      alert('Error submitting form');
+                      alert('Error booking appointment. Please try again.');
                     }
                   } catch (error) {
-                    alert('Error submitting form');
+                    alert('Error booking appointment. Please try again.');
                   }
                 }}>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div>
                     <input
-                      name="name"
+                      name="fullName"
                       type="text"
                       placeholder="Full Name"
                       required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
                     />
-                    <input
-                      name="phone"
-                      type="tel"
-                      placeholder="Phone Number"
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <select
+                      name="gender"
                       required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <input
+                      name="age"
+                      type="number"
+                      placeholder="Age"
+                      required
+                      min="1"
+                      max="120"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
                     />
+                  </div>
+                  <div>
+                    <input
+                      name="contactNumber"
+                      type="tel"
+                      placeholder="Contact Number"
+                      required
+                      pattern="[0-9]{10}"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      name="address"
+                      placeholder="Address"
+                      required
+                      rows={2}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <select
+                      name="scan"
+                      required
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    >
+                      <option value="">Select Scan Type</option>
+                      <option value="CT Scan - General">CT Scan - General</option>
+                      <option value="CT Scan - Cardiac">CT Scan - Cardiac</option>
+                      <option value="CT Scan - Emergency">CT Scan - Emergency</option>
+                      <option value="Dual Energy CT">Dual Energy CT</option>
+                      <option value="CT Angiography">CT Angiography</option>
+                      <option value="CT Brain">CT Brain</option>
+                      <option value="CT Chest">CT Chest</option>
+                      <option value="CT Abdomen">CT Abdomen</option>
+                      <option value="CT Spine">CT Spine</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <input
-                      name="email"
-                      type="email"
-                      placeholder="Email Address"
+                      name="appointmentDate"
+                      type="date"
+                      required
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    />
+                    <input
+                      name="scheduleTime"
+                      type="time"
                       required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
                       style={{fontFamily: 'Roboto, sans-serif'}}
                     />
-                    <select name="scanType" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm" style={{fontFamily: 'Roboto, sans-serif'}}>
-                      <option>Select Scan Type</option>
-                      <option>CT Scan - General</option>
-                      <option>CT Scan - Cardiac</option>
-                      <option>CT Scan - Emergency</option>
-                      <option>Dual Energy CT</option>
-                    </select>
                   </div>
-                  <textarea
-                    name="message"
-                    placeholder="Additional Information (Optional)"
-                    rows={3}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
-                    style={{fontFamily: 'Roboto, sans-serif'}}
-                  ></textarea>
+                  <div>
+                    <textarea
+                      name="additionalInformation"
+                      placeholder="Additional Information (Optional)"
+                      rows={3}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED] text-sm"
+                      style={{fontFamily: 'Roboto, sans-serif'}}
+                    ></textarea>
+                  </div>
                   
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button

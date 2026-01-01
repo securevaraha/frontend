@@ -1,104 +1,41 @@
 "use client";
 
-import { Heart, Zap, Eye, Stethoscope, Activity, Shield, Bone, Droplets } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, Droplets, Scan, CheckCircle2, XCircle } from "lucide-react";
+
+interface ScanData {
+  sno: number;
+  scanName: string;
+  renalTest: string;
+}
+
+interface ScansData {
+  CECT: ScanData[];
+  NCCT: ScanData[];
+}
 
 export default function ServicesPage() {
-  const services = [
-    {
-      icon: <Heart className="w-8 h-8 text-white" />,
-      title: "CARDIAC CASES",
-      features: [
-        "Covers whole heart in one rotation",
-        "Takes 1000 images in one rotation", 
-        "One beat motion free coronary images",
-        "Entire examination in one beat",
-        "Entire aorta imaging in 7 seconds",
-        "Low dose coronary & aorta imaging"
-      ]
-    },
-    {
-      icon: <Zap className="w-8 h-8 text-white" />,
-      title: "MONOENERGETIC IMAGING",
-      features: [
-        "Beam hardening artifact elimination",
-        "Contrast augmentation",
-        "Enhanced tissue visualization",
-        "Helpful for implant patients"
-      ]
-    },
-    {
-      icon: <Eye className="w-8 h-8 text-white" />,
-      title: "VIRTUAL NCCT",
-      features: [
-        "Virtual non-contrast CT scan",
-        "Dual energy method",
-        "Brain and body imaging",
-        "Any body part scanning"
-      ]
-    },
-    {
-      icon: <Droplets className="w-8 h-8 text-white" />,
-      title: "CONTRAST SCAN",
-      features: [
-        "Plain and contrast from single scan",
-        "Dual energy method",
-        "Reduced contrast usage",
-        "Better image quality"
-      ]
-    },
-    {
-      icon: <Activity className="w-8 h-8 text-white" />,
-      title: "ADVANCE LUNG ANALYSIS",
-      features: [
-        "Lung segmentation & evaluation",
-        "Lung volume measurement",
-        "Emphysema index calculation",
-        "Lung capacity measurement"
-      ]
-    },
-    {
-      icon: <Bone className="w-8 h-8 text-white" />,
-      title: "GOUT IMAGING",
-      features: [
-        "Color coded visualization",
-        "Uric acid crystal detection",
-        "Peripheral extremities imaging",
-        "Precise gout diagnosis"
-      ]
-    },
-    {
-      icon: <Shield className="w-8 h-8 text-white" />,
-      title: "CALCULI CHARACTERIZATION",
-      features: [
-        "Chemical composition analysis",
-        "Kidney stone visualization",
-        "Stone character identification",
-        "Treatment planning support"
-      ]
-    },
-    {
-      icon: <Stethoscope className="w-8 h-8 text-white" />,
-      title: "MARROW IMAGING",
-      features: [
-        "Calcium subtraction method",
-        "Marrow pathology detection",
-        "Bone swelling analysis",
-        "Dual energy marrow imaging"
-      ]
-    }
-  ];
+  const [activeTab, setActiveTab] = useState<"CECT" | "NCCT">("CECT");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [scansData, setScansData] = useState<ScansData>({ CECT: [], NCCT: [] });
+  const [loading, setLoading] = useState(true);
 
-  const advantages = [
-    "Less time on table with better scan quality",
-    "Low radiation dose",
-    "Virtual Bronchoscopy available",
-    "1000 images in one rotation",
-    "Better scans with less contrast",
-    "Government rates pricing",
-    "Brain and lung perfusion scans",
-    "Dental scan available",
-    "All body angiography available"
-  ];
+  useEffect(() => {
+    fetch("/ct-scans.json")
+      .then((res) => res.json())
+      .then((data: ScansData) => {
+        setScansData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error loading scans data:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const filteredScans = scansData[activeTab]?.filter((scan) =>
+    scan.scanName.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
   return (
     <div>
@@ -121,47 +58,121 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Scans Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-            DUAL ENERGY APPLICATIONS
+          <h2 className="text-3xl font-bold text-center mb-8" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+            Available CT Scans
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
-              <div key={index} className="group perspective-1000 h-64">
-                <div className="relative w-full h-full transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                  {/* Front */}
-                  <div className="absolute inset-0 backface-hidden bg-white rounded-2xl p-6 flex flex-col items-center justify-center shadow-lg" style={{color: '#0056AE'}}>
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#0056AE'}}>
-                      {service.icon}
-                    </div>
-                    <h3 className="text-lg font-bold text-center" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                      {service.title}
-                    </h3>
-                  </div>
-                  
-                  {/* Back */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
-                    <h3 className="text-lg font-bold mb-4 text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                      {service.title}
-                    </h3>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 bg-[#2E92ED] rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-sm leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* Tabs */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex bg-gray-100 rounded-xl p-1">
+              <button
+                onClick={() => {
+                  setActiveTab("CECT");
+                  setSearchQuery("");
+                }}
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  activeTab === "CECT"
+                    ? "bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white shadow-lg"
+                    : "text-gray-600 hover:text-[#0056AE]"
+                }`}
+                style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+              >
+                CECT (Contrast Enhanced)
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("NCCT");
+                  setSearchQuery("");
+                }}
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  activeTab === "NCCT"
+                    ? "bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white shadow-lg"
+                    : "text-gray-600 hover:text-[#0056AE]"
+                }`}
+                style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+              >
+                NCCT (Non-Contrast)
+              </button>
+            </div>
           </div>
+
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={`Search ${activeTab} scans...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent"
+                style={{fontFamily: 'Roboto, sans-serif'}}
+              />
+            </div>
+          </div>
+
+          {/* Loading State */}
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="inline-block w-8 h-8 border-4 border-[#0056AE] border-t-transparent rounded-full animate-spin"></div>
+              <p className="mt-4 text-gray-600" style={{fontFamily: 'Roboto, sans-serif'}}>Loading scans...</p>
+            </div>
+          ) : (
+            <>
+              {/* Scans Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                {filteredScans.map((scan, index) => (
+                  <div
+                    key={index}
+                    className="bg-white rounded-xl p-5 shadow-md border border-gray-200 hover:shadow-lg hover:border-[#2E92ED] transition-all duration-300"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="font-bold text-base mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                          {scan.scanName}
+                        </h3>
+                      </div>
+                      <div className="ml-2">
+                        {scan.renalTest && scan.renalTest.toLowerCase().includes('required') ? (
+                          <CheckCircle2 className="w-5 h-5 text-green-500" />
+                        ) : scan.renalTest && scan.renalTest.toLowerCase().includes('not') ? (
+                          <XCircle className="w-5 h-5 text-gray-400" />
+                        ) : null}
+                      </div>
+                    </div>
+                    {scan.renalTest && (
+                      <div className="mt-3 pt-3 border-t border-gray-100">
+                        <p className="text-xs" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                          <span className="font-medium">Renal Function Test: </span>
+                          {scan.renalTest}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* No Results */}
+              {filteredScans.length === 0 && !loading && (
+                <div className="text-center py-12">
+                  <Scan className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-600" style={{fontFamily: 'Roboto, sans-serif'}}>
+                    No scans found matching "{searchQuery}"
+                  </p>
+                </div>
+              )}
+
+              {/* Results Count */}
+              {filteredScans.length > 0 && (
+                <div className="text-center text-sm text-gray-600 mb-4" style={{fontFamily: 'Roboto, sans-serif'}}>
+                  Showing {filteredScans.length} of {scansData[activeTab]?.length || 0} {activeTab} scans
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
@@ -174,7 +185,17 @@ export default function ServicesPage() {
           
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-6">
-              {advantages.map((advantage, index) => (
+              {[
+                "Less time on table with better scan quality",
+                "Low radiation dose",
+                "Virtual Bronchoscopy available",
+                "1000 images in one rotation",
+                "Better scans with less contrast",
+                "Government rates pricing",
+                "Brain and lung perfusion scans",
+                "Dental scan available",
+                "All body angiography available"
+              ].map((advantage, index) => (
                 <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-blue-100">
                   <div className="w-3 h-3 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-full flex-shrink-0"></div>
                   <span style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>

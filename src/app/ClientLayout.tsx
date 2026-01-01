@@ -14,6 +14,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     '/about',
     '/services', 
     '/facilities',
+    '/dual-energy',
     '/contact',
     '/privacy-policy',
     '/terms-and-conditions',

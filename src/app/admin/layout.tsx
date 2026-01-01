@@ -17,14 +17,22 @@ export default function AdminLayout({
 
   useEffect(() => {
     const checkAuth = () => {
-      const authCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('admin-auth='));
-      
-      if (authCookie && authCookie.split('=')[1] === 'true') {
-        setIsAuthenticated(true);
-      } else if (pathname !== '/admin/login') {
-        router.push('/admin/login');
+      // Check for user in localStorage (from main login page)
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          // Check if user is admin or superadmin
+          if (user.role === 'admin' || user.role === 'superadmin') {
+            setIsAuthenticated(true);
+          } else {
+            router.push('/login');
+          }
+        } catch (error) {
+          router.push('/login');
+        }
+      } else {
+        router.push('/login');
       }
       setLoading(false);
     };
@@ -33,8 +41,8 @@ export default function AdminLayout({
   }, [pathname, router]);
 
   const handleLogout = () => {
-    document.cookie = 'admin-auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    router.push('/admin/login');
+    localStorage.removeItem('user');
+    router.push('/login');
   };
 
   if (loading) {
@@ -43,11 +51,7 @@ export default function AdminLayout({
     </div>;
   }
 
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !loading) {
     return null;
   }
 

@@ -1,0 +1,956 @@
+{
+  "CECT": [
+    {
+      "sno": 1,
+      "scanName": "CECT Brain (Both)",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 2,
+      "scanName": "CECT Sella / CT Pituitary Fossa ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 3,
+      "scanName": "CECT Temporal Bone (Both)",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 4,
+      "scanName": "CECT Mastoid (Both)",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 5,
+      "scanName": "CECT Orbit ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 6,
+      "scanName": "Triple Phase Ct Whole Abdomen",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 7,
+      "scanName": "CECT KUB/Urography",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 8,
+      "scanName": "CECT Pelvis ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 9,
+      "scanName": "CECT Chest ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 10,
+      "scanName": "CECT Parotid ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 11,
+      "scanName": "CECT Maxilla",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 12,
+      "scanName": "CECT Mandible ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 13,
+      "scanName": "CECT Oral Cavity / Check / Mouth",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 14,
+      "scanName": "CECT Nasopharynx ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 15,
+      "scanName": "CECT Laryngo Pharynx ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 16,
+      "scanName": "CECT Neck ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 17,
+      "scanName": "CECT PNS ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 18,
+      "scanName": "CECT Whole spine ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 19,
+      "scanName": "CECT Base of skull ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 20,
+      "scanName": "CECT CV Junction ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 21,
+      "scanName": "CECT Spine any part",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 22,
+      "scanName": "CECT Cervical Spine ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 23,
+      "scanName": "CECT Dorsal Spine ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 24,
+      "scanName": "CECT Dorsal Lumbar Spine",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 25,
+      "scanName": "CECT LS Spine ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 26,
+      "scanName": "CECT Sacrum",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 27,
+      "scanName": "CECT Myelography ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 28,
+      "scanName": "CR Angiography (Any One Part) with Calcium Scoring",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 29,
+      "scanName": "CT Angiography Brain",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 30,
+      "scanName": "CT Angiography Venous Phase",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 31,
+      "scanName": "CT Venography Brain ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 32,
+      "scanName": "CT Venography Any One Body Part",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 33,
+      "scanName": "CT Angiography of Cerebral Vessels with 3D Reconstruction",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 34,
+      "scanName": "CT Angiography Carotids / Neck Vessels",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 35,
+      "scanName": "CT Angiography Face",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 36,
+      "scanName": "CT Angiography Coronary / Coronary Angio with CA Scoring",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 37,
+      "scanName": "CT Angiography Pulmonary Artery and Veins",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 38,
+      "scanName": "CT Angiography  Peripheral Vessels",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 39,
+      "scanName": "CT Angiography of Cardiac veins and Coronary Sinus with 3D Reconstruction and Post-Processing",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 40,
+      "scanName": "CT Angiography of Cardiac Chamber with 3D",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 41,
+      "scanName": "CT Angiography of Congenital heart Disease ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 42,
+      "scanName": "CT cardiac Angiography Congenital Heart Disease ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 43,
+      "scanName": "CT Angiography Chest",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 44,
+      "scanName": "CT Angiography Abdomen",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 45,
+      "scanName": "CT Angiography Arota",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 46,
+      "scanName": "CT Angiography of Aorta and Peripheral Vessels with 3D Reconstruction and Post-Processing",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 47,
+      "scanName": "CT Angiography of Hepatic Vasculature",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 48,
+      "scanName": "CT Angiography Renal Arteries ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 49,
+      "scanName": "CT Angiography of Splenic Arteries",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 50,
+      "scanName": "CT Angiography of Masentic Artery ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 51,
+      "scanName": "CT Angiography Coeliac Artery ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 52,
+      "scanName": "CT Angiography Great Vessels",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 53,
+      "scanName": "CT Angiography Upper Limb / Lower Limb",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 54,
+      "scanName": "CECT Scan Joint with 3D Reconstruction ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 55,
+      "scanName": "CECT Extremities/Foot/Arm/Lower Limb/Upper Limb ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 56,
+      "scanName": "CECT Joint (Any One Body Part) ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 57,
+      "scanName": "CECT Scan Shoulder Joint/Shoulder with Arm/Humerus ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 58,
+      "scanName": "CECT Scan Sterno Clavicular Joint ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 59,
+      "scanName": "CECT Scan Elbow Joint/Elbow with Arm/Elbow with FA ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 60,
+      "scanName": "CECT Scan FA/FA with Elbow/FA with Wrist ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 61,
+      "scanName": "CECT Scan Wrist/Hand/Wrist with Hand ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 62,
+      "scanName": "CECT Scan S.I Joint ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 63,
+      "scanName": "CECT Pelvis/Pelvis with Hip Joint",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 64,
+      "scanName": "CECT Hip Joint / Hip with Femur ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 65,
+      "scanName": "CECT Femur/Thigh/Femur with Knee Joint ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 66,
+      "scanName": "CECT Knee Joint/Knee with Femur/Knee with Leg ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 67,
+      "scanName": "CECT Leg Bone/CT Tibia ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 68,
+      "scanName": "CECT Ankle/Foot/Ankle with Foot ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 69,
+      "scanName": "CECT Lung Perfusion (Dual Energy) ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 70,
+      "scanName": "CT Contrast VS Blood Differentiation",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 71,
+      "scanName": "CT Direct Neuro (Cerebral) Angiography",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 72,
+      "scanName": "CT Vascular Plaque Characterisation (Carotid)",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 73,
+      "scanName": "CT Vascular Plaque Characterisation (Coronary)",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 74,
+      "scanName": "CT Gout Imaging",
+      "renalTest": ""
+    },
+    {
+      "sno": 75,
+      "scanName": "CT Calculi Characterisation",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 76,
+      "scanName": "CT Pulmonary Embolism",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 77,
+      "scanName": "CT Advance Lung Analysis",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 78,
+      "scanName": "CT Marrow Imaging",
+      "renalTest": ""
+    },
+    {
+      "sno": 79,
+      "scanName": "CECT Face ",
+      "renalTest": "Renal function test required (serum cretinine)"
+    },
+    {
+      "sno": 80,
+      "scanName": "DVD AVAILBLE",
+      "renalTest": ""
+    }
+  ],
+  "NCCT": [
+    {
+      "sno": 1,
+      "scanName": "NCCT Brain / Head",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 2,
+      "scanName": "NCCT Perfusion Brain",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 3,
+      "scanName": "NCCT Cisternography",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 4,
+      "scanName": "NCCT Sella / Pituitary Fossa ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 5,
+      "scanName": "NCCT Sella / CT Pituitary Fossa (Both)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 6,
+      "scanName": "HRCT Temporal Bone",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 7,
+      "scanName": "NCCT Mastoid ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 8,
+      "scanName": "NCCT Mastoid",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 9,
+      "scanName": "NCCT Head Bone Cuts with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 10,
+      "scanName": "CT dynamic study Pituitary",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 11,
+      "scanName": "NCCT Orbit",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 12,
+      "scanName": "NCCT Orbit ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 13,
+      "scanName": "NCCT Face with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 14,
+      "scanName": "NCCT TM Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 15,
+      "scanName": "NCCT TM Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 16,
+      "scanName": "NCCT Upper Abdomen ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 17,
+      "scanName": "NCCT Lower Abdomen",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 18,
+      "scanName": "NCCT Whole Abdomen ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 19,
+      "scanName": "NCCT Lower Abdomen/Upper Abdomen/Whole Abdomen",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 20,
+      "scanName": "NCCT KUB / Urography",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 21,
+      "scanName": "NCCT KUB",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 22,
+      "scanName": "NCCT Pelvis",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 23,
+      "scanName": "NCCT Pelvis ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 24,
+      "scanName": "HRCT Chest / Supine or Both ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 25,
+      "scanName": "NCCT Chest / Thorax",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 26,
+      "scanName": "NCCT Chest ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 27,
+      "scanName": "CT Scan Virtual  Bronchoscopy",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 28,
+      "scanName": "NCCT Parotid",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 29,
+      "scanName": "NCCT Parotid ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 30,
+      "scanName": "NCCT Face",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 31,
+      "scanName": "NCCT Maxilla ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 32,
+      "scanName": "NCCT Maxilla ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 33,
+      "scanName": "NCCT Mandible ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 34,
+      "scanName": "NCCT Mandible ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 35,
+      "scanName": "NCCT Oral Cavity / Check / Mouth ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 36,
+      "scanName": "NCCT NECK",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 37,
+      "scanName": "NCCT Nasopharynx",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 38,
+      "scanName": "NCCT Nasopharynx ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 39,
+      "scanName": "NCCT Laryngo Pharynx / Neck",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 40,
+      "scanName": "NCCT Laryngo Pharynx ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 41,
+      "scanName": "NCCT Neck",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 42,
+      "scanName": "NCCT Neck ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 43,
+      "scanName": "NCCT PNS",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 44,
+      "scanName": "NCCT PNS ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 45,
+      "scanName": "NCCT Whole spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 46,
+      "scanName": "NCCT Whole spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 47,
+      "scanName": "NCCT Base of Skull",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 48,
+      "scanName": "NCCT Base of skull ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 49,
+      "scanName": "NCCT CV Junction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 50,
+      "scanName": "NCCTT CV Junction ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 51,
+      "scanName": "CT CV Junction with any region of spine with dynamic study (Flexion/ Extension)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 52,
+      "scanName": "NCCT Spine any part",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 53,
+      "scanName": "NCCT Spine any part ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 54,
+      "scanName": "NCCT Cervical Spine / Neck ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 55,
+      "scanName": "NCCT Cervical Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 56,
+      "scanName": "NCCT Cervical Dorsal spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 57,
+      "scanName": "NCCT Dorsal Spine",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 58,
+      "scanName": "NCCT Dorsal Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 59,
+      "scanName": "NCCT Dorsal Lumber Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 60,
+      "scanName": "NCCT Dorsal Lumbar Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 61,
+      "scanName": "NCCT LS Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 62,
+      "scanName": "NCCT LS Spine ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 63,
+      "scanName": "NCCT Lumbosacral  Spine Flexion & Extension",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 64,
+      "scanName": "NCCT Sacrum ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 65,
+      "scanName": "NCCT Sacrum ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 66,
+      "scanName": "NCCT Myelography",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 67,
+      "scanName": "NCCT Myelography ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 68,
+      "scanName": "CT Dynamic Study Flexion & Extension",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 69,
+      "scanName": "NCCT Denta Scan",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 70,
+      "scanName": "NCCT Scan Scanogram",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 71,
+      "scanName": "NCCT Musculoskeletal (Unspecified)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 72,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 73,
+      "scanName": "NCCT Scan Joint with 3D Reconstruction ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 74,
+      "scanName": "NCCT Extremities/Foot/Arm/Lower Limb/Upper Limb ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 75,
+      "scanName": "NCCT Extremities/Foot/Arm/Lower Limb/Upper Limb ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 76,
+      "scanName": "NCCT Joint (Any One Body Part)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 77,
+      "scanName": "NCCT Joint (Any One Body Part) ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 78,
+      "scanName": "NCCT Scan Shoulder Joint/Shoulder with Arm/Humerus",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 79,
+      "scanName": "NCCT Scan Shoulder Joint/Shoulder with Arm/Humerus ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 80,
+      "scanName": "NCCT Scan Sterno Clavicular Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 81,
+      "scanName": "NCCT Scan Sterno Clavicular Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 82,
+      "scanName": "NCCT Scan Elbow Joint/Elbow with Arm/Elbow with FA ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 83,
+      "scanName": "NCCT Scan Elbow Joint/Elbow with Arm/Elbow with FA",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 84,
+      "scanName": "NCCT Scan FA/FA with Elbow / FA with Wrist ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 85,
+      "scanName": "NCCT Scan FA/FA with Elbow/FA with Wrist ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 86,
+      "scanName": "NCCT Scan Wrist / Hand / Wrist with Hand ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 87,
+      "scanName": "NCCT Scan Wrist/Hand/Wrist with Hand ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 88,
+      "scanName": "NCCT Scan S.I Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 89,
+      "scanName": "NCCT Scan S.I Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 90,
+      "scanName": "NCCT Pelvis / Pelvis with Hip Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 91,
+      "scanName": "NCCT Pelvis/Pelvis with Hip Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 92,
+      "scanName": "NCCT Hip Joint / Hip with Femur",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 93,
+      "scanName": "NCCT Hip Joint / Hip with Femur ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 94,
+      "scanName": "NCCT Femur/Thigh/Femur with Knee Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 95,
+      "scanName": "NCCT Femur/Thigh/Femur with Knee Joint ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 96,
+      "scanName": "NCCT Knee Joint/Knee with Femur/Knee with Leg ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 97,
+      "scanName": "NCCT Knee Joint/Knee with Femur/Knee with Leg ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 98,
+      "scanName": "NCCT Leg Bone/CT Tibia ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 99,
+      "scanName": "NCCT Leg Bone/CT Tibia ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 100,
+      "scanName": "NCCT Ankle/Foot/Ankle with Foot ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 101,
+      "scanName": "NCCT Ankle/Foot/Ankle with Foot",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 102,
+      "scanName": "NCCT Lung Perfusion (Dual Energy)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 103,
+      "scanName": "NCCT Lung Perfusion (Dual Energy) ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 104,
+      "scanName": "NCCT Monoenergetic Imaging for Artifact Reduction (Brain/Face/Spine/Skeletal/Chest/Abdomen)",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 105,
+      "scanName": "NCCT Face ",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 106,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 107,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 108,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 109,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    },
+    {
+      "sno": 110,
+      "scanName": "NCCT Scan Joint with 3D reconstruction",
+      "renalTest": "Not"
+    }
+  ]
+}
