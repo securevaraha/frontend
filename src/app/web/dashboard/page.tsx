@@ -53,9 +53,9 @@ export default function WebDashboard() {
       });
       const appointmentsData = appointmentsResponse.ok ? await appointmentsResponse.json() : { success: false, total: 0, today: 0 };
       
-      // Fetch schedule availability stats - need today's date
+      // Fetch schedule availability stats - need today's date in YYYY-MM-DD format
       const today = new Date();
-      const todayStr = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+      const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD format
       const scheduleResponse = await fetch(`${API_BASE_URL}/web/schedule/stats?date=${todayStr}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }

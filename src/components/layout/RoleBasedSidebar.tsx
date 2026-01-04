@@ -145,6 +145,7 @@ export default function RoleBasedSidebar({ userRole, onClose }: SidebarProps) {
         { id: 'dashboard', label: 'Dashboard', icon: BarChart3, href: '/doctor/dashboard' },
         { id: 'doctor', label: 'Patient In Queue', icon: Stethoscope, href: '/doctor/ct-scan-doctor-list' },
         { id: 'ct-scan-doctors', label: 'CT Scan Doctors', icon: UserPlus, href: '/doctor/ct-scan-doctors' },
+        { id: 'sent-report', label: 'Sent Report', icon: FileText, href: '/doctor/sent-report' },
         { 
           id: 'patient-report', 
           label: 'Patient Report', 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CalendarCheck, Search, Filter, Calendar, Clock, User, Phone, FileText, CheckCircle, XCircle } from 'lucide-react';
+import { CalendarCheck, Search, Filter, Calendar, Clock, User, Phone, FileText, CheckCircle, XCircle, Download } from 'lucide-react';
 
 interface Appointment {
   id: number;
@@ -22,7 +22,7 @@ export default function AppointmentsPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'scheduled' | 'completed' | 'cancelled'>('all');
-  const [dateFilter, setDateFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     fetchAppointments();
@@ -31,48 +31,33 @@ export default function AppointmentsPage() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      // Mock appointments data from web contact form
-      const mockAppointments = [
-        {
-          id: 1,
-          cro: 'WEB001',
-          patientName: 'John Doe',
-          phone: '9876543210',
-          email: 'john@example.com',
-          age: '35',
-          gender: 'male',
-          scanType: 'CT Scan',
-          appointmentDate: new Date().toISOString().split('T')[0],
-          appointmentTime: '10:00',
-          status: 'scheduled' as const,
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 2,
-          cro: 'WEB002',
-          patientName: 'Jane Smith',
-          phone: '9876543211',
-          email: 'jane@example.com',
-          age: '28',
-          gender: 'female',
-          scanType: 'MRI Scan',
-          appointmentDate: new Date().toISOString().split('T')[0],
-          appointmentTime: '14:30',
-          status: 'scheduled' as const,
-          createdAt: new Date().toISOString()
-        }
-      ];
+      const API_BASE_URL = 'https://varahasdc.co.in/api';
       
-      // Filter by status and date if provided
-      let filtered = mockAppointments;
+      // Build query parameters
+      const params = new URLSearchParams();
       if (statusFilter !== 'all') {
-        filtered = filtered.filter(apt => apt.status === statusFilter);
+        params.append('status', statusFilter);
       }
       if (dateFilter) {
-        filtered = filtered.filter(apt => apt.appointmentDate === dateFilter);
+        params.append('date', dateFilter);
       }
       
-      setAppointments(filtered);
+      const response = await fetch(`${API_BASE_URL}/web/appointments?${params}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && Array.isArray(data.appointments)) {
+          setAppointments(data.appointments);
+        } else {
+          setAppointments([]);
+        }
+      } else {
+        console.error('API response not ok:', response.status);
+        setAppointments([]);
+      }
     } catch (error) {
       console.error('Error fetching appointments:', error);
       setAppointments([]);
@@ -81,10 +66,49 @@ export default function AppointmentsPage() {
     }
   };
 
+  const exportToExcel = () => {
+    const csvContent = [
+      ['CRO', 'Patient Name', 'Phone', 'Age', 'Gender', 'Scan Type', 'Date', 'Time', 'Status'],
+      ...filteredAppointments.map(apt => [
+        apt.cro,
+        apt.patientName,
+        apt.phone,
+        apt.age,
+        apt.gender,
+        apt.scanType,
+        apt.appointmentDate,
+        apt.appointmentTime,
+        apt.status
+      ])
+    ].map(row => row.join(',')).join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `appointments-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   const updateAppointmentStatus = async (id: number, status: 'scheduled' | 'completed' | 'cancelled') => {
-    setAppointments(appointments.map(apt => 
-      apt.id === id ? { ...apt, status } : apt
-    ));
+    try {
+      const API_BASE_URL = 'https://varahasdc.co.in/api';
+      const response = await fetch(`${API_BASE_URL}/web/appointments/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      
+      if (response.ok) {
+        // Refresh appointments list
+        fetchAppointments();
+      } else {
+        console.error('Failed to update appointment status');
+      }
+    } catch (error) {
+      console.error('Error updating appointment status:', error);
+    }
   };
 
   const filteredAppointments = appointments.filter(appointment => {
@@ -153,11 +177,18 @@ export default function AppointmentsPage() {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
               placeholder="Filter by date"
             />
+            <button
+              onClick={exportToExcel}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <Download className="h-4 w-4" />
+              Export
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Appointments List */}
+      {/* Appointments Table */}
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
@@ -168,79 +199,89 @@ export default function AppointmentsPage() {
           <p className="text-gray-600 text-lg">No appointments found</p>
         </div>
       ) : (
-        <div className="space-y-4">
-          {filteredAppointments.map((appointment) => (
-            <div
-              key={appointment.id}
-              className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow"
-            >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-cyan-100 rounded-lg">
-                      <User className="h-5 w-5 text-cyan-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">{appointment.patientName}</h3>
-                      <div className="flex items-center gap-4 mt-1">
-                        <span className="text-sm text-gray-600">CRO: {appointment.cro}</span>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadge(appointment.status)} flex items-center gap-1`}>
-                          {getStatusIcon(appointment.status)}
-                          {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                        </span>
+        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gradient-to-r from-cyan-50 to-blue-50">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Patient</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Appointment</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Scan Type</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {filteredAppointments.map((appointment, index) => (
+                  <tr key={appointment.id} className={`hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center">
+                          <User className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">{appointment.patientName}</div>
+                          <div className="text-sm text-gray-500">CRO: {appointment.cro}</div>
+                          <div className="text-sm text-gray-500">{appointment.age}y, {appointment.gender}</div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Phone className="h-4 w-4" />
-                      <span>{appointment.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <User className="h-4 w-4" />
-                      <span>{appointment.age} years, {appointment.gender}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(appointment.appointmentDate).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Clock className="h-4 w-4" />
-                      <span>{appointment.appointmentTime}</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-gray-600" />
-                      <span className="font-medium text-gray-700">Scan Type:</span>
-                      <span className="text-gray-600">{appointment.scanType}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  {appointment.status === 'scheduled' && (
-                    <>
-                      <button
-                        onClick={() => updateAppointmentStatus(appointment.id, 'completed')}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                      >
-                        Mark as Completed
-                      </button>
-                      <button
-                        onClick={() => updateAppointmentStatus(appointment.id, 'cancelled')}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                      >
-                        Cancel Appointment
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Phone className="w-4 h-4" />
+                        <span className="font-medium">{appointment.phone}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <Calendar className="w-4 h-4" />
+                          <span className="font-medium">{new Date(appointment.appointmentDate).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <Clock className="w-4 h-4" />
+                          <span>{appointment.appointmentTime}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-900 font-medium">{appointment.scanType}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadge(appointment.status)}`}>
+                        {getStatusIcon(appointment.status)}
+                        {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        {appointment.status === 'scheduled' && (
+                          <>
+                            <button
+                              onClick={() => updateAppointmentStatus(appointment.id, 'completed')}
+                              className="px-3 py-1 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition-colors"
+                            >
+                              Complete
+                            </button>
+                            <button
+                              onClick={() => updateAppointmentStatus(appointment.id, 'cancelled')}
+                              className="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

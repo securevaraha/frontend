@@ -1,0 +1,720 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Search, RefreshCw, ArrowLeft, FileText, Eye, Upload } from 'lucide-react';
+import { useToastContext } from '@/context/ToastContext';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+interface ConsoleRecord {
+  con_id: number;
+  c_p_cro: string;
+  patient_name: string;
+  pre: string;
+  doctor_name: string;
+  status: string;
+  start_time: string;
+  stop_time: string;
+  added_on: string;
+  date: string;
+  scan_date: string;
+  allot_date: string;
+  examination_id: number;
+  number_scan: string;
+  number_film: string;
+  number_films: number;
+  number_contrast: string;
+  technician_name: string;
+  nursing_name: string;
+  issue_cd: string;
+  remark: string;
+  contact_number?: string;
+  age?: string;
+  gender?: string;
+  scan_type?: string;
+}
+
+export default function SentReport() {
+  const toast = useToastContext();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const viewId = searchParams.get('view');
+  const [records, setRecords] = useState<ConsoleRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Calcutta' })
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [viewingRecord, setViewingRecord] = useState<ConsoleRecord | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [reportName, setReportName] = useState('');
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  const formatDate = (dateStr: string) => {
+    if (!dateStr || dateStr === '-') return '-';
+    
+    if (dateStr.includes('T')) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-GB', { timeZone: 'Asia/Calcutta' }).replace(/\//g, '-');
+    }
+    
+    if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      return dateStr.split('-').reverse().join('-');
+    }
+    
+    if (dateStr.match(/^\d{2}-\d{2}-\d{4}$/)) {
+      return dateStr;
+    }
+    
+    return dateStr;
+  };
+
+  useEffect(() => {
+    fetchRecords();
+  }, [selectedDate]);
+
+  useEffect(() => {
+    if (viewId && records.length > 0) {
+      const recordToView = records.find(r => r.con_id.toString() === viewId);
+      if (recordToView) {
+        setViewingRecord(recordToView);
+      }
+    }
+  }, [viewId, records]);
+
+  const fetchRecords = async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        fromDate: selectedDate.split('-').reverse().join('-'),
+        toDate: selectedDate.split('-').reverse().join('-')
+      });
+      
+      const response = await fetch(`https://varahasdc.co.in/api/console/detail-report?${params}`, {
+        cache: 'no-cache',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRecords(data.data || []);
+        if (data.data && data.data.length > 0) {
+          toast.success(`Found ${data.data.length} sent reports`);
+        } else {
+          toast.error('No sent reports found for selected date');
+        }
+      } else {
+        toast.error('Failed to fetch sent reports');
+      }
+    } catch (error) {
+      console.error('Error fetching records:', error);
+      toast.error('Error loading sent reports');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleView = (record: ConsoleRecord) => {
+    router.push(`/doctor/sent-report?view=${record.con_id}`);
+  };
+
+  const handleBack = () => {
+    router.push('/doctor/sent-report');
+  };
+
+  const filteredRecords = records.filter(record =>
+    record.c_p_cro.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    record.patient_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const paginatedRecords = filteredRecords.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedDate]);
+
+  const isDoctor = user?.role === 'doctor' || user?.admin_type === 'doctor';
+
+  const handleFileUpload = async () => {
+    if (!uploadFile || !reportName.trim() || !viewingRecord) {
+      toast.error('Please select a file and enter report name');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('report', uploadFile);
+      formData.append('reportName', reportName.trim());
+      formData.append('cro', viewingRecord.c_p_cro);
+      formData.append('patientName', viewingRecord.patient_name);
+      formData.append('conId', viewingRecord.con_id.toString());
+      formData.append('contactNumber', viewingRecord.contact_number || '');
+
+      const response = await fetch('https://varahasdc.co.in/api/console/upload-report', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        toast.success('Report uploaded and WhatsApp notification sent successfully');
+        
+        // Update the record with report info
+        const randomNum = Math.floor(Math.random() * 10000);
+        const fileName = `${viewingRecord.c_p_cro.replace(/\//g, '_')}_${reportName.trim()}_${randomNum}.pdf`;
+        
+        await fetch('https://varahasdc.co.in/api/console/update-console', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            con_id: viewingRecord.con_id,
+            onWhatsappSent: true,
+            reportFileName: fileName,
+            reportFilePath: `/uploads/reports/${fileName}`
+          })
+        });
+        
+        setUploadFile(null);
+        setReportName('');
+        const fileInput = document.getElementById('reportFile') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+        
+        // Navigate back to list
+        router.push('/doctor/sent-report');
+        
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || 'Failed to upload report');
+      }
+    } catch (error) {
+      console.error('Error uploading report:', error);
+      toast.error('Error uploading report');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // If in view mode, show view form
+  if (viewId && viewingRecord) {
+    return (
+      <div className="p-6 space-y-6">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleBack}
+                className="p-2 bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <div>
+                <h1 className="text-3xl font-bold mb-2">View Sent Report</h1>
+                <p className="text-emerald-100">CRO: {viewingRecord.c_p_cro}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Patient Information - Read Only */}
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Patient Information</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">CRO Number</label>
+                <input
+                  type="text"
+                  value={viewingRecord.c_p_cro}
+                  readOnly
+                  disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
+                <input
+                  type="text"
+                  value={`${viewingRecord.pre} ${viewingRecord.patient_name}`}
+                  readOnly
+                  disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
+                <input
+                  type="text"
+                  value={viewingRecord.doctor_name || '-'}
+                  readOnly
+                  disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Console Details - Read Only for Doctor */}
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Console Details</h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Examination ID</label>
+                  <input
+                    type="number"
+                    value={viewingRecord.examination_id || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <input
+                    type="text"
+                    value={viewingRecord.status || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Number of Scans</label>
+                  <input
+                    type="number"
+                    value={viewingRecord.number_scan || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Number of Films</label>
+                  <input
+                    type="number"
+                    value={viewingRecord.number_film || viewingRecord.number_films || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Number of Contrast</label>
+                  <input
+                    type="number"
+                    value={viewingRecord.number_contrast || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Technician Name</label>
+                  <input
+                    type="text"
+                    value={viewingRecord.technician_name || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Issue CD/DVD</label>
+                  <input
+                    type="text"
+                    value={viewingRecord.issue_cd || ''}
+                    readOnly
+                    disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Date Fields - Read Only for Doctor */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Date Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Registration Date</label>
+              <input
+                type="text"
+                value={formatDate(viewingRecord.date)}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Allot Date</label>
+              <input
+                type="text"
+                value={formatDate(viewingRecord.allot_date)}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Scan Date</label>
+              <input
+                type="text"
+                value={formatDate(viewingRecord.scan_date)}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Console Date & Time - Read Only */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Console Date & Time</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Console Date</label>
+              <input
+                type="text"
+                value={formatDate(viewingRecord.added_on)}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+              <input
+                type="text"
+                value={viewingRecord.start_time}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Stop Time</label>
+              <input
+                type="text"
+                value={viewingRecord.stop_time}
+                readOnly
+                disabled={isDoctor}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Report Upload Section - Show for Complete status */}
+        {viewingRecord?.status === 'Complete' && (
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg border-2 border-blue-200">
+            <h3 className="text-lg font-semibold text-blue-900 mb-6 flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                <Upload className="h-4 w-4 text-white" />
+              </div>
+              <span>Upload Medical Report</span>
+            </h3>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-blue-800 mb-2">Report Name *</label>
+                  <input
+                    type="text"
+                    value={reportName}
+                    onChange={(e) => setReportName(e.target.value)}
+                    placeholder="Enter report name (e.g., CT Scan Report)"
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-blue-800 mb-2">Select PDF Report *</label>
+                  <input
+                    id="reportFile"
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                    className="w-full px-4 py-3 border-2 border-dashed border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
+                  />
+                  <p className="text-xs text-blue-600 mt-2">📄 PDF only (Max 10MB)</p>
+                </div>
+                
+                <button
+                  onClick={handleFileUpload}
+                  disabled={uploading || !uploadFile || !reportName.trim()}
+                  className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg hover:shadow-xl"
+                >
+                  <Upload className={`h-5 w-5 ${uploading ? 'animate-spin' : ''}`} />
+                  <span>{uploading ? 'Uploading & Sending WhatsApp...' : 'Upload Report & Send WhatsApp'}</span>
+                </button>
+              </div>
+              
+              {/* PDF Preview */}
+              {uploadFile && (
+                <div className="bg-white border-2 border-blue-200 rounded-xl p-4">
+                  <h4 className="text-sm font-semibold text-blue-900 mb-3">File Preview</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <FileText className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-blue-900">{uploadFile.name}</p>
+                        <p className="text-xs text-blue-700">{(uploadFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                      </div>
+                    </div>
+                    
+                    <div className="border-2 border-blue-200 rounded-lg overflow-hidden">
+                      <iframe
+                        src={URL.createObjectURL(uploadFile)}
+                        className="w-full h-64"
+                        title="PDF Preview"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-4 sm:p-6 rounded-xl shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+          <div>
+            <h1 className="text-xl sm:text-3xl font-bold mb-2">Sent Report</h1>
+            <p className="text-emerald-100 text-sm sm:text-base">View sent reports and patient details</p>
+          </div>
+          <button
+            onClick={fetchRecords}
+            disabled={loading}
+            className="flex items-center justify-center space-x-2 px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-colors disabled:opacity-50 text-sm sm:text-base"
+          >
+            <RefreshCw className={`h-4 w-4 sm:h-5 sm:w-5 ${loading ? 'animate-spin' : ''}`} />
+            <span>Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="flex flex-col sm:flex-row sm:items-end space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex-shrink-0">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Select Date</label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="px-3 py-2 w-full sm:w-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <input
+                type="text"
+                placeholder="Search by CRO or Patient Name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">Sent Reports</h2>
+          <p className="text-sm text-gray-600 mt-1">
+            Date: {selectedDate.split('-').reverse().join('-')} | Total: {filteredRecords.length} records | Page {currentPage} of {totalPages}
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CRO</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Allot Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scan Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Console Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {loading ? (
+                <tr>
+                  <td colSpan={10} className="px-6 py-12 text-center">
+                    <div className="flex items-center justify-center space-x-2">
+                      <RefreshCw className="h-5 w-5 animate-spin text-emerald-500" />
+                      <span className="text-gray-500">Loading sent reports...</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : filteredRecords.length === 0 ? (
+                <tr>
+                  <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
+                    No sent reports found
+                  </td>
+                </tr>
+              ) : (
+                paginatedRecords.map((record) => (
+                  <tr key={record.con_id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-emerald-600">{record.c_p_cro}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-black">{record.pre} {record.patient_name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {record.doctor_name || '-'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {formatDate(record.date)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {formatDate(record.allot_date)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {formatDate(record.scan_date)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {formatDate(record.added_on)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-3 py-1 text-xs font-bold rounded-full border ${
+                        record.status === 'Complete' 
+                          ? 'bg-green-100 text-green-900 border-green-300' 
+                          : record.status === 'Pending'
+                          ? 'bg-yellow-100 text-yellow-900 border-yellow-300'
+                          : 'bg-gray-100 text-gray-900 border-gray-300'
+                      }`}>
+                        {record.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {record.start_time} - {record.stop_time}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => handleView(record)}
+                        className="inline-flex items-center space-x-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium"
+                      >
+                        <Eye className="h-4 w-4" />
+                        <span>View</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        {filteredRecords.length > itemsPerPage && (
+          <div className="px-6 py-4 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-700">
+                Page {currentPage} of {totalPages} | Total: {filteredRecords.length} records
+              </div>
+              <div className="flex items-center space-x-2">
+                {currentPage > 1 && (
+                  <>
+                    <button
+                      onClick={() => setCurrentPage(1)}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      First
+                    </button>
+                    <button
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Previous
+                    </button>
+                  </>
+                )}
+                
+                <div className="flex items-center space-x-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    const startPage = Math.max(1, currentPage - 2);
+                    const page = startPage + i;
+                    if (page > totalPages) return null;
+                    
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`px-3 py-2 text-sm font-medium rounded-lg ${
+                          currentPage === page
+                            ? 'bg-emerald-600 text-white'
+                            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {currentPage < totalPages && (
+                  <>
+                    <button
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Next
+                    </button>
+                    <button
+                      onClick={() => setCurrentPage(totalPages)}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Last
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

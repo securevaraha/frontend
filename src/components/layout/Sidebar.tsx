@@ -104,6 +104,7 @@ const roleNavigation = {
   'doctor': [
     { name: 'Dashboard', href: '/doctor', icon: LayoutDashboard },
     { name: 'Doctor', href: '/doctor/doctors', icon: Users },
+    { name: 'Sent Report', href: '/doctor/sent-report', icon: FileText },
     { 
       name: 'Patient Report', 
       icon: FileText,
