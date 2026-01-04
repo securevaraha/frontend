@@ -6,30 +6,55 @@ export default function HomeContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
+  const [errors, setErrors] = useState<{email?: string; phone?: string}>({});
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(phone);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage("");
+    setErrors({});
 
     const formData = new FormData(e.target as HTMLFormElement);
     const data = {
-      fullName: formData.get('fullName'),
-      gender: formData.get('gender'),
-      age: formData.get('age'),
-      contactNumber: formData.get('contactNumber'),
-      address: formData.get('address'),
-      scan: formData.get('scan'),
-      appointmentDate: formData.get('appointmentDate'),
-      scheduleTime: formData.get('scheduleTime'),
-      additionalInformation: formData.get('additionalInformation')
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      message: formData.get('message') as string
     };
 
+    const newErrors: {email?: string; phone?: string} = {};
+    
+    if (!validateEmail(data.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    
+    if (!validatePhone(data.phone)) {
+      newErrors.phone = "Please enter a valid 10-digit mobile number";
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://varahasdc.co.in/api/web/enquiries', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
 
       const result = await response.json();
@@ -37,10 +62,10 @@ export default function HomeContactForm() {
       if (result.success) {
         const form = e.target as HTMLFormElement;
         form.reset();
-        setMessage("Appointment booked successfully! We will contact you soon.");
+        setMessage("Thank you for your enquiry! We will contact you soon.");
         setMessageType("success");
       } else {
-        setMessage(result.error || "Failed to book appointment. Please try again.");
+        setMessage(result.error || "Failed to submit enquiry. Please try again.");
         setMessageType("error");
       }
       
@@ -50,7 +75,7 @@ export default function HomeContactForm() {
       }, 5000);
     } catch (error) {
       console.error('Form submission error:', error);
-      setMessage("Failed to book appointment. Please try again.");
+      setMessage("Failed to submit enquiry. Please try again.");
       setMessageType("error");
       setTimeout(() => {
         setMessage("");
@@ -63,8 +88,6 @@ export default function HomeContactForm() {
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-lg">
-      <h3 className="text-lg font-bold text-center mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Book Appointment</h3>
-      
       {message && (
         <div className={`mb-4 p-3 rounded-lg text-center text-sm font-medium ${
           messageType === "success" 
@@ -76,103 +99,67 @@ export default function HomeContactForm() {
       )}
       
       <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          name="fullName"
-          type="text"
-          placeholder="Full Name"
-          required
-          className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-          style={{fontFamily: 'Roboto, sans-serif'}}
-        />
-        <div className="grid grid-cols-2 gap-3">
-          <select
-            name="gender"
-            required
-            className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-            style={{fontFamily: 'Roboto, sans-serif'}}
-          >
-            <option value="">Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1" style={{fontFamily: 'Roboto, sans-serif'}}>Full Name</label>
           <input
-            name="age"
-            type="number"
-            placeholder="Age"
-            required
-            min="1"
-            max="120"
-            className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-            style={{fontFamily: 'Roboto, sans-serif'}}
-          />
-        </div>
-        <input
-          name="contactNumber"
-          type="tel"
-          placeholder="Contact Number"
-          required
-          pattern="[0-9]{10}"
-          className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-          style={{fontFamily: 'Roboto, sans-serif'}}
-        />
-        <textarea
-          name="address"
-          placeholder="Address"
-          required
-          rows={2}
-          className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-          style={{fontFamily: 'Roboto, sans-serif'}}
-        ></textarea>
-        <select
-          name="scan"
-          required
-          className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-          style={{fontFamily: 'Roboto, sans-serif'}}
-        >
-          <option value="">Select Scan Type</option>
-          <option value="CT Scan - General">CT Scan - General</option>
-          <option value="CT Scan - Cardiac">CT Scan - Cardiac</option>
-          <option value="CT Scan - Emergency">CT Scan - Emergency</option>
-          <option value="Dual Energy CT">Dual Energy CT</option>
-          <option value="CT Angiography">CT Angiography</option>
-          <option value="CT Brain">CT Brain</option>
-          <option value="CT Chest">CT Chest</option>
-          <option value="CT Abdomen">CT Abdomen</option>
-          <option value="CT Spine">CT Spine</option>
-          <option value="Other">Other</option>
-        </select>
-        <div className="grid grid-cols-2 gap-3">
-          <input
-            name="appointmentDate"
-            type="date"
-            required
-            min={new Date().toISOString().split('T')[0]}
-            className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-            style={{fontFamily: 'Roboto, sans-serif'}}
-          />
-          <input
-            name="scheduleTime"
-            type="time"
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Enter your full name"
             required
             className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
             style={{fontFamily: 'Roboto, sans-serif'}}
           />
         </div>
-        <textarea
-          name="additionalInformation"
-          placeholder="Additional Information (Optional)"
-          rows={2}
-          className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
-          style={{fontFamily: 'Roboto, sans-serif'}}
-        ></textarea>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1" style={{fontFamily: 'Roboto, sans-serif'}}>Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email address"
+            required
+            className={`w-full p-3 text-sm border rounded-lg focus:outline-none ${
+              errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-300 focus:border-[#2E92ED]'
+            }`}
+            style={{fontFamily: 'Roboto, sans-serif'}}
+          />
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+        </div>
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1" style={{fontFamily: 'Roboto, sans-serif'}}>Mobile Number</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="Enter your mobile number"
+            required
+            className={`w-full p-3 text-sm border rounded-lg focus:outline-none ${
+              errors.phone ? 'border-red-500 focus:border-red-500' : 'border-gray-300 focus:border-[#2E92ED]'
+            }`}
+            style={{fontFamily: 'Roboto, sans-serif'}}
+          />
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+        </div>
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1" style={{fontFamily: 'Roboto, sans-serif'}}>Your Message / Enquiry</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Enter your message or enquiry"
+            required
+            rows={3}
+            className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#2E92ED]"
+            style={{fontFamily: 'Roboto, sans-serif'}}
+          ></textarea>
+        </div>
         <button
           type="submit"
           disabled={isSubmitting}
           className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-3 px-6 rounded-lg text-sm hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
         >
-          {isSubmitting ? 'Booking...' : 'Book Appointment'}
+          {isSubmitting ? 'Sending...' : 'Send Enquiry'}
         </button>
       </form>
     </div>

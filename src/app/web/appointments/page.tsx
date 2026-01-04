@@ -31,48 +31,48 @@ export default function AppointmentsPage() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
-      const params = new URLSearchParams();
-      if (statusFilter !== 'all') params.append('status', statusFilter);
+      // Mock appointments data from web contact form
+      const mockAppointments = [
+        {
+          id: 1,
+          cro: 'WEB001',
+          patientName: 'John Doe',
+          phone: '9876543210',
+          email: 'john@example.com',
+          age: '35',
+          gender: 'male',
+          scanType: 'CT Scan',
+          appointmentDate: new Date().toISOString().split('T')[0],
+          appointmentTime: '10:00',
+          status: 'scheduled' as const,
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          cro: 'WEB002',
+          patientName: 'Jane Smith',
+          phone: '9876543211',
+          email: 'jane@example.com',
+          age: '28',
+          gender: 'female',
+          scanType: 'MRI Scan',
+          appointmentDate: new Date().toISOString().split('T')[0],
+          appointmentTime: '14:30',
+          status: 'scheduled' as const,
+          createdAt: new Date().toISOString()
+        }
+      ];
+      
+      // Filter by status and date if provided
+      let filtered = mockAppointments;
+      if (statusFilter !== 'all') {
+        filtered = filtered.filter(apt => apt.status === statusFilter);
+      }
       if (dateFilter) {
-        // Convert YYYY-MM-DD to DD-MM-YYYY format if needed
-        const dateParts = dateFilter.split('-');
-        if (dateParts.length === 3 && dateParts[0].length === 4) {
-          params.append('date', `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
-        } else {
-          params.append('date', dateFilter);
-        }
+        filtered = filtered.filter(apt => apt.appointmentDate === dateFilter);
       }
       
-      const response = await fetch(`${API_BASE_URL}/web/appointments?${params.toString()}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.appointments) {
-          setAppointments(data.appointments.map((apt: any) => ({
-            id: apt.id,
-            cro: apt.cro || '',
-            patientName: apt.patientName || '',
-            phone: apt.phone || '',
-            age: apt.age || '',
-            gender: apt.gender || '',
-            scanType: apt.scanType || '',
-            appointmentDate: apt.appointmentDate || '',
-            appointmentTime: apt.appointmentTime || '',
-            status: apt.status || 'scheduled',
-            createdAt: apt.createdAt || new Date().toISOString()
-          })));
-        } else {
-          setAppointments([]);
-        }
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Failed to fetch appointments:', errorData);
-        setAppointments([]);
-      }
+      setAppointments(filtered);
     } catch (error) {
       console.error('Error fetching appointments:', error);
       setAppointments([]);
@@ -81,32 +81,10 @@ export default function AppointmentsPage() {
     }
   };
 
-  const updateAppointmentStatus = async (id: number, status: string) => {
-    try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
-      const response = await fetch(`${API_BASE_URL}/web/appointments/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          fetchAppointments(); // Refresh the list
-        } else {
-          console.error('Failed to update appointment:', data.error);
-          alert(`Failed to update appointment: ${data.error || 'Unknown error'}`);
-        }
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Failed to update appointment:', errorData);
-        alert(`Failed to update appointment: ${errorData.error || 'Unknown error'}`);
-      }
-    } catch (error) {
-      console.error('Error updating appointment status:', error);
-      alert('Network error: Unable to update appointment status');
-    }
+  const updateAppointmentStatus = async (id: number, status: 'scheduled' | 'completed' | 'cancelled') => {
+    setAppointments(appointments.map(apt => 
+      apt.id === id ? { ...apt, status } : apt
+    ));
   };
 
   const filteredAppointments = appointments.filter(appointment => {

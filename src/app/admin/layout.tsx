@@ -57,7 +57,7 @@ export default function AdminLayout({
       <RoleBasedSidebar userRole="admin" />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header user={user} />
-        <main className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4">
           <div className="max-w-7xl mx-auto w-full">
             {children}
           </div>

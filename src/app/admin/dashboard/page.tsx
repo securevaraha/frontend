@@ -46,106 +46,106 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-3 space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+        <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
         <div className="flex items-center space-x-2 text-sm text-gray-500">
           <Calendar className="h-4 w-4" />
           <span>{new Date().toLocaleDateString()}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Patient Registered</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-blue-600">{stats.totalPatients}</p>
+              <p className="text-2xl font-bold text-blue-600">{stats.totalPatients}</p>
             </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Users className="h-6 w-6 text-blue-600" />
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Users className="h-5 w-5 text-blue-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total CT Scan</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-green-600">{stats.todayPatients}</p>
+              <p className="text-2xl font-bold text-green-600">{stats.todayPatients}</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <Activity className="h-6 w-6 text-green-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Activity className="h-5 w-5 text-green-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Received Amount</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-purple-600">₹{(stats.totalRevenue || 0).toLocaleString()}</p>
+              <p className="text-2xl font-bold text-purple-600">₹{(stats.totalRevenue || 0).toLocaleString()}</p>
             </div>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <TrendingUp className="h-6 w-6 text-purple-600" />
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <TrendingUp className="h-5 w-5 text-purple-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Due Amount</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-orange-600">₹{(stats.todayRevenue || 0).toLocaleString()}</p>
+              <p className="text-2xl font-bold text-orange-600">₹{(stats.todayRevenue || 0).toLocaleString()}</p>
             </div>
-            <div className="p-3 bg-orange-100 rounded-full">
-              <FileText className="h-6 w-6 text-orange-600" />
+            <div className="p-2 bg-orange-100 rounded-lg">
+              <FileText className="h-5 w-5 text-orange-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Withdraw</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-red-600">₹{(stats.todayWithdraw || 0).toLocaleString()}</p>
+              <p className="text-2xl font-bold text-red-600">₹{(stats.todayWithdraw || 0).toLocaleString()}</p>
             </div>
-            <div className="p-3 bg-red-100 rounded-full">
-              <Hospital className="h-6 w-6 text-red-600" />
+            <div className="p-2 bg-red-100 rounded-lg">
+              <Hospital className="h-5 w-5 text-red-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Cash In Hand</p>
               <p className="text-xs text-gray-500 mb-1">Today</p>
-              <p className="text-3xl font-bold text-indigo-600">₹{(stats.cashInHand || 0).toLocaleString()}</p>
+              <p className="text-2xl font-bold text-indigo-600">₹{(stats.cashInHand || 0).toLocaleString()}</p>
             </div>
-            <div className="p-3 bg-indigo-100 rounded-full">
-              <TrendingUp className="h-6 w-6 text-indigo-600" />
+            <div className="p-2 bg-indigo-100 rounded-lg">
+              <TrendingUp className="h-5 w-5 text-indigo-600" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+        <h2 className="text-lg font-semibold text-gray-900 mb-3">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {quickActions.map((action, index) => (
             <a
               key={index}
               href={action.href}
-              className="flex items-center space-x-3 p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
+              className="flex items-center space-x-2 p-3 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors text-sm"
             >
-              <div className={`p-2 rounded-lg ${action.color}`}>
-                <action.icon className="h-5 w-5 text-white" />
+              <div className={`p-1.5 rounded-lg ${action.color}`}>
+                <action.icon className="h-4 w-4 text-white" />
               </div>
               <span className="font-medium text-gray-700">{action.label}</span>
             </a>

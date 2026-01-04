@@ -109,7 +109,7 @@ export default function Login() {
               />
             </div>
             <div className="space-y-2">
-              <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
+              <h1 className="text-5xl font-bold mb-2 text-white" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
                 Varaha SDC
               </h1>
               <div className="h-1 w-32 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full"></div>
@@ -127,7 +127,7 @@ export default function Login() {
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-sm mb-1">256 Slice CT</h3>
+              <h3 className="font-bold text-sm mb-1 text-white">256 Slice CT</h3>
               <p className="text-xs opacity-80">Technology</p>
             </div>
             
@@ -137,7 +137,7 @@ export default function Login() {
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-sm mb-1">Same Day</h3>
+              <h3 className="font-bold text-sm mb-1 text-white">Same Day</h3>
               <p className="text-xs opacity-80">Service</p>
             </div>
             
@@ -147,7 +147,7 @@ export default function Login() {
                   <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-sm mb-1">24/7 Emergency</h3>
+              <h3 className="font-bold text-sm mb-1 text-white">24/7 Emergency</h3>
               <p className="text-xs opacity-80">Care</p>
             </div>
             
@@ -157,24 +157,8 @@ export default function Login() {
                   <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h2v-2H4v-2h2v-2H4V6h2V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-2h-2v2H4z"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-sm mb-1">Expert Medical</h3>
+              <h3 className="font-bold text-sm mb-1 text-white">Expert Medical</h3>
               <p className="text-xs opacity-80">Team</p>
-            </div>
-          </div>
-          
-          {/* Trust Indicators */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span>Trusted by 10,000+ Patients</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
-              <span>ISO Certified Medical Facility</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2 text-sm opacity-90">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-              <span>Award Winning Healthcare</span>
             </div>
           </div>
         </div>
@@ -242,18 +226,17 @@ export default function Login() {
                 </div>
               </div>
             </div>
-            <h2 className="text-3xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+            <h2 className="text-2xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 600}}>
               Welcome Back
             </h2>
-            <p className="text-gray-600" style={{fontFamily: 'Roboto, sans-serif'}}>
+            <p className="text-gray-600 text-sm" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
               Sign in to access your dashboard
             </p>
           </div>
 
           {/* Role Selection */}
-          <div className="mb-8">
-            <h3 className="text-sm font-medium text-gray-700 mb-4">Select Your Role</h3>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="mb-3">
+            <div className="grid grid-cols-3 gap-1">
               {roles.map((role) => {
                 const IconComponent = role.icon;
                 return (
@@ -261,21 +244,23 @@ export default function Login() {
                     key={role.id}
                     type="button"
                     onClick={() => handleRoleSelect(role)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                    className={`p-1.5 rounded text-xs transition-all ${
                       selectedRole === role.id
-                        ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-lg`
-                        : `bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-600 hover:border-gray-300`
+                        ? `bg-gradient-to-r ${role.color} text-white`
+                        : `bg-gray-50 hover:bg-gray-100 text-gray-600`
                     }`}
                   >
-                    <IconComponent className="w-6 h-6 mx-auto mb-2" />
-                    <div className="text-sm font-medium">{role.name}</div>
+                    <IconComponent className={`w-3 h-3 mx-auto mb-0.5 ${
+                      selectedRole === role.id ? 'text-white' : 'text-gray-500'
+                    }`} />
+                    <div className="text-xs">{role.name}</div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
                 <div className="text-red-700 text-sm">{error}</div>
@@ -283,38 +268,38 @@ export default function Login() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-4 w-4 text-gray-400" />
                 </div>
                 <input
                   type="text"
                   required
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
                   placeholder="Enter your username"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-4 w-4 text-gray-400" />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  className="w-full pl-9 pr-10 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
                   placeholder="Enter your password"
                 />
                 <button
@@ -323,9 +308,9 @@ export default function Login() {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
                   )}
                 </button>
               </div>
@@ -334,7 +319,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading || !selectedRole}
-              className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {loading ? (
                 <div className="flex items-center justify-center space-x-2">
