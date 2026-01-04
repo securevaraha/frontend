@@ -2,6 +2,7 @@ import Image from "next/image";
 import HeroClient from "./components/HeroClient";
 import CardiacPopup from "./components/CardiacPopup";
 import HomeContactForm from "./components/HomeContactForm";
+import MedicalServicesCards from "./components/MedicalServicesCards";
 import { Trophy, ShieldCheck, Wrench, Award, Users, Clock } from "lucide-react";
 
 // Feature Card Component
@@ -31,65 +32,65 @@ export default async function HomePage() {
         <HeroClient />
       </section>
 
-      {/* Features Section - 4 Cards */}
-      <section className="py-16 lg:py-20 bg-white relative overflow-hidden">
+      {/* Features Section - 4 Cards - Compact Medical Design */}
+      <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-[#F8FBFF] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             {/* 24 Hours Fast Scan with Low Radiation */}
-            <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6EC1E4] to-[#61CE70] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-              <div className="p-8 flex flex-col items-center justify-center min-h-[200px]">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#6EC1E4'}}>
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-[#0056AE] overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#0056AE]/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[160px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-[#0056AE] to-[#2E92ED]">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-                <h3 className="text-xl font-bold text-center" style={{color: '#54595F', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  </svg>
+                </div>
+                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                   24 Hours Fast Scan with Low Radiation
                 </h3>
               </div>
-          </div>
+            </div>
 
             {/* Dual Energy Scan */}
-            <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6EC1E4] to-[#61CE70] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-              <div className="p-8 flex flex-col items-center justify-center min-h-[200px]">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#6EC1E4'}}>
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-[#2E92ED] overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#2E92ED]/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[160px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-[#2E92ED] to-[#0056AE]">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-center" style={{color: '#54595F', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                   Dual Energy Scan
                 </h3>
-                        </div>
-                      </div>
+              </div>
+            </div>
 
             {/* Emergency Scans */}
-            <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6EC1E4] to-[#61CE70] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-              <div className="p-8 flex flex-col items-center justify-center min-h-[200px]">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#6EC1E4'}}>
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-red-500 overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-500/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[160px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-red-500 to-red-600">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                    </div>
-                <h3 className="text-xl font-bold text-center" style={{color: '#54595F', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                </div>
+                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                   Emergency Scans
                 </h3>
               </div>
-                </div>
+            </div>
                 
             {/* Two Heart Beat Scan */}
-            <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6EC1E4] to-[#61CE70] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-              <div className="p-8 flex flex-col items-center justify-center min-h-[200px]">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#6EC1E4'}}>
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pink-500 overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[160px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-pink-500 to-pink-600">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-center" style={{color: '#54595F', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                   Two Heart Beat Scan
                 </h3>
               </div>
@@ -98,117 +99,131 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Technical Specifications */}
-      <section className="py-16 lg:py-20 relative overflow-hidden" style={{backgroundColor: '#F8FBFF'}}>
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#2E92ED]/10 to-[#0056AE]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-br from-[#0056AE]/10 to-[#2E92ED]/10 rounded-full blur-3xl"></div>
+      {/* Technical Specifications - Full Screen Design */}
+      <section className="py-16 lg:py-20 relative overflow-hidden bg-gradient-to-b from-white to-gray-50">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-purple-100/30 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-0 w-80 h-80 bg-gradient-to-br from-cyan-100/30 to-blue-100/30 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
         </div>
         
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 mr-3" style={{color: '#0056AE'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-full relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16 px-4">
+            <div className="inline-flex items-center justify-center mb-6 px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200">
+              <svg className="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
               </svg>
-              <h2 className="text-3xl sm:text-4xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 800}}>
                 Technical Specifications
               </h2>
             </div>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+              Cutting-edge technology that revolutionizes medical imaging
+            </p>
           </div>
 
-          {/* Main Content Card */}
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border-t-4" style={{borderTopColor: '#0056AE'}}>
-              {/* Introduction Section */}
-              <div className="p-8 lg:p-12" style={{backgroundColor: '#F8FBFF'}}>
-                <div className="flex items-start mb-6">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 mr-6" style={{backgroundColor: '#0056AE'}}>
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          {/* Main Content - Full Width */}
+          <div className="w-full">
+            {/* Header Section */}
+            <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 py-16 md:py-24">
+              <div className="container mx-auto px-4 relative z-10">
+                <div className="flex flex-col lg:flex-row items-center gap-12">
+                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 border-2 border-white/30">
+                    <svg className="w-16 h-16 md:w-20 md:h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  <div className="flex-1 text-center lg:text-left">
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 800}}>
                       Revolution CT Technology
                     </h3>
-                    <div className="space-y-4">
-                      <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                        Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.
-                      </p>
-                      <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                        In the time it takes for your heart to beat once, GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second. The scanner helps the doctors to improve image quality and reduce the amount of radiation the patients receives compared with other scanners.
-                      </p>
-                    </div>
+                    <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-6 max-w-4xl" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+                      Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.
+                    </p>
+                    <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-5xl" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+                      In the time it takes for your heart to beat once, GE healthcare's revolution CT scanner can capture a detailed picture of your body.
+                    </p>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Core Specifications */}
-              <div className="p-8 lg:p-12 bg-white">
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold mb-6 flex items-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                    <span className="w-1 h-8 mr-3" style={{backgroundColor: '#2E92ED'}}></span>
+            {/* Core Specifications */}
+            <div className="py-16 md:py-20 bg-white">
+              <div className="container mx-auto px-4">
+                <div className="mb-16 text-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
                     Core Specifications
                   </h3>
-                        </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                  <p className="text-lg text-gray-600">Advanced features that set us apart</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
                   {[
-                    { icon: '⚡', title: '256 Slice CT Simultaneous Dual Energy Capability' },
-                    { icon: '🔄', title: 'Both Axial and Spiral Mode System with Dual Source' },
-                    { icon: '💎', title: 'Gemstone Detector with Ultra Fast kVp Switching Technology' },
-                    { icon: '📡', title: 'Dual Layer Detector Technology for Dual Energy Data Acquisition' }
+                    { 
+                      icon: '⚡', 
+                      title: '256 Slice CT Simultaneous Dual Energy Capability',
+                      gradient: 'from-yellow-400 to-orange-500'
+                    },
+                    { 
+                      icon: '🔄', 
+                      title: 'Both Axial and Spiral Mode System with Dual Source',
+                      gradient: 'from-blue-400 to-cyan-500'
+                    },
+                    { 
+                      icon: '💎', 
+                      title: 'Gemstone Detector with Ultra Fast kVp Switching Technology',
+                      gradient: 'from-purple-400 to-pink-500'
+                    },
+                    { 
+                      icon: '📡', 
+                      title: 'Dual Layer Detector Technology for Dual Energy Data Acquisition',
+                      gradient: 'from-green-400 to-emerald-500'
+                    }
                   ].map((spec, index) => (
-                    <div key={index} className="group flex items-start p-5 rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:border-[#2E92ED]" style={{borderColor: '#E8F2FF'}}>
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#E8F2FF'}}>
-                        <span className="text-2xl">{spec.icon}</span>
-                      </div>
-                      <div className="flex-1 pt-1">
-                        <p className="text-base font-medium leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                        {spec.title}
+                    <div 
+                      key={index} 
+                      className="group relative overflow-hidden rounded-2xl border border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-xl bg-white"
+                    >
+                      <div className="p-6 md:p-8">
+                        <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg mb-6`}>
+                          <span className="text-2xl md:text-3xl">{spec.icon}</span>
+                        </div>
+                        <p className="text-base md:text-lg font-semibold leading-tight text-gray-800" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+                          {spec.title}
                         </p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+            </div>
 
-              {/* Revolution CT 256 Slice Machine Features */}
-              <div className="p-8 lg:p-12 bg-gradient-to-br from-white to-[#F8FBFF] border-t" style={{borderTopColor: '#E8F2FF'}}>
-                <div className="mb-8">
-                  <div className="flex items-center mb-2">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mr-4" style={{backgroundColor: '#0056AE'}}>
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                      Revolution CT 256 Slice Machine
-                    </h3>
-                  </div>
-                  <div className="ml-16 h-1 w-16" style={{backgroundColor: '#2E92ED'}}></div>
+            {/* Revolution CT Features */}
+            <div className="py-16 md:py-20 bg-gray-50">
+              <div className="container mx-auto px-4">
+                <div className="mb-16 text-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
+                    Revolution CT 256 Slice Machine Features
+                  </h3>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
                   {[
-                    'Volume GSI',
-                    'High Definition',
-                    '3D Dose modulation',
-                    'Smart prep with Dynamic Transition',
-                    'Dynamic perfusion',
-                    'Reduce metal artifacts',
-                    'Overlapped Recon',
-                    'Organ Dose Modulation',
-                    'Digital Tilt',
-                    'Fast Scout',
-                    'Enhance lesion detectability',
-                    'Improve tissue characterisation'
+                    'Volume GSI', 'High Definition', '3D Dose modulation', 'Smart prep with Dynamic Transition',
+                    'Dynamic perfusion', 'Reduce metal artifacts', 'Overlapped Recon', 'Organ Dose Modulation',
+                    'Digital Tilt', 'Fast Scout', 'Enhance lesion detectability', 'Improve tissue characterisation'
                   ].map((feature, index) => (
-                    <div key={index} className="group flex items-center p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:bg-[#E8F2FF]" style={{backgroundColor: '#FFFFFF'}}>
-                      <div className="w-2 h-2 rounded-full mr-3 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" style={{backgroundColor: '#2E92ED'}}></div>
-                      <span className="text-sm font-medium" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                        {feature}
-                      </span>
+                    <div 
+                      key={index} 
+                      className="group relative overflow-hidden rounded-xl bg-white border border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:scale-105"
+                    >
+                      <div className="p-3 md:p-4 flex items-center gap-3">
+                        <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-blue-500 flex-shrink-0"></div>
+                        <span className="text-xs md:text-sm font-medium text-gray-700" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+                          {feature}
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -427,56 +442,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CARDIAC, Angiography, Dual Energy / GSI Section */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* CARDIAC Card */}
-              <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border-t-4 overflow-hidden" style={{borderTopColor: '#0056AE'}}>
-                <div className="p-6 lg:p-8">
-                  <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#E8F2FF'}}>
-                    <svg className="w-10 h-10" style={{color: '#0056AE'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-center mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                    CARDIAC
-                  </h3>
-                </div>
-              </div>
-
-              {/* Angiography Card */}
-              <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border-t-4 overflow-hidden" style={{borderTopColor: '#2E92ED'}}>
-                <div className="p-6 lg:p-8">
-                  <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: '#E8F2FF'}}>
-                    <svg className="w-10 h-10" style={{color: '#2E92ED'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-center mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                    angiography
-                  </h3>
-                </div>
-              </div>
-
-              {/* Dual Energy / GSI Card */}
-              <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border-t-4 overflow-hidden" style={{borderTopColor: '#0056AE'}}>
-                <div className="p-6 lg:p-8">
-                  <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 bg-gray-100">
-                    <div className="w-full h-full rounded-full flex items-center justify-center" style={{backgroundColor: '#E8F2FF'}}>
-                      <span className="text-xs text-gray-400">Image</span>
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold text-center mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                    Dual Energy / GSI
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Medical Services Cards Section */}
+      <MedicalServicesCards />
 
       {/* Dual Energy Section */}
       <section className="py-16 lg:py-20" style={{backgroundColor: '#F8FBFF'}}>

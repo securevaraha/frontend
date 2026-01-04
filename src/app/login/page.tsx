@@ -69,7 +69,7 @@ export default function Login() {
             router.push('/inventory/dashboard');
             break;
           case 'web':
-            router.push('/dashboard');
+            router.push('/web/dashboard');
             break;
           default:
             router.push('/dashboard');

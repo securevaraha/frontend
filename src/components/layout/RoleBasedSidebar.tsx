@@ -9,7 +9,8 @@ import {
   Hospital, Settings, ChevronDown, ChevronRight,
   Activity, ClipboardList, UserPlus, Search, Camera,
   Clock, Edit, Tag, RotateCcw, TrendingUp, Scan,
-  Package, Plus, List, ArrowDown, ArrowUp
+  Package, Plus, List, ArrowDown, ArrowUp, Globe,
+  MessageSquare, CalendarCheck, CalendarClock
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -181,6 +182,17 @@ export default function RoleBasedSidebar({ userRole, onClose }: SidebarProps) {
         { id: 'transactions', label: 'Transactions', icon: Activity, href: '/inventory/transactions' },
         { id: 'report', label: 'Report', icon: FileText, href: '/inventory/report' },
         { id: 'analysis', label: 'Analysis', icon: TrendingUp, href: '/inventory/analysis' }
+      ]
+    },
+    web: {
+      icon: Globe,
+      color: 'from-cyan-500 to-cyan-600',
+      bgColor: 'bg-cyan-50',
+      menus: [
+        { id: 'dashboard', label: 'Dashboard', icon: BarChart3, href: '/web/dashboard' },
+        { id: 'enquiries', label: 'Enquiries', icon: MessageSquare, href: '/web/enquiries' },
+        { id: 'appointments', label: 'Appointments', icon: CalendarCheck, href: '/web/appointments' },
+        { id: 'schedule-availability', label: 'Schedule Availability', icon: CalendarClock, href: '/web/schedule-availability' }
       ]
     }
   };
