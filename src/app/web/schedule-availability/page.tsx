@@ -28,19 +28,20 @@ export default function ScheduleAvailabilityPage() {
   const fetchSchedule = async () => {
     setLoading(true);
     try {
-      // For now, create mock data since API doesn't exist
-      const mockSlots: TimeSlot[] = [
-        { id: 1, date: selectedDate, startTime: '09:00', endTime: '09:30', status: 'available' as const },
-        { id: 2, date: selectedDate, startTime: '09:30', endTime: '10:00', status: 'available' as const },
-        { id: 3, date: selectedDate, startTime: '10:00', endTime: '10:30', status: 'booked' as const, patientName: 'John Doe', cro: 'CRO001' },
-        { id: 4, date: selectedDate, startTime: '10:30', endTime: '11:00', status: 'available' as const },
-        { id: 5, date: selectedDate, startTime: '11:00', endTime: '11:30', status: 'blocked' as const },
-        { id: 6, date: selectedDate, startTime: '14:00', endTime: '14:30', status: 'available' as const },
-        { id: 7, date: selectedDate, startTime: '14:30', endTime: '15:00', status: 'available' as const },
-        { id: 8, date: selectedDate, startTime: '15:00', endTime: '15:30', status: 'available' as const }
-      ];
+      const params = new URLSearchParams({ date: selectedDate });
+      if (statusFilter !== 'all') {
+        params.append('status', statusFilter);
+      }
       
-      setSlots(mockSlots);
+      const response = await fetch(`https://varahasdc.co.in/api/web/schedule?${params}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setSlots(data.slots || []);
+      } else {
+        console.error('Failed to fetch schedule:', data.error);
+        setSlots([]);
+      }
     } catch (error) {
       console.error('Error fetching schedule:', error);
       setSlots([]);
@@ -55,58 +56,73 @@ export default function ScheduleAvailabilityPage() {
       return;
     }
     
-    // Check for duplicate time slots
-    const isDuplicate = slots.some(slot => 
-      slot.date === selectedDate && 
-      slot.startTime === newSlot.startTime && 
-      slot.endTime === newSlot.endTime
-    );
-    
-    if (isDuplicate) {
-      alert('A time slot with the same start and end time already exists for this date');
-      return;
-    }
-    
-    // Check for overlapping time slots
-    const isOverlapping = slots.some(slot => {
-      if (slot.date !== selectedDate) return false;
-      const newStart = newSlot.startTime;
-      const newEnd = newSlot.endTime;
-      const existingStart = slot.startTime;
-      const existingEnd = slot.endTime;
+    try {
+      const response = await fetch('https://varahasdc.co.in/api/web/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date: selectedDate,
+          startTime: newSlot.startTime,
+          endTime: newSlot.endTime,
+          status: newSlot.status
+        })
+      });
       
-      return (newStart < existingEnd && newEnd > existingStart);
-    });
-    
-    if (isOverlapping) {
-      alert('This time slot overlaps with an existing slot');
-      return;
+      const data = await response.json();
+      
+      if (data.success) {
+        setShowAddModal(false);
+        setNewSlot({ startTime: '', endTime: '', status: 'available' });
+        fetchSchedule(); // Refresh the list
+      } else {
+        alert(data.error || 'Failed to add time slot');
+      }
+    } catch (error) {
+      console.error('Error adding slot:', error);
+      alert('Error adding time slot. Please try again.');
     }
-    
-    // Create new slot with mock ID
-    const newId = Math.max(...slots.map(s => s.id), 0) + 1;
-    const newSlotData = {
-      id: newId,
-      date: selectedDate,
-      startTime: newSlot.startTime,
-      endTime: newSlot.endTime,
-      status: newSlot.status
-    };
-    
-    setSlots([...slots, newSlotData].sort((a, b) => a.startTime.localeCompare(b.startTime)));
-    setShowAddModal(false);
-    setNewSlot({ startTime: '', endTime: '', status: 'available' });
   };
 
   const updateSlotStatus = async (id: number, status: 'available' | 'booked' | 'blocked') => {
-    setSlots(slots.map(slot => 
-      slot.id === id ? { ...slot, status } : slot
-    ));
+    try {
+      const response = await fetch(`https://varahasdc.co.in/api/web/schedule/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        fetchSchedule(); // Refresh the list
+      } else {
+        alert(data.error || 'Failed to update slot status');
+      }
+    } catch (error) {
+      console.error('Error updating slot:', error);
+      alert('Error updating slot status. Please try again.');
+    }
   };
 
   const deleteSlot = async (id: number) => {
     if (!confirm('Are you sure you want to delete this time slot?')) return;
-    setSlots(slots.filter(slot => slot.id !== id));
+    
+    try {
+      const response = await fetch(`https://varahasdc.co.in/api/web/schedule/${id}`, {
+        method: 'DELETE'
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        fetchSchedule(); // Refresh the list
+      } else {
+        alert(data.error || 'Failed to delete slot');
+      }
+    } catch (error) {
+      console.error('Error deleting slot:', error);
+      alert('Error deleting slot. Please try again.');
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -124,14 +140,9 @@ export default function ScheduleAvailabilityPage() {
     return <XCircle className="h-4 w-4" />;
   };
 
-  const filteredSlots = slots.filter(slot => {
-    if (statusFilter === 'all') return true;
-    return slot.status === statusFilter;
-  });
-
-  const availableCount = filteredSlots.filter(s => s.status === 'available').length;
-  const bookedCount = filteredSlots.filter(s => s.status === 'booked').length;
-  const blockedCount = filteredSlots.filter(s => s.status === 'blocked').length;
+  const availableCount = slots.filter(s => s.status === 'available').length;
+  const bookedCount = slots.filter(s => s.status === 'booked').length;
+  const blockedCount = slots.filter(s => s.status === 'blocked').length;
 
   return (
     <div className="p-6 space-y-6">
@@ -213,14 +224,14 @@ export default function ScheduleAvailabilityPage() {
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
         </div>
-      ) : filteredSlots.length === 0 ? (
+      ) : slots.length === 0 ? (
         <div className="bg-white p-12 rounded-xl shadow-lg border border-gray-100 text-center">
           <CalendarClock className="h-16 w-16 text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600 text-lg">No time slots found for this date</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSlots.map((slot) => (
+          {slots.map((slot) => (
             <div
               key={slot.id}
               className={`bg-white p-4 rounded-xl shadow-lg border-2 ${
