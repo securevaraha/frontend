@@ -25,8 +25,8 @@ export default function HeroClient() {
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight" 
           style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700, letterSpacing: '-0.02em'}}
         >
-          <span className="text-white">Engineering the Future of</span>{" "}
-          <span style={{color: '#2E92ED'}}>Medical Diagnostics</span>
+          <span className="text-white">Advanced CT Scan Center</span>{" "}
+          <span style={{color: '#2E92ED'}}>Excellence in Imaging</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -37,8 +37,8 @@ export default function HeroClient() {
           className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto text-gray-200 leading-relaxed" 
           style={{fontFamily: 'Roboto, sans-serif', lineHeight: '1.7'}}
         >
-          Precision Imaging. Accurate Diagnosis. Better Outcomes. 
-          Experience advanced CT scan technology with minimal radiation and maximum clarity.
+          State-of-the-art 256 Slice CT technology delivering precise diagnostics with minimal radiation. 
+          Your trusted partner for comprehensive medical imaging solutions.
         </motion.p>
 
         {/* CTA Buttons */}
