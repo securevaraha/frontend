@@ -165,78 +165,36 @@ export default function Login() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-gray-50">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="lg:hidden mb-8">
-              <div className="relative inline-block mb-6">
-                <div className="absolute inset-0 bg-[#2E92ED]/20 rounded-full blur-xl animate-pulse"></div>
+          {/* Login Card */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="lg:hidden mb-6">
                 <Image
                   src="/Varaha logo@4x 2.png"
                   alt="Varaha SDC Logo"
-                  width={100}
-                  height={100}
-                  className="relative mx-auto rounded-full ring-4 ring-[#2E92ED]/30 shadow-xl"
+                  width={80}
+                  height={80}
+                  className="mx-auto rounded-full ring-4 ring-[#2E92ED]/20 shadow-lg"
                   priority
                 />
               </div>
-              <h1 className="text-2xl font-bold mb-2 text-white" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
-                Varaha SDC
-              </h1>
-              <p className="text-sm text-gray-600 mb-4" style={{fontFamily: 'Roboto, sans-serif'}}>
-                Advanced CT Scan Management System
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Welcome Back
+              </h2>
+              <p className="text-gray-600">
+                Sign in to access your medical dashboard
               </p>
-              
-              {/* Mobile Features */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-3 text-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  </div>
-                  <p className="text-xs font-semibold text-blue-800">256 Slice CT</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-3 text-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </div>
-                  <p className="text-xs font-semibold text-green-800">Same Day</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-3 text-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
-                    </svg>
-                  </div>
-                  <p className="text-xs font-semibold text-red-800">24/7 Care</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-3 text-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h2v-2H4v-2h2v-2H4V6h2V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-2h-2v2H4z"/>
-                    </svg>
-                  </div>
-                  <p className="text-xs font-semibold text-purple-800">Expert Team</p>
-                </div>
-              </div>
             </div>
-            <h2 className="text-2xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 600}}>
-              Welcome Back
-            </h2>
-            <p className="text-gray-600 text-sm" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
-              Sign in to access your dashboard
-            </p>
-          </div>
 
           {/* Role Selection */}
-          <div className="mb-3">
-            <div className="grid grid-cols-3 gap-1">
+          <div className="mb-6">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Select Your Role
+            </label>
+            <div className="grid grid-cols-2 gap-3">
               {roles.map((role) => {
                 const IconComponent = role.icon;
                 return (
@@ -244,16 +202,16 @@ export default function Login() {
                     key={role.id}
                     type="button"
                     onClick={() => handleRoleSelect(role)}
-                    className={`p-1.5 rounded text-xs transition-all ${
+                    className={`p-3 rounded-xl text-sm transition-all duration-300 border-2 ${
                       selectedRole === role.id
-                        ? `bg-gradient-to-r ${role.color} text-white`
-                        : `bg-gray-50 hover:bg-gray-100 text-gray-600`
+                        ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-lg`
+                        : `bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200 hover:border-gray-300`
                     }`}
                   >
-                    <IconComponent className={`w-3 h-3 mx-auto mb-0.5 ${
+                    <IconComponent className={`w-5 h-5 mx-auto mb-2 ${
                       selectedRole === role.id ? 'text-white' : 'text-gray-500'
                     }`} />
-                    <div className="text-xs">{role.name}</div>
+                    <div className="font-medium">{role.name}</div>
                   </button>
                 );
               })}
@@ -268,38 +226,38 @@ export default function Login() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-4 w-4 text-gray-400" />
+                  <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="text"
                   required
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
                   placeholder="Enter your username"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-gray-400" />
+                  <Lock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-9 pr-10 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-12 py-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E92ED] focus:border-transparent transition-all duration-200"
                   placeholder="Enter your password"
                 />
                 <button
@@ -308,9 +266,9 @@ export default function Login() {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
                   ) : (
-                    <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
                   )}
                 </button>
               </div>
@@ -319,7 +277,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading || !selectedRole}
-              className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white py-3 px-4 rounded-lg text-sm font-medium hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E92ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {loading ? (
                 <div className="flex items-center justify-center space-x-2">
@@ -332,8 +290,12 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="mt-8 text-center">
-            <p className="text-xs text-gray-500">Secure Medical System Access</p>
+          <div className="mt-6 text-center">
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <p className="text-xs text-gray-500 font-medium">Secure Medical System</p>
+            </div>
+          </div>
           </div>
         </div>
       </div>

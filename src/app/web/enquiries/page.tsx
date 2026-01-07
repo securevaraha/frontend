@@ -19,6 +19,9 @@ export default function EnquiriesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [dateFilter, setDateFilter] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     fetchEnquiries();
@@ -58,7 +61,27 @@ export default function EnquiriesPage() {
     const matchesSearch = enquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          enquiry.phone.includes(searchTerm) ||
                          enquiry.enquiry.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
+    
+    let matchesDate = true;
+    const enquiryDate = new Date(enquiry.createdAt);
+    const today = new Date();
+    
+    if (dateFilter === 'today') {
+      matchesDate = enquiryDate.toDateString() === today.toDateString();
+    } else if (dateFilter === 'week') {
+      const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+      matchesDate = enquiryDate >= weekAgo;
+    } else if (dateFilter === 'month') {
+      const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+      matchesDate = enquiryDate >= monthAgo;
+    } else if (dateFilter === 'custom' && startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+      matchesDate = enquiryDate >= start && enquiryDate <= end;
+    }
+    
+    return matchesSearch && matchesDate;
   });
 
   // Pagination logic
@@ -67,10 +90,10 @@ export default function EnquiriesPage() {
   const endIndex = startIndex + itemsPerPage;
   const paginatedEnquiries = filteredEnquiries.slice(startIndex, endIndex);
 
-  // Reset to first page when search changes
+  // Reset to first page when search or date filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+  }, [searchTerm, dateFilter, startDate, endDate]);
 
 
 
@@ -109,7 +132,7 @@ export default function EnquiriesPage() {
 
       {/* Filters and Search */}
       <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100">
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
@@ -120,13 +143,47 @@ export default function EnquiriesPage() {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
             />
           </div>
-          <button
-            onClick={exportToExcel}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-          >
-            <Download className="h-4 w-4" />
-            Export
-          </button>
+          
+          <div className="flex flex-col sm:flex-row gap-2">
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+            >
+              <option value="">All Time</option>
+              <option value="today">Today</option>
+              <option value="week">Last 7 Days</option>
+              <option value="month">Last 30 Days</option>
+              <option value="custom">Custom Range</option>
+            </select>
+            
+            {dateFilter === 'custom' && (
+              <>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Start Date"
+                />
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="End Date"
+                />
+              </>
+            )}
+            
+            <button
+              onClick={exportToExcel}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors whitespace-nowrap"
+            >
+              <Download className="h-4 w-4" />
+              Export
+            </button>
+          </div>
         </div>
       </div>
 
