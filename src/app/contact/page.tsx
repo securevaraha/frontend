@@ -24,6 +24,7 @@ export default function ContactPage() {
   const [scanSearch, setScanSearch] = useState('');
   const [showScanDropdown, setShowScanDropdown] = useState(false);
   const [toast, setToast] = useState<{show: boolean, message: string, type: 'success' | 'error'}>({show: false, message: '', type: 'success'});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const showToast = (message: string, type: 'success' | 'error') => {
@@ -259,7 +260,7 @@ export default function ContactPage() {
                     const result = await response.json();
                     
                     if (response.ok && result.success) {
-                      showToast('Appointment booked successfully! We will contact you soon.', 'success');
+                      setShowSuccessModal(true);
                       (e.target as HTMLFormElement).reset();
                       setSelectedDate('');
                       setAvailableSlots([]);
@@ -569,6 +570,68 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform animate-scale-in">
+            <div className="p-6">
+              {/* Header with Medical Icon */}
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Roboto, sans-serif'}}>
+                  Appointment Submitted Successfully!
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-emerald-600 mx-auto rounded-full"></div>
+              </div>
+              
+              {/* Message */}
+              <div className="text-center mb-6">
+                <p className="text-gray-700 leading-relaxed mb-4" style={{fontFamily: 'Roboto, sans-serif'}}>
+                  Varaha SDC will contact you soon to confirm your appointment.
+                </p>
+                
+                {/* Contact Information */}
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
+                  <p className="text-sm font-semibold text-gray-800 mb-3">You can also reach us directly:</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <Mail className="w-4 h-4 text-blue-600" />
+                      <span className="text-gray-700">info@varahasdc.in</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <Phone className="w-4 h-4 text-blue-600" />
+                      <span className="text-gray-700">+91 8233338550</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-semibold py-3 px-4 rounded-lg hover:shadow-lg transition-all duration-300"
+                  style={{fontFamily: 'Roboto, sans-serif'}}
+                >
+                  Got it!
+                </button>
+                <a
+                  href="tel:+918233338550"
+                  className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-semibold py-3 px-4 rounded-lg hover:bg-[#2E92ED] hover:text-white transition-all duration-300 text-center"
+                  style={{fontFamily: 'Roboto, sans-serif'}}
+                >
+                  Call Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Toast Notification */}
       {toast.show && (
