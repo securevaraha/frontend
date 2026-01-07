@@ -646,14 +646,13 @@ export default function ConsoleUpdate() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Console Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Upload</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan={11} className="px-6 py-12 text-center">
+                  <td colSpan={10} className="px-6 py-12 text-center">
                     <div className="flex items-center justify-center space-x-2">
                       <RefreshCw className="h-5 w-5 animate-spin text-sky-500" />
                       <span className="text-gray-500">Loading console records...</span>
@@ -662,7 +661,7 @@ export default function ConsoleUpdate() {
                 </tr>
               ) : filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={11} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
                     No console records found
                   </td>
                 </tr>
@@ -703,21 +702,6 @@ export default function ConsoleUpdate() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
                       {record.start_time} - {record.stop_time}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {record.status === 'Complete' ? (
-                        <button
-                          onClick={() => {
-                            router.push(`/console/update?edit=${record.con_id}&reportupload=true`);
-                          }}
-                          className="inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-sm shadow-md hover:shadow-lg"
-                        >
-                          <Upload className="h-4 w-4" />
-                          <span>Upload</span>
-                        </button>
-                      ) : (
-                        <span className="text-gray-400 text-sm">-</span>
-                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

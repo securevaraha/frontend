@@ -3,6 +3,7 @@ import HeroClient from "./components/HeroClient";
 import CardiacPopup from "./components/CardiacPopup";
 import HomeContactForm from "./components/HomeContactForm";
 import MedicalServicesCards from "./components/MedicalServicesCards";
+import MedicalImagingGallery from "./components/MedicalImagingGallery";
 import { Trophy, ShieldCheck, Wrench, Award, Users, Clock } from "lucide-react";
 
 // Feature Card Component
@@ -23,7 +24,7 @@ export default async function HomePage() {
     <div className="overflow-hidden">
       <section className="relative h-screen w-full flex items-center justify-center text-white">
         <Image
-          src="/hero.png"
+          src="/images/home.jpg"
           alt="Medical imaging equipment"
           fill
           className="object-cover brightness-[0.4]"
@@ -31,6 +32,8 @@ export default async function HomePage() {
         />
         <HeroClient />
       </section>
+
+      <MedicalImagingGallery />
 
       {/* Features Section - 4 Cards - Compact Medical Design */}
       <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-[#F8FBFF] relative overflow-hidden">
@@ -441,9 +444,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Medical Services Cards Section */}
-      <MedicalServicesCards />
 
       {/* Dual Energy Section */}
       <section className="py-16 lg:py-20" style={{backgroundColor: '#F8FBFF'}}>
