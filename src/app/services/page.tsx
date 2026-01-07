@@ -40,10 +40,10 @@ export default function ServicesPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-20 text-white overflow-hidden">
+      <section className="relative h-[60vh] w-full flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/hero.png"
+            src="/images/home.jpg"
             alt="Medical imaging equipment"
             className="w-full h-full object-cover brightness-[0.4]"
           />
@@ -123,31 +123,31 @@ export default function ServicesPage() {
           ) : (
             <>
               {/* Scans Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mb-8">
                 {filteredScans.map((scan, index) => (
                   <div
                     key={index}
-                    className="bg-white rounded-xl p-5 shadow-md border border-gray-200 hover:shadow-lg hover:border-[#2E92ED] transition-all duration-300"
+                    className="bg-white rounded-lg p-3 shadow-sm border border-gray-200 hover:shadow-md hover:border-[#2E92ED] transition-all duration-300"
                   >
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">
-                        <h3 className="font-bold text-base mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                        <h3 className="font-semibold text-sm leading-tight mb-1" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                           {scan.scanName}
                         </h3>
                       </div>
                       <div className="ml-2">
                         {scan.renalTest && scan.renalTest.toLowerCase().includes('required') ? (
-                          <CheckCircle2 className="w-5 h-5 text-green-500" />
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
                         ) : scan.renalTest && scan.renalTest.toLowerCase().includes('not') ? (
-                          <XCircle className="w-5 h-5 text-gray-400" />
+                          <XCircle className="w-4 h-4 text-gray-400" />
                         ) : null}
                       </div>
                     </div>
                     {scan.renalTest && (
-                      <div className="mt-3 pt-3 border-t border-gray-100">
-                        <p className="text-xs" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                          <span className="font-medium">Renal Function Test: </span>
-                          {scan.renalTest}
+                      <div className="mt-2 pt-2 border-t border-gray-100">
+                        <p className="text-xs leading-tight" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                          <span className="font-medium">RFT: </span>
+                          {scan.renalTest.length > 20 ? `${scan.renalTest.substring(0, 20)}...` : scan.renalTest}
                         </p>
                       </div>
                     )}

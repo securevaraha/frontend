@@ -93,10 +93,10 @@ export default function ContactPage() {
   return (
     <div>
       {/* Compact Hero Section */}
-      <section className="relative py-16 text-white overflow-hidden">
+      <section className="relative h-[60vh] w-full flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/hero.png"
+            src="/images/home.jpg"
             alt="Medical imaging equipment"
             className="w-full h-full object-cover brightness-[0.4]"
           />

@@ -10,7 +10,7 @@ export default function DualEnergyPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full flex items-center justify-center text-white">
         <Image
-          src="/hero.png"
+          src="/images/home.jpg"
           alt="Dual Energy CT Scan"
           fill
           className="object-cover brightness-[0.4]"

@@ -128,7 +128,7 @@ export default async function HomePage() {
           {/* Main Content - Full Width */}
           <div className="w-full">
             {/* Header Section */}
-            <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 py-16 md:py-24">
+            <div className="relative bg-gradient-to-r from-[#0056AE] to-[#2E92ED] py-16 md:py-24">
               <div className="container mx-auto px-4 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-12">
                   <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 border-2 border-white/30">
@@ -164,22 +164,22 @@ export default async function HomePage() {
                 <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
                   {[
                     { 
-                      icon: '⚡', 
+                      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, 
                       title: '256 Slice CT Simultaneous Dual Energy Capability',
                       gradient: 'from-yellow-400 to-orange-500'
                     },
                     { 
-                      icon: '🔄', 
+                      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>, 
                       title: 'Both Axial and Spiral Mode System with Dual Source',
                       gradient: 'from-blue-400 to-cyan-500'
                     },
                     { 
-                      icon: '💎', 
+                      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>, 
                       title: 'Gemstone Detector with Ultra Fast kVp Switching Technology',
                       gradient: 'from-purple-400 to-pink-500'
                     },
                     { 
-                      icon: '📡', 
+                      icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 7.172V5L8 4z" /></svg>, 
                       title: 'Dual Layer Detector Technology for Dual Energy Data Acquisition',
                       gradient: 'from-green-400 to-emerald-500'
                     }
@@ -190,7 +190,7 @@ export default async function HomePage() {
                     >
                       <div className="p-6 md:p-8">
                         <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg mb-6`}>
-                          <span className="text-2xl md:text-3xl">{spec.icon}</span>
+                          {spec.icon}
                         </div>
                         <p className="text-base md:text-lg font-semibold leading-tight text-gray-800" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
                           {spec.title}
@@ -209,26 +209,39 @@ export default async function HomePage() {
                   <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
                     Revolution CT 256 Slice Machine Features
                   </h3>
+                  <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto mb-6"></div>
+                  <p className="text-lg text-gray-600">Advanced capabilities for superior medical imaging</p>
                 </div>
                 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
-                  {[
-                    'Volume GSI', 'High Definition', '3D Dose modulation', 'Smart prep with Dynamic Transition',
-                    'Dynamic perfusion', 'Reduce metal artifacts', 'Overlapped Recon', 'Organ Dose Modulation',
-                    'Digital Tilt', 'Fast Scout', 'Enhance lesion detectability', 'Improve tissue characterisation'
-                  ].map((feature, index) => (
-                    <div 
-                      key={index} 
-                      className="group relative overflow-hidden rounded-xl bg-white border border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:scale-105"
-                    >
-                      <div className="p-3 md:p-4 flex items-center gap-3">
-                        <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-blue-500 flex-shrink-0"></div>
-                        <span className="text-xs md:text-sm font-medium text-gray-700" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
-                          {feature}
-                        </span>
+                <div className="max-w-6xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[
+                      'Volume GSI', 'High Definition', '3D Dose modulation', 'Smart prep with Dynamic Transition',
+                      'Dynamic perfusion', 'Reduce metal artifacts', 'Overlapped Recon', 'Organ Dose Modulation',
+                      'Digital Tilt', 'Fast Scout', 'Enhance lesion detectability', 'Improve tissue characterisation'
+                    ].map((feature, index) => (
+                      <div 
+                        key={index} 
+                        className="group relative overflow-hidden rounded-2xl bg-white border-2 border-gray-100 hover:border-[#2E92ED] transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                      >
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                        <div className="p-6 flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0056AE] to-[#2E92ED] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-base font-semibold group-hover:text-[#0056AE] transition-colors duration-300" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
+                              {feature}
+                            </h4>
+                            <div className="w-8 h-0.5 bg-[#2E92ED] mt-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#0056AE]/5 to-[#2E92ED]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

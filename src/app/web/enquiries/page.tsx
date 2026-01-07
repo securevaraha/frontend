@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { MessageSquare, Search, Phone, Mail, User, Download } from 'lucide-react';
+import Pagination from '../../../components/ui/Pagination';
 
 interface Enquiry {
   id: number;
@@ -16,6 +17,8 @@ export default function EnquiriesPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchEnquiries();
@@ -57,6 +60,17 @@ export default function EnquiriesPage() {
                          enquiry.enquiry.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesSearch;
   });
+
+  // Pagination logic
+  const totalItems = filteredEnquiries.length;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedEnquiries = filteredEnquiries.slice(startIndex, endIndex);
+
+  // Reset to first page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
 
 
@@ -139,7 +153,7 @@ export default function EnquiriesPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredEnquiries.map((enquiry, index) => (
+                {paginatedEnquiries.map((enquiry, index) => (
                   <tr key={enquiry.id} className={`hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -194,6 +208,12 @@ export default function EnquiriesPage() {
               </tbody>
             </table>
           </div>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       )}
     </div>

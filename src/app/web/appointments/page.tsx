@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CalendarCheck, Search, Filter, Calendar, Clock, User, Phone, FileText, CheckCircle, XCircle, Download } from 'lucide-react';
+import Pagination from '../../../components/ui/Pagination';
 
 interface Appointment {
   id: number;
@@ -23,6 +24,8 @@ export default function AppointmentsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'scheduled' | 'completed' | 'cancelled'>('all');
   const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchAppointments();
@@ -117,6 +120,17 @@ export default function AppointmentsPage() {
                          appointment.phone.includes(searchTerm);
     return matchesSearch;
   });
+
+  // Pagination logic
+  const totalItems = filteredAppointments.length;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedAppointments = filteredAppointments.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter, dateFilter]);
 
   const getStatusBadge = (status: string) => {
     const badges = {
@@ -213,7 +227,7 @@ export default function AppointmentsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredAppointments.map((appointment, index) => (
+                {paginatedAppointments.map((appointment, index) => (
                   <tr key={appointment.id} className={`hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -282,6 +296,12 @@ export default function AppointmentsPage() {
               </tbody>
             </table>
           </div>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       )}
     </div>

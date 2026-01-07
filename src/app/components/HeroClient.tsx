@@ -37,9 +37,8 @@ export default function HeroClient() {
           className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto text-gray-200 leading-relaxed" 
           style={{fontFamily: 'Roboto, sans-serif', lineHeight: '1.7'}}
         >
-          Varaha SDC delivers precision, reliability, and unmatched
-          performance in every diagnostic service we provide. Transform your healthcare with
-          cutting-edge medical imaging technology.
+          Precision Imaging. Accurate Diagnosis. Better Outcomes. 
+          Experience advanced CT scan technology with minimal radiation and maximum clarity.
         </motion.p>
 
         {/* CTA Buttons */}
