@@ -325,3 +325,9 @@ p {
     color-adjust: exact;
   }
 }
+
+/* Blue headings for console cards */
+.bg-white.rounded-xl.shadow-lg.border.border-gray-100.p-6.bluebg h2, 
+.bg-white.rounded-xl.shadow-lg.border.border-gray-100.p-6.bluebg h3 {
+    color: #0068a8;
+}

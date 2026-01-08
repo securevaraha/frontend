@@ -324,8 +324,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       </div>
 
       {/* Patient Details */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Patient History</h2>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 bluebg">
+        <h2 className="text-xl font-semibold text-sky-600 mb-4">Patient History</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Console Date Of Examination</label>
@@ -406,8 +406,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       
 
       {/* Timer */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Timer</h2>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 bluebg">
+        <h2 className="text-xl font-semibold text-sky-600 mb-4">Timer</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Start Time</label>
@@ -431,8 +431,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       </div>
 
       {/* MRI Details */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">MRI Details</h2>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 bluebg">
+        <h2 className="text-xl font-semibold text-sky-600 mb-4">MRI Details</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -479,8 +479,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       </div>
 
       {/* Console Form */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Console Details</h2>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 bluebg">
+        <h2 className="text-xl font-semibold text-sky-600 mb-4">Console Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Date of Examination</label>
