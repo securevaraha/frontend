@@ -33,8 +33,6 @@ export default async function HomePage() {
         <HeroClient />
       </section>
 
-      <MedicalImagingGallery />
-
       {/* Features Section - 4 Cards - Compact Medical Design */}
       <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-[#F8FBFF] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,18 +109,11 @@ export default async function HomePage() {
         
         <div className="w-full relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16 px-4">
-            <div className="inline-flex items-center justify-center mb-6 px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200">
-              <svg className="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-              </svg>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 800}}>
-                Technical Specifications
-              </h2>
-            </div>
-            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
-              Cutting-edge technology that revolutionizes medical imaging
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              Technical Specifications
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
           </div>
 
           {/* Main Content - Full Width */}
@@ -155,10 +146,10 @@ export default async function HomePage() {
             <div className="py-16 md:py-20 bg-white">
               <div className="container mx-auto px-4">
                 <div className="mb-16 text-center">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
+                  <h3 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE !important', fontFamily: 'Roboto, sans-serif !important', fontWeight: '600 !important'}}>
                     Core Specifications
                   </h3>
-                  <p className="text-lg text-gray-600">Advanced features that set us apart</p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
                 </div>
                 
                 <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -206,11 +197,10 @@ export default async function HomePage() {
             <div className="py-16 md:py-20 bg-gray-50">
               <div className="container mx-auto px-4">
                 <div className="mb-16 text-center">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif'}}>
+                  <h3 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE !important', fontFamily: 'Roboto, sans-serif !important', fontWeight: '600 !important'}}>
                     Revolution CT 256 Slice Machine Features
                   </h3>
-                  <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto mb-6"></div>
-                  <p className="text-lg text-gray-600">Advanced capabilities for superior medical imaging</p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
                 </div>
                 
                 <div className="max-w-6xl mx-auto">
@@ -248,6 +238,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <MedicalImagingGallery />
 
       {/* Services & Care Section */}
       <section className="py-16 lg:py-20 bg-white relative overflow-hidden">

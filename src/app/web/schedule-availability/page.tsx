@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CalendarClock, Calendar, Clock, CheckCircle, XCircle, Plus, Edit, Trash2, Download } from 'lucide-react';
+import Pagination from '../../../components/ui/Pagination';
 
 interface TimeSlot {
   id: number;
@@ -20,6 +21,8 @@ export default function ScheduleAvailabilityPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newSlot, setNewSlot] = useState({ startTime: '', endTime: '', status: 'available' as const });
   const [statusFilter, setStatusFilter] = useState<'all' | 'available' | 'booked' | 'blocked'>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     fetchSchedule();
@@ -53,6 +56,21 @@ export default function ScheduleAvailabilityPage() {
   const addTimeSlot = async () => {
     if (!newSlot.startTime || !newSlot.endTime) {
       alert('Please provide both start time and end time');
+      return;
+    }
+    
+    // Check for overlapping slots
+    const hasOverlap = slots.some(slot => {
+      const newStart = new Date(`1970-01-01T${newSlot.startTime}:00`);
+      const newEnd = new Date(`1970-01-01T${newSlot.endTime}:00`);
+      const existingStart = new Date(`1970-01-01T${slot.startTime}:00`);
+      const existingEnd = new Date(`1970-01-01T${slot.endTime}:00`);
+      
+      return (newStart < existingEnd && newEnd > existingStart);
+    });
+    
+    if (hasOverlap) {
+      alert('Time slot overlaps with existing slot. Please choose different times.');
       return;
     }
     
@@ -166,6 +184,17 @@ export default function ScheduleAvailabilityPage() {
   const bookedCount = slots.filter(s => s.status === 'booked').length;
   const blockedCount = slots.filter(s => s.status === 'blocked').length;
 
+  // Pagination logic
+  const totalItems = slots.length;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedSlots = slots.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedDate, statusFilter]);
+
   return (
     <div className="p-6 space-y-6">
       <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 text-white p-6 rounded-xl shadow-lg">
@@ -217,6 +246,7 @@ export default function ScheduleAvailabilityPage() {
             <input
               type="date"
               value={selectedDate}
+              min={new Date().toISOString().split('T')[0]}
               onChange={(e) => setSelectedDate(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
             />
@@ -272,16 +302,26 @@ export default function ScheduleAvailabilityPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {slots.map((slot, index) => {
+                {paginatedSlots.map((slot, index) => {
                   const duration = slot.startTime && slot.endTime ? 
                     `${Math.abs(new Date(`1970-01-01T${slot.endTime}:00`).getTime() - new Date(`1970-01-01T${slot.startTime}:00`).getTime()) / (1000 * 60)} min` : 
                     'N/A';
                   
+                  // Check if slot is expired (past time for today's date)
+                  const isToday = selectedDate === new Date().toISOString().split('T')[0];
+                  const currentTime = new Date();
+                  const slotEndTime = new Date(`${selectedDate}T${slot.endTime}:00`);
+                  const isExpired = isToday && slotEndTime < currentTime;
+                  
                   return (
-                    <tr key={slot.id} className={`hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
+                    <tr key={slot.id} className={`hover:bg-gray-50 transition-colors ${
+                      isExpired ? 'opacity-50 bg-gray-100' : 
+                      index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                    }`}>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                            isExpired ? 'bg-gradient-to-br from-gray-400 to-gray-500' :
                             slot.status === 'available' ? 'bg-gradient-to-br from-green-500 to-green-600' :
                             slot.status === 'booked' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
                             'bg-gradient-to-br from-red-500 to-red-600'
@@ -289,8 +329,12 @@ export default function ScheduleAvailabilityPage() {
                             <Clock className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-semibold text-gray-900">{slot.startTime} - {slot.endTime}</div>
-                            <div className="text-sm text-gray-500">Slot ID: {slot.id}</div>
+                            <div className={`font-semibold ${
+                              isExpired ? 'text-gray-500 line-through' : 'text-gray-900'
+                            }`}>{slot.startTime} - {slot.endTime}</div>
+                            <div className="text-sm text-gray-500">
+                              Slot ID: {slot.id} {isExpired && '(Expired)'}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -298,9 +342,11 @@ export default function ScheduleAvailabilityPage() {
                         <span className="text-gray-600 font-medium">{duration}</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadge(slot.status)}`}>
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${
+                          isExpired ? 'bg-gray-100 text-gray-500 border-gray-300' : getStatusBadge(slot.status)
+                        }`}>
                           {getStatusIcon(slot.status)}
-                          {slot.status.charAt(0).toUpperCase() + slot.status.slice(1)}
+                          {isExpired ? 'Expired' : slot.status.charAt(0).toUpperCase() + slot.status.slice(1)}
                         </span>
                       </td>
                       <td className="px-6 py-4">
@@ -353,6 +399,12 @@ export default function ScheduleAvailabilityPage() {
               </tbody>
             </table>
           </div>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       )}
 
@@ -361,8 +413,18 @@ export default function ScheduleAvailabilityPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
             <div className="p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">Add Time Slot</h2>
+              <h2 className="text-xl font-bold mb-4 text-gray-900">Add Time Slot for {selectedDate}</h2>
               <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  />
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
                   <input

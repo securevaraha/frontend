@@ -50,7 +50,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
     issue_cd: 'NO',
     remark: '',
     console_date: new Date().toLocaleDateString('en-CA'),
-    console_time: new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false })
+    console_time: new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false }),
+    date_of_examination: new Date().toLocaleDateString('en-CA')
   });
 
   useEffect(() => {
@@ -329,10 +330,10 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Console Date Of Examination</label>
             <input
-              type="text"
-              value={new Date().toLocaleDateString('en-GB').replace(/\//g, '-')}
-              readOnly
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
+              type="date"
+              value={formData.date_of_examination}
+              onChange={(e) => setFormData({...formData, date_of_examination: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -481,6 +482,15 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Console Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Date of Examination</label>
+            <input
+              type="date"
+              value={formData.date_of_examination}
+              onChange={(e) => setFormData({...formData, date_of_examination: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Examination ID <span className="text-red-500">*</span></label>
             <input

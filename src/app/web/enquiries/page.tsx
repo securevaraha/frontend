@@ -20,18 +20,28 @@ export default function EnquiriesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [dateFilter, setDateFilter] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     fetchEnquiries();
-  }, []);
+  }, [dateFilter]);
 
   const fetchEnquiries = async () => {
     setLoading(true);
     try {
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
-      const response = await fetch(`${API_BASE_URL}/web/enquiries`, {
+      
+      // Build query parameters
+      const params = new URLSearchParams();
+      if (searchTerm) {
+        params.append('search', searchTerm);
+      }
+      
+      // Handle date filtering
+      if (dateFilter) {
+        params.append('date', dateFilter);
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/web/enquiries?${params}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -57,32 +67,15 @@ export default function EnquiriesPage() {
 
 
 
-  const filteredEnquiries = enquiries.filter(enquiry => {
-    const matchesSearch = enquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         enquiry.phone.includes(searchTerm) ||
-                         enquiry.enquiry.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    let matchesDate = true;
-    const enquiryDate = new Date(enquiry.createdAt);
-    const today = new Date();
-    
-    if (dateFilter === 'today') {
-      matchesDate = enquiryDate.toDateString() === today.toDateString();
-    } else if (dateFilter === 'week') {
-      const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-      matchesDate = enquiryDate >= weekAgo;
-    } else if (dateFilter === 'month') {
-      const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
-      matchesDate = enquiryDate >= monthAgo;
-    } else if (dateFilter === 'custom' && startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999);
-      matchesDate = enquiryDate >= start && enquiryDate <= end;
-    }
-    
-    return matchesSearch && matchesDate;
-  });
+  // Add search trigger
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchEnquiries();
+    }, 300);
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm]);
+
+  const filteredEnquiries = enquiries;
 
   // Pagination logic
   const totalItems = filteredEnquiries.length;
@@ -90,10 +83,9 @@ export default function EnquiriesPage() {
   const endIndex = startIndex + itemsPerPage;
   const paginatedEnquiries = filteredEnquiries.slice(startIndex, endIndex);
 
-  // Reset to first page when search or date filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, dateFilter, startDate, endDate]);
+  }, [searchTerm, dateFilter]);
 
 
 
@@ -145,36 +137,12 @@ export default function EnquiriesPage() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-2">
-            <select
+            <input
+              type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-            >
-              <option value="">All Time</option>
-              <option value="today">Today</option>
-              <option value="week">Last 7 Days</option>
-              <option value="month">Last 30 Days</option>
-              <option value="custom">Custom Range</option>
-            </select>
-            
-            {dateFilter === 'custom' && (
-              <>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-                  placeholder="Start Date"
-                />
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-                  placeholder="End Date"
-                />
-              </>
-            )}
+            />
             
             <button
               onClick={exportToExcel}

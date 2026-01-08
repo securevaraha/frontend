@@ -23,9 +23,9 @@ export default function AppointmentsPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'scheduled' | 'completed' | 'cancelled'>('all');
-  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+  const [dateFilter, setDateFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     fetchAppointments();
@@ -34,7 +34,7 @@ export default function AppointmentsPage() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const API_BASE_URL = 'https://varahasdc.co.in/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
       
       // Build query parameters
       const params = new URLSearchParams();
@@ -45,10 +45,16 @@ export default function AppointmentsPage() {
         params.append('date', dateFilter);
       }
       
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch(`${API_BASE_URL}/web/appointments?${params}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       
       if (response.ok) {
         const data = await response.json();
@@ -62,7 +68,11 @@ export default function AppointmentsPage() {
         setAppointments([]);
       }
     } catch (error) {
-      console.error('Error fetching appointments:', error);
+      if (error.name === 'AbortError') {
+        console.error('Request timed out');
+      } else {
+        console.error('Error fetching appointments:', error);
+      }
       setAppointments([]);
     } finally {
       setLoading(false);
@@ -96,12 +106,19 @@ export default function AppointmentsPage() {
 
   const updateAppointmentStatus = async (id: number, status: 'scheduled' | 'completed' | 'cancelled') => {
     try {
-      const API_BASE_URL = 'https://varahasdc.co.in/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
       const response = await fetch(`${API_BASE_URL}/web/appointments/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        body: JSON.stringify({ status }),
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       
       if (response.ok) {
         // Refresh appointments list
@@ -110,7 +127,11 @@ export default function AppointmentsPage() {
         console.error('Failed to update appointment status');
       }
     } catch (error) {
-      console.error('Error updating appointment status:', error);
+      if (error.name === 'AbortError') {
+        console.error('Update request timed out');
+      } else {
+        console.error('Error updating appointment status:', error);
+      }
     }
   };
 
@@ -207,10 +228,15 @@ export default function AppointmentsPage() {
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
         </div>
-      ) : filteredAppointments.length === 0 ? (
+      ) : paginatedAppointments.length === 0 ? (
         <div className="bg-white p-12 rounded-xl shadow-lg border border-gray-100 text-center">
           <CalendarCheck className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">No appointments found</p>
+          <p className="text-gray-600 text-lg mb-2">No appointments found</p>
+          <p className="text-gray-500 text-sm">
+            {searchTerm ? `No results for "${searchTerm}"` : 
+             dateFilter ? 'Try selecting a different date or status filter' : 
+             'No appointments available for the selected criteria'}
+          </p>
         </div>
       ) : (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
@@ -235,7 +261,7 @@ export default function AppointmentsPage() {
                           <User className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">{appointment.patientName}</div>
+                          <div className="font-semibold text-gray-900 text-sm leading-tight max-w-xs truncate" title={appointment.patientName}>{appointment.patientName}</div>
                           <div className="text-sm text-gray-500">CRO: {appointment.cro}</div>
                           <div className="text-sm text-gray-500">{appointment.age}y, {appointment.gender}</div>
                         </div>
@@ -248,12 +274,12 @@ export default function AppointmentsPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-gray-600">
+                      <div className="flex items-center gap-4 text-gray-600">
+                        <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
-                          <span className="font-medium">{new Date(appointment.appointmentDate).toLocaleDateString()}</span>
+                          <span className="font-medium">{appointment.appointmentDate}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-2">
                           <Clock className="w-4 h-4" />
                           <span>{appointment.appointmentTime}</span>
                         </div>
@@ -262,7 +288,9 @@ export default function AppointmentsPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FileText className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-900 font-medium">{appointment.scanType}</span>
+                        <span className="text-gray-900 font-medium text-sm leading-tight max-w-xs truncate" title={appointment.scanType}>
+                          {appointment.scanType}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">

@@ -202,9 +202,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                      Book Your CT Scan
+                      Appointment Form
                     </h3>
-                    <p className="text-sm" style={{color: '#586C80'}}>Same day service available</p>
                   </div>
                 </div>
                 
@@ -452,11 +451,11 @@ export default function ContactPage() {
                     ></textarea>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col gap-3">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
                     >
                       {isSubmitting ? (
@@ -470,13 +469,6 @@ export default function ContactPage() {
                       ) : (
                         'Book Appointment'
                       )}
-                    </button>
-                    <button
-                      type="button"
-                      className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-bold py-3 px-6 rounded-lg hover:bg-[#2E92ED] hover:text-white transition-all duration-300 text-sm"
-                      style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
-                    >
-                      Call Now: 8233338550
                     </button>
                   </div>
                 </form>
@@ -615,18 +607,11 @@ export default function ContactPage() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowSuccessModal(false)}
-                  className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-semibold py-3 px-4 rounded-lg hover:shadow-lg transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-semibold py-3 px-4 rounded-lg hover:shadow-lg transition-all duration-300"
                   style={{fontFamily: 'Roboto, sans-serif'}}
                 >
                   Got it!
                 </button>
-                <a
-                  href="tel:+918233338550"
-                  className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-semibold py-3 px-4 rounded-lg hover:bg-[#2E92ED] hover:text-white transition-all duration-300 text-center"
-                  style={{fontFamily: 'Roboto, sans-serif'}}
-                >
-                  Call Now
-                </a>
               </div>
             </div>
           </div>

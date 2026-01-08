@@ -297,15 +297,6 @@ export default function ConsoleUpdate() {
                 <Save className={`h-5 w-5 ${saving ? 'animate-spin' : ''}`} />
                 <span>{saving ? 'Saving...' : 'Save Changes'}</span>
               </button>
-              {editingRecord.status === 'Complete' && (
-                <button
-                  onClick={() => setShowUploadDialog(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                >
-                  <Upload className="h-5 w-5" />
-                  <span>Upload Report</span>
-                </button>
-              )}
             </div>
           </div>
         </div>
