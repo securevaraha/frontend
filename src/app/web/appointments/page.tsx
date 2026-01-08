@@ -67,8 +67,8 @@ export default function AppointmentsPage() {
         console.error('API response not ok:', response.status);
         setAppointments([]);
       }
-    } catch (error) {
-      if (error.name === 'AbortError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
         console.error('Request timed out');
       } else {
         console.error('Error fetching appointments:', error);
@@ -126,8 +126,8 @@ export default function AppointmentsPage() {
       } else {
         console.error('Failed to update appointment status');
       }
-    } catch (error) {
-      if (error.name === 'AbortError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
         console.error('Update request timed out');
       } else {
         console.error('Error updating appointment status:', error);

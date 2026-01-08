@@ -90,7 +90,8 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
             issue_cd: console.issue_cd || 'NO',
             remark: console.remark || '',
             console_date: new Date().toLocaleDateString('en-CA'),
-            console_time: new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false })
+            console_time: new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false }),
+            date_of_examination: console.added_on || new Date().toLocaleDateString('en-CA')
           });
           setStartTime(console.start_time || '');
           setStopTime(console.stop_time || '');
