@@ -268,75 +268,50 @@ export default async function HomePage() {
           
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {/* Emergency Care */}
-              <div className="group perspective-1000">
-                <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                  <div className="absolute inset-0 backface-hidden">
-                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#0056AE'}}>
-                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#0056AE'}}>
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        EMERGENCY CARE
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 backface-hidden rotate-y-180">
-                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
-                      <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
-                        Immediate medical care available 24 hours a day for emergency patients
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Dual Energy */}
-              <div className="group perspective-1000">
-                <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                  <div className="absolute inset-0 backface-hidden">
-                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#0056AE'}}>
-                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#0056AE'}}>
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        DUAL ENERGY
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 backface-hidden rotate-y-180">
-                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
-                      <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
-                        Dual energy scans provides better quality of scans with low dose radiation
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cooperative Staff */}
+              {/* 24 Hour Reporting */}
               <div className="group perspective-1000">
                 <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
                   <div className="absolute inset-0 backface-hidden">
                     <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#2E92ED'}}>
                       <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#2E92ED'}}>
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                       <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        COOPERATIVE STAFF
+                        24 HOUR REPORTING
                       </h3>
                     </div>
                   </div>
                   <div className="absolute inset-0 backface-hidden rotate-y-180">
                     <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#2E92ED'}}>
                       <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
-                        We have a cooperative team of staff who is available 24x7 to guide and assist you in the process
+                        Complete reports provided within 24 hours and also shared on WhatsApp for your convenience
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Personal Care */}
+              <div className="group perspective-1000">
+                <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
+                  <div className="absolute inset-0 backface-hidden">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#0056AE'}}>
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#0056AE'}}>
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                        PERSONAL CARE
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 backface-hidden rotate-y-180">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
+                      <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
+                        Dedicated personal care with individual attention to ensure comfort and support throughout your visit
                       </p>
                     </div>
                   </div>
@@ -362,6 +337,31 @@ export default async function HomePage() {
                     <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
                       <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
                         We have an efficient team of radiologists for reporting
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Expert Team */}
+              <div className="group perspective-1000">
+                <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
+                  <div className="absolute inset-0 backface-hidden">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#2E92ED'}}>
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#2E92ED'}}>
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                        COOPERATIVE STAFF
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 backface-hidden rotate-y-180">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#2E92ED'}}>
+                      <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
+                        Experienced radiologists and cooperative staff available 24x7 to guide and assist you
                       </p>
                     </div>
                   </div>
@@ -457,100 +457,6 @@ export default async function HomePage() {
                 <div className="absolute inset-0 backface-hidden rotate-y-180">
                   <div className="text-center p-6 rounded-xl h-full flex flex-col justify-center" style={{backgroundColor: '#2E92ED'}}>
                     <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>All trauma patients are done on priority and urgent case's reports are provided the same day</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dual Energy Section */}
-      <section className="py-16 lg:py-20" style={{backgroundColor: '#F8FBFF'}}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-              Dual Energy
-            </h2>
-            <p className="text-xl mb-6" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>256 slice CT simultaneous dual energy capability</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="group perspective-1000">
-              <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                <div className="absolute inset-0 backface-hidden">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center items-center" style={{backgroundColor: '#E8F2FF'}}>
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#2E92ED'}}>
-                      <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Fast & Safe Scanning</h3>
-                  </div>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center" style={{backgroundColor: '#2E92ED'}}>
-                    <p className="text-sm leading-relaxed text-white text-center" style={{fontFamily: 'Roboto, sans-serif'}}>The machine provides fast scans with minimum radiations, less time on table for patients with better quality scans. It captures detailed images of entire organs in a single scan, reducing radiation exposure.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="group perspective-1000">
-              <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                <div className="absolute inset-0 backface-hidden">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center items-center" style={{backgroundColor: '#E8F2FF'}}>
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#2E92ED'}}>
-                      <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>2 Heart Beats Scanning</h3>
-                  </div>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center" style={{backgroundColor: '#2E92ED'}}>
-                    <p className="text-sm leading-relaxed text-white text-center" style={{fontFamily: 'Roboto, sans-serif'}}>All scans including cardiac scans are done within 2 heart beats. In the time it takes for a heart to beat once, GE healthcare's revolution CT scanner can capture a detailed picture of the body.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="group perspective-1000">
-              <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                <div className="absolute inset-0 backface-hidden">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center items-center" style={{backgroundColor: '#E8F2FF'}}>
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#2E92ED'}}>
-                      <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Advanced Heart Imaging</h3>
-                  </div>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center" style={{backgroundColor: '#2E92ED'}}>
-                    <p className="text-sm leading-relaxed text-white text-center" style={{fontFamily: 'Roboto, sans-serif'}}>The 256 slice CT provides a quantum leap in imaging and is now being used to diagnose heart disease. This advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="group perspective-1000">
-              <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-                <div className="absolute inset-0 backface-hidden">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center items-center" style={{backgroundColor: '#E8F2FF'}}>
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#2E92ED'}}>
-                      <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Superior Image Quality</h3>
-                  </div>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180">
-                  <div className="p-6 rounded-xl h-full flex flex-col justify-center" style={{backgroundColor: '#2E92ED'}}>
-                    <p className="text-sm leading-relaxed text-white text-center" style={{fontFamily: 'Roboto, sans-serif'}}>The x-ray tube moves at incredible speed capturing thousands of slices per second. The scanner helps doctors improve image quality and reduce radiation exposure compared to other scanners.</p>
                   </div>
                 </div>
               </div>
