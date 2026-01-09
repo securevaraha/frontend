@@ -50,7 +50,7 @@ export default function ServicesPage() {
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-            GSI (Dual Energy) Services
+            Services
           </h1>
           <p className="text-xl max-w-3xl mx-auto text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
             Advanced dual energy CT applications for comprehensive diagnostic imaging

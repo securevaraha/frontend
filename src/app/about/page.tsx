@@ -49,7 +49,7 @@ export default function AboutUsPage() {
             About Us
           </h1>
           <p className="text-lg md:text-xl mt-4 drop-shadow-md">
-            Our Legacy of Precision Engineering
+            Varaha SDC introduces the city's first 256-slice CT technology for superior medical diagnosis with minimal radiation.
           </p>
         </div>
       </motion.section>
@@ -73,9 +73,12 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time, we at varaha focus on bringing quality diagnosis by providing best quality services. Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines. our advanced technology gives doctors an edge in diagnosing the illness better
-            </p>
+          <div className="text-lg md:text-xl mt-4 drop-shadow-md max-w-4xl mx-auto space-y-4">
+            <p>Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time.</p>
+            <p>We at Varaha focus on bringing quality diagnosis by providing best quality services.</p>
+            <p>Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines.</p>
+            <p>Our advanced technology gives doctors an edge in diagnosing the illness better.</p>
+          </div>
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
               We provide immediate medical care for emergency patients and our acquiescent staff will be glad to assist you 24x7 and we have an efficient team of radiologist for excellent reporting.
             </p>

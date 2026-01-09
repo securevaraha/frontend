@@ -60,12 +60,13 @@ export default function CardiacPopup() {
                 <p>This advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation.</p>
               </div>
               
-              <button 
+              <a 
+                href="/book-appointment"
                 className="mt-4 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300"
                 style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
               >
-                Learn More
-              </button>
+                Book Cardiac Scan
+              </a>
             </div>
           </div>
         </div>

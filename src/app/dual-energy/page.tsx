@@ -24,7 +24,7 @@ export default function DualEnergyPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            DUAL ENERGY
+            Dual Energy
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl max-w-3xl mx-auto"

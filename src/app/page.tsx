@@ -37,63 +37,75 @@ export default async function HomePage() {
       <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-[#F8FBFF] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-            {/* 24 Hours Fast Scan with Low Radiation */}
+            {/* 24/7 Services Available */}
             <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-[#0056AE] overflow-hidden">
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#0056AE]/5 to-transparent rounded-bl-full"></div>
-              <div className="p-5 flex flex-col items-start min-h-[160px]">
+              <div className="p-5 flex flex-col items-start min-h-[200px]">
                 <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-[#0056AE] to-[#2E92ED]">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                  24 Hours Fast Scan with Low Radiation
+                <h3 className="text-base font-semibold leading-tight mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  24/7 Services Available
                 </h3>
+                <p className="text-xs leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                  Immediate medical care available 24 hours a day for emergency patients
+                </p>
+              </div>
+            </div>
+
+            {/* Low Radiation */}
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-[#2E92ED] overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#2E92ED]/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[200px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-[#2E92ED] to-[#0056AE]">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="text-base font-semibold leading-tight mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  Low Radiation
+                </h3>
+                <p className="text-xs leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                  Advanced dose reduction techniques ensure minimal radiation exposure for patient safety
+                </p>
               </div>
             </div>
 
             {/* Dual Energy Scan */}
-            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-[#2E92ED] overflow-hidden">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#2E92ED]/5 to-transparent rounded-bl-full"></div>
-              <div className="p-5 flex flex-col items-start min-h-[160px]">
-                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-[#2E92ED] to-[#0056AE]">
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-green-500 overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-500/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[200px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-green-500 to-green-600">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                <h3 className="text-base font-semibold leading-tight mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                   Dual Energy Scan
                 </h3>
-              </div>
-            </div>
-
-            {/* Emergency Scans */}
-            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-red-500 overflow-hidden">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-500/5 to-transparent rounded-bl-full"></div>
-              <div className="p-5 flex flex-col items-start min-h-[160px]">
-                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-red-500 to-red-600">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                  Emergency Scans
-                </h3>
+                <p className="text-xs leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                  Dual energy scans provides better quality of scans with low dose radiation
+                </p>
               </div>
             </div>
                 
-            {/* Two Heart Beat Scan */}
-            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pink-500 overflow-hidden">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/5 to-transparent rounded-bl-full"></div>
-              <div className="p-5 flex flex-col items-start min-h-[160px]">
-                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-pink-500 to-pink-600">
+            {/* No Waiting (Patient done same day) */}
+            <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-purple-500 overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/5 to-transparent rounded-bl-full"></div>
+              <div className="p-5 flex flex-col items-start min-h-[200px]">
+                <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-purple-500 to-purple-600">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-base font-semibold leading-tight" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                  Two Heart Beat Scan
+                <h3 className="text-base font-semibold leading-tight mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  No Waiting (Patient done same day)
                 </h3>
+                <p className="text-xs leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+                  All patients are scanned the same day as registration with no waiting period
+                </p>
               </div>
             </div>
           </div>
@@ -116,39 +128,44 @@ export default async function HomePage() {
             <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
           </div>
 
-          {/* Main Content - Full Width */}
-          <div className="w-full">
-            {/* Header Section */}
-            <div className="relative bg-gradient-to-r from-[#0056AE] to-[#2E92ED] py-16 md:py-24">
-              <div className="container mx-auto px-4 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-12">
-                  <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 border-2 border-white/30">
-                    <svg className="w-16 h-16 md:w-20 md:h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 text-center lg:text-left">
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 800}}>
-                      Revolution CT Technology
-                    </h3>
-                    <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-6 max-w-4xl" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+          {/* Revolution CT Technology */}
+          <div className="bg-white py-16 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                {/* Left Side - Content */}
+                <div>
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 800}}>
+                    Revolution CT Technology
+                  </h3>
+                  <div className="space-y-6">
+                    <p className="text-lg md:text-xl leading-relaxed" style={{color: '#000000', fontFamily: 'Inter, system-ui, sans-serif'}}>
                       Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.
                     </p>
-                    <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-5xl" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
-                      In the time it takes for your heart to beat once, GE healthcare's revolution CT scanner can capture a detailed picture of your body.
+                    <p className="text-base md:text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Inter, system-ui, sans-serif'}}>
+                      GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second. The scanner helps the doctors to improve image quality and reduce the amount of radiation the patients receives compared with other scanners.
                     </p>
                   </div>
                 </div>
+                
+                {/* Right Side - Image */}
+                <div className="relative">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img
+                      src="/images/angiography2.jpg"
+                      alt="Revolution CT Technology"
+                      className="w-full h-[400px] object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Core Specifications */}
-            <div className="py-16 md:py-20 bg-white">
-              <div className="container mx-auto px-4">
-                <div className="mb-16 text-center">
-                  <h3 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE !important', fontFamily: 'Roboto, sans-serif !important', fontWeight: '600 !important'}}>
+              {/* Core Specifications */}
+              <div className="mb-16">
+                <div className="mb-12 text-center">
+                  <h4 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                     Core Specifications
-                  </h3>
+                  </h4>
                   <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
                 </div>
                 
@@ -191,15 +208,13 @@ export default async function HomePage() {
                   ))}
                 </div>
               </div>
-            </div>
 
-            {/* Revolution CT Features */}
-            <div className="py-16 md:py-20 bg-gray-50">
-              <div className="container mx-auto px-4">
-                <div className="mb-16 text-center">
-                  <h3 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE !important', fontFamily: 'Roboto, sans-serif !important', fontWeight: '600 !important'}}>
+              {/* Revolution CT Features */}
+              <div>
+                <div className="mb-12 text-center">
+                  <h4 className="text-3xl sm:text-4xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                     Revolution CT 256 Slice Machine Features
-                  </h3>
+                  </h4>
                   <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
                 </div>
                 
@@ -792,7 +807,7 @@ export default async function HomePage() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="/contact" className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                  <a href="/book-appointment" className="flex-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-xl text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                     Book Appointment Now
                   </a>
                   <a href="tel:8233338550" className="flex-1 border-2 border-[#2E92ED] text-[#2E92ED] font-bold py-4 px-8 rounded-xl text-center hover:bg-[#2E92ED] hover:text-white transition-all duration-300">

@@ -175,8 +175,8 @@ p {
 @media (min-width: 1024px) {
   .container {
     max-width: 1024px;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
 }
 

@@ -36,8 +36,7 @@ const Footer = () => {
             </Link>
             
             <p className="mb-6 leading-relaxed" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
-              Engineering excellence in medical diagnostics with cutting-edge
-              technology. Trusted by thousands of patients for accurate diagnosis.
+              Advanced 256-slice CT technology providing high-quality scans with minimal radiation. Same-day service with 24-hour reporting for comprehensive diagnostic imaging.
             </p>
             
             <div className="flex space-x-4">
@@ -75,9 +74,21 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/facilities" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                <Link href="/dual-energy" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
-                  Facilities
+                  Dual Energy
+                </Link>
+              </li>
+              <li>
+                <Link href="/cardiac" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Cardiac
+                </Link>
+              </li>
+              <li>
+                <Link href="/book-appointment" className="transition-colors duration-300 flex items-center gap-2 group hover:text-white" style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
+                  <span className="w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2" style={{backgroundColor: '#2E92ED'}}></span>
+                  Book Appointment
                 </Link>
               </li>
               <li>
