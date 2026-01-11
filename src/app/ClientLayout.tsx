@@ -20,6 +20,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     '/book-appointment',
     '/privacy-policy',
     '/terms-and-conditions',
+    '/faq',
     '/sitemap'
   ];
   

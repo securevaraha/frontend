@@ -1,14 +1,23 @@
+import Image from "next/image";
+
 export default function TermsAndConditionsPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+      <section className="relative h-[60vh] w-full flex items-center justify-center text-white">
+        <Image
+          src="/images/home.jpg"
+          alt="Medical imaging equipment"
+          fill
+          className="object-cover brightness-[0.4]"
+          priority
+        />
+        <div className="relative z-10 text-center p-4">
+          <h1 className="text-5xl md:text-7xl font-extrabold drop-shadow-lg">
             Terms & Conditions
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{fontFamily: 'Roboto, sans-serif'}}>
-            Terms of service for our medical diagnostic services
+          <p className="text-lg md:text-xl mt-4 drop-shadow-md">
+            Terms of service for our medical imaging services
           </p>
         </div>
       </section>
