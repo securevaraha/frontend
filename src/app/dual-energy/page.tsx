@@ -152,6 +152,150 @@ export default function DualEnergyPage() {
               </p>
             </motion.div>
 
+            {/* Image Gallery Section - Layout 1: Grid */}
+            <motion.div
+              className="mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <div className="text-center mb-8">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                  Dual Energy Imaging Examples
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-[#2E92ED] to-[#0056AE] mx-auto rounded-full"></div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <motion.div
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="relative h-64">
+                    <Image
+                      src="/images/GSI ARTIFACT 1.jpg"
+                      alt="GSI Artifact Reduction 1"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>
+                      Metal Artifact Reduction
+                    </h4>
+                    <p className="text-base" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                      Advanced artifact reduction technology for clearer imaging around metal implants.
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="relative h-64">
+                    <Image
+                      src="/images/GSI ARTIFACT 2.jpg"
+                      alt="GSI Artifact Reduction 2"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h4 className="text-xl font-bold mb-2" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>
+                      Enhanced Image Quality
+                    </h4>
+                    <p className="text-base" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                      Superior image quality with reduced beam-hardening artifacts.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Image Gallery Section - Layout 2: Side by Side */}
+            <motion.div
+              className="mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+            >
+              {/* Gout Imaging */}
+              <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <Activity className="w-8 h-8" style={{color: '#2E92ED'}} />
+                    <h4 className="text-2xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      Gout Imaging
+                    </h4>
+                  </div>
+                  <p className="text-base leading-relaxed mb-6" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                    Dual-Energy CT provides color-coded visualization of deposited uric acid crystals in peripheral extremities, offering non-invasive detection and quantification of gout deposits.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Non-invasive uric acid detection</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Color-coded visualization</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Quantitative analysis</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/GSI GOUT 1.png"
+                    alt="GSI Gout Imaging"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* KUB Imaging */}
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="lg:order-2">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Scan className="w-8 h-8" style={{color: '#2E92ED'}} />
+                    <h4 className="text-2xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      KUB Imaging
+                    </h4>
+                  </div>
+                  <p className="text-base leading-relaxed mb-6" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                    Dual-Energy KUB (Kidney, Ureter, Bladder) imaging determines the chemical composition of kidney stones, helping doctors select appropriate treatments and potentially avoiding unnecessary surgery.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Stone composition analysis</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Treatment planning optimization</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
+                      <span style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Low-dose imaging</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="lg:order-1 relative h-80 rounded-2xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/GSI KUB.jpg"
+                    alt="GSI KUB Imaging"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
             {/* DUAL ENERGY APPLICATIONS Section */}
             <motion.div
               className="mb-16"
@@ -516,4 +660,3 @@ export default function DualEnergyPage() {
     </div>
   );
 }
-
