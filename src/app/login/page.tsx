@@ -23,7 +23,7 @@ export default function Login() {
     { id: 'doctor', name: 'Doctor', icon: Stethoscope, color: 'from-emerald-500 to-emerald-600' },
     { id: 'console', name: 'Console', icon: Monitor, color: 'from-violet-500 to-violet-600' },
     { id: 'inventory', name: 'Inventory', icon: Package, color: 'from-orange-500 to-orange-600' },
-    { id: 'web', name: 'Web Login', icon: Globe, color: 'from-cyan-500 to-cyan-600' },
+    { id: 'web', name: 'Web Admin', icon: Globe, color: 'from-cyan-500 to-cyan-600' },
   ];
 
   const handleRoleSelect = (role: any) => {

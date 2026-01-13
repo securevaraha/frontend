@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-const ImageCard = ({ src, title, description, sectionId }: { src: string, title: string, description: string, sectionId: string }) => {
+const ImageCard = ({ src, title, description, redirectUrl }: { src: string, title: string, description: string, redirectUrl: string }) => {
+  const router = useRouter();
+
   const handleCardClick = () => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    router.push(redirectUrl);
   };
 
   return (
@@ -38,19 +38,19 @@ const MedicalImagingGallery = () => {
       src: '/images/cardiac_main.png', 
       title: 'Cardiac', 
       description: 'High-resolution cardiac imaging for comprehensive heart analysis',
-      sectionId: 'cardiac-section'
+      redirectUrl: '/cardiac'
     },
     { 
       src: '/images/angiography_main.png', 
       title: 'Angiography', 
       description: 'Advanced angiography for detailed vascular visualization',
-      sectionId: 'angiography-section'
+      redirectUrl: '/dual-energy'
     },
     { 
       src: '/images/duealenergy:gi.png', 
       title: 'Dual Energy / GSI', 
       description: 'Dual energy imaging for enhanced tissue characterization',
-      sectionId: 'dual-energy-section'
+      redirectUrl: '/dual-energy'
     }
   ];
 
@@ -69,26 +69,9 @@ const MedicalImagingGallery = () => {
               src={image.src}
               title={image.title}
               description={image.description}
-              sectionId={image.sectionId}
+              redirectUrl={image.redirectUrl}
             />
           ))}
-        </div>
-        
-        <div className="mt-16 space-y-12">
-          <div id="cardiac-section" className="text-center p-8 bg-red-50 rounded-2xl">
-            <h3 className="text-3xl font-bold mb-4" style={{color: '#0056AE'}}>Cardiac Imaging</h3>
-            <p className="text-lg text-gray-700">Our cardiac CT imaging provides detailed visualization of heart structures, coronary arteries, and cardiac function assessment for comprehensive cardiovascular diagnosis.</p>
-          </div>
-          
-          <div id="angiography-section" className="text-center p-8 bg-blue-50 rounded-2xl">
-            <h3 className="text-3xl font-bold mb-4" style={{color: '#0056AE'}}>Angiography</h3>
-            <p className="text-lg text-gray-700">Advanced angiographic imaging enables precise visualization of blood vessels throughout the body, helping diagnose vascular conditions and plan treatments.</p>
-          </div>
-          
-          <div id="dual-energy-section" className="text-center p-8 bg-purple-50 rounded-2xl">
-            <h3 className="text-3xl font-bold mb-4" style={{color: '#0056AE'}}>Dual Energy / GSI</h3>
-            <p className="text-lg text-gray-700">Dual energy CT technology provides enhanced tissue characterization, material decomposition, and improved diagnostic confidence with reduced radiation dose.</p>
-          </div>
         </div>
       </div>
     </section>
