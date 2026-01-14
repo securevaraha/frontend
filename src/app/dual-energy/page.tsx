@@ -2,9 +2,21 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect } from "react";
 import { Heart, Zap, Shield, Activity, CheckCircle2, Brain, Wind, Bone, Droplets, Scan, Stethoscope, Sparkles } from "lucide-react";
 
 export default function DualEnergyPage() {
+  useEffect(() => {
+    if (window.location.hash === '#angiography') {
+      setTimeout(() => {
+        const element = document.getElementById('angiography');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    }
+  }, []);
+
   return (
     <div>
       {/* Hero Section */}
@@ -55,7 +67,7 @@ export default function DualEnergyPage() {
               WHY USE DUAL ENERGY
             </motion.h2>
 
-            {/* What is Dual Energy - Left-Right Layout */}
+            {/* Two Column Layout */}
             <motion.div
               className="mb-12"
               initial={{ opacity: 0, y: 20 }}
@@ -63,7 +75,8 @@ export default function DualEnergyPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* What is Dual Energy */}
                 <div>
                   <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6">
                     <h3 className="text-2xl font-bold text-white flex items-center gap-3" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
@@ -77,34 +90,20 @@ export default function DualEnergyPage() {
                     </p>
                   </div>
                 </div>
-                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/images/se001.png" alt="Dual Energy CT Technology" fill className="object-cover" />
-                </div>
-              </div>
-            </motion.div>
 
-            {/* Difference Section - Right-Left Layout */}
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="lg:order-2">
-                  <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4" style={{borderLeftColor: '#2E92ED'}}>
-                    <h3 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                      <CheckCircle2 className="w-7 h-7" style={{color: '#2E92ED'}} />
+                {/* Difference Section */}
+                <div>
+                  <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6">
+                    <h3 className="text-2xl font-bold text-white flex items-center gap-3" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      <CheckCircle2 className="w-7 h-7" />
                       Difference between Single and Dual Energy CT
                     </h3>
+                  </div>
+                  <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
                     <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
                       Dual-energy computed tomography (DECT) uses different energy spectrum x-ray beams for differentiating materials with similar attenuation at a certain energy. Compared with single-energy CT, it provides images with better diagnostic performance and a potential reduction of contrast agent and radiation doses.
                     </p>
                   </div>
-                </div>
-                <div className="lg:order-1 relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/images/se002.png" alt="Single vs Dual Energy Comparison" fill className="object-cover" />
                 </div>
               </div>
             </motion.div>
@@ -184,103 +183,6 @@ export default function DualEnergyPage() {
               </div>
             </motion.div>
 
-
-
-
-            {/* Angiography Section - Left-Right Layout with Image Slider */}
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="p-8 rounded-2xl shadow-lg" style={{backgroundColor: '#F0F8FF', border: '2px solid #E8F2FF'}}>
-                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-3" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                    <Activity className="w-7 h-7" />
-                    Angiography
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                    Advanced angiographic imaging enables precise visualization of blood vessels throughout the body, helping diagnose vascular conditions and plan treatments. Our Revolution CT provides exceptional image quality for coronary angiography, peripheral vascular studies, and comprehensive vascular assessments with minimal contrast and reduced radiation exposure.
-                  </p>
-                </div>
-                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl group">
-                  <div className="flex transition-transform duration-500 ease-in-out group-hover:animate-pulse">
-                    <div className="relative w-full h-80 flex-shrink-0">
-                      <Image src="/images/angiography_main.png" alt="Angiography Main" fill className="object-cover" />
-                    </div>
-                    <div className="relative w-full h-80 flex-shrink-0">
-                      <Image src="/images/angiography.jpg" alt="Angiography Study 1" fill className="object-cover" />
-                    </div>
-                    <div className="relative w-full h-80 flex-shrink-0">
-                      <Image src="/images/angiography2.jpg" alt="Angiography Study 2" fill className="object-cover" />
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Cardiac Imaging Gallery */}
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-            >
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>
-                  Cardiac Imaging Examples
-                </h3>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { src: '/images/cardiac_main.png', title: 'Cardiac Main' },
-                  { src: '/images/cadiac.png', title: 'Cardiac Study' },
-                  { src: '/images/cardiac2.png', title: 'Cardiac Analysis 1' },
-                  { src: '/images/cardiac3.png', title: 'Cardiac Analysis 2' },
-                  { src: '/images/cardiac4.png', title: 'Cardiac Function' }
-                ].map((img, idx) => (
-                  <div key={idx} className="relative h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <Image src={img.src} alt={img.title} fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Dual Energy Imaging Gallery */}
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-            >
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>
-                  Dual Energy Imaging Examples
-                </h3>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { src: '/images/se001.png', title: 'Dual Energy 1' },
-                  { src: '/images/se002.png', title: 'Dual Energy 2' },
-                  { src: '/images/se003.png', title: 'Dual Energy 3' },
-                  { src: '/images/se004.png', title: 'Dual Energy 4' },
-                  { src: '/images/se005.png', title: 'Dual Energy 5' },
-                  { src: '/images/se006.png', title: 'Dual Energy 6' },
-                  { src: '/images/se007.png', title: 'Dual Energy 7' },
-                  { src: '/images/se008.png', title: 'Dual Energy 8' }
-                ].map((img, idx) => (
-                  <div key={idx} className="relative h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <Image src={img.src} alt={img.title} fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
             {/* DUAL ENERGY APPLICATIONS Section - Theme Design */}
             <motion.div
               className="mb-16"
@@ -297,7 +199,7 @@ export default function DualEnergyPage() {
               <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
-                    { icon: Heart, title: 'CARDIAC CASES', items: ['Covers whole heart in one rotation', 'Takes 1000 images in one rotation', 'One beat motion free coronary images'], color: '#0056AE' },
+                    { icon: Heart, title: 'CARDIAC CASES', items: ['Covers whole heart in one rotation', 'Takes 4000 images in two rotation', 'Two beat motion free coronary images'], color: '#0056AE' },
                     { icon: Zap, title: 'MONOENERGETIC', items: ['Beam hardening artifact elimination', 'Helpful for implant patients'], color: '#2E92ED' },
                     { icon: Brain, title: 'VIRTUAL NCCT', items: ['Virtual non contrast CT scan'], color: '#0056AE' },
                     { icon: Droplets, title: 'CONTRAST SCAN', items: ['Plain and contrast from single scan'], color: '#2E92ED' },
@@ -325,9 +227,6 @@ export default function DualEnergyPage() {
               </div>
             </motion.div>
 
-
-
-            {/* Moved 3 Paragraphs to End */}
             {/* Introduction Paragraph - Card Style */}
             <motion.div
               className="mb-12 p-8 rounded-2xl shadow-lg border-l-4"
@@ -389,6 +288,67 @@ export default function DualEnergyPage() {
                   <p className="text-lg leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
                     This advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation, providing much more visual detail about the hearts function and structures.
                   </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Angiography Section - Full Width with Theme Shade */}
+            <motion.div
+              id="angiography"
+              className="mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6">
+                <h3 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
+                  <Activity className="w-10 h-10" />
+                  ANGIOGRAPHY
+                </h3>
+              </div>
+              <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
+                <p className="text-lg text-center mb-8 max-w-4xl mx-auto" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                  Advanced angiographic imaging enables precise visualization of blood vessels throughout the body, helping diagnose vascular conditions and plan treatments. Our Revolution CT provides exceptional image quality for coronary angiography, peripheral vascular studies, and comprehensive vascular assessments with minimal contrast and reduced radiation exposure.
+                </p>
+                
+                <div className="relative overflow-hidden rounded-2xl" style={{backgroundColor: '#F8FBFF'}}>
+                  <style jsx>{`
+                    @keyframes scrollAngio {
+                      0% { transform: translateX(0); }
+                      100% { transform: translateX(calc(-280px * 8)); }
+                    }
+                    .angio-carousel {
+                      display: flex;
+                      gap: 1.5rem;
+                      padding: 2rem 0;
+                      animation: scrollAngio 15s linear infinite;
+                    }
+                  `}</style>
+                  <div className="angio-carousel">
+                    {[
+                      '/images/se001.png',
+                      '/images/se002.png',
+                      '/images/se003.png',
+                      '/images/se004.png',
+                      '/images/se005.png',
+                      '/images/se006.png',
+                      '/images/se007.png',
+                      '/images/se008.png',
+                      '/images/se001.png',
+                      '/images/se002.png',
+                      '/images/se003.png',
+                      '/images/se004.png',
+                      '/images/se005.png',
+                      '/images/se006.png',
+                      '/images/se007.png',
+                      '/images/se008.png'
+                    ].map((src, idx) => (
+                      <div key={idx} className="relative h-64 w-64 flex-shrink-0 rounded-xl overflow-hidden shadow-lg">
+                        <Image src={src} alt={`Angiography ${idx + 1}`} fill className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>

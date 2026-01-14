@@ -10,34 +10,24 @@ export default function CardiacPage() {
 
   const cardiacImages = [
     {
-      src: "/images/CARDIAC.jpg",
+      src: "/images/Cardiac1.png",
       alt: "Cardiac CT Scan",
       title: "Advanced Cardiac Imaging"
     },
     {
-      src: "/images/cardiac2.png", 
+      src: "/images/Cardiac2.png", 
       alt: "Heart Scan Technology",
       title: "Precision Heart Diagnostics"
     },
     {
-      src: "/images/cardiac3.png",
+      src: "/images/Cardiac3.png",
       alt: "Coronary Angiography",
       title: "Coronary Vessel Analysis"
     },
     {
-      src: "/images/cardiac4.png",
+      src: "/images/Cardiac4.png",
       alt: "Cardiac Analysis",
       title: "Comprehensive Heart Analysis"
-    },
-    {
-      src: "/images/angiography.jpg",
-      alt: "Angiography Imaging",
-      title: "Vascular Imaging Technology"
-    },
-    {
-      src: "/images/angiography2.jpg",
-      alt: "Advanced Angiography",
-      title: "State-of-the-Art Angiography"
     }
   ];
 
@@ -213,68 +203,21 @@ export default function CardiacPage() {
                     CARDIAC GALLERY
                   </h2>
                   
-                  <div className="relative">
-                    <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl mb-6">
-                      <Image
-                        src={cardiacImages[currentImageIndex].src}
-                        alt={cardiacImages[currentImageIndex].alt}
-                        fill
-                        className="object-cover transition-all duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <div className="absolute bottom-4 left-4 text-white">
-                        <h3 className="text-lg font-bold" style={{fontFamily: 'Roboto, sans-serif'}}>
-                          {cardiacImages[currentImageIndex].title}
-                        </h3>
-                      </div>
-                    </div>
-                    
-                    {/* Navigation Buttons */}
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                    
-                    {/* Dots Indicator */}
-                    <div className="flex justify-center space-x-2">
-                      {cardiacImages.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === currentImageIndex ? 'bg-[#0056AE] scale-125' : 'bg-gray-300 hover:bg-gray-400'
-                          }`}
+                  {/* Static Image Display */}
+                  <div className="flex flex-col gap-4">
+                    {cardiacImages.map((image, index) => (
+                      <div
+                        key={index}
+                        className="relative h-48 w-full rounded-lg overflow-hidden shadow-lg"
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          className="object-cover"
                         />
-                      ))}
-                    </div>
-                    
-                    {/* Thumbnail Grid */}
-                    <div className="grid grid-cols-3 gap-2 mt-6">
-                      {cardiacImages.map((image, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`relative h-20 rounded-lg overflow-hidden transition-all duration-300 ${
-                            index === currentImageIndex ? 'ring-2 ring-[#0056AE] scale-105' : 'hover:scale-105'
-                          }`}
-                        >
-                          <Image
-                            src={image.src}
-                            alt={image.alt}
-                            fill
-                            className="object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 </motion.div>
               </div>

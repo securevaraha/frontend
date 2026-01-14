@@ -44,7 +44,7 @@ const MedicalImagingGallery = () => {
       src: '/images/angiography_main.png', 
       title: 'Angiography', 
       description: 'Advanced angiography for detailed vascular visualization',
-      redirectUrl: '/dual-energy'
+      redirectUrl: '/dual-energy#angiography'
     },
     { 
       src: '/images/duealenergy:gi.png', 
@@ -58,8 +58,8 @@ const MedicalImagingGallery = () => {
     <section className="py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>Medical Imaging Gallery</h2>
-          <p className="text-xl text-gray-600">Advanced imaging capabilities in cardiac, angiography, and dual energy</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>CT Scan Center Gallery</h2>
+          <p className="text-xl text-gray-600">Advanced CT scan capabilities in cardiac, angiography, and dual energy</p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">

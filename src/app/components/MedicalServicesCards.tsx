@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const MedicalServicesCards = () => {
@@ -15,7 +16,8 @@ const MedicalServicesCards = () => {
       images: ['/images/CARDIAC.jpg', '/images/cardiac2.png', '/images/cardiac3.png', '/images/cardiac4.png', '/images/cadiac.png'],
       color: 'from-red-500 to-pink-600',
       bgColor: 'bg-red-50',
-      iconColor: 'text-red-600'
+      iconColor: 'text-red-600',
+      link: '/cardiac'
     },
     {
       id: 2,
@@ -24,7 +26,8 @@ const MedicalServicesCards = () => {
       images: ['/images/angiography.jpg', '/images/angiography2.jpg', '/images/ln001.png', '/images/ln002.png', '/images/ln005.png', '/images/ln006.png', '/images/ln007.png', '/images/ln008.png', '/images/pg001.png'],
       color: 'from-blue-500 to-cyan-600',
       bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600'
+      iconColor: 'text-blue-600',
+      link: '/dual-energy#angiography'
     },
     {
       id: 3,
@@ -33,7 +36,8 @@ const MedicalServicesCards = () => {
       images: ['/images/se001.png', '/images/se002.png', '/images/se003.png', '/images/se004.png', '/images/se005.png', '/images/se006.png', '/images/se007.png', '/images/se008.png'],
       color: 'from-purple-500 to-indigo-600',
       bgColor: 'bg-purple-50',
-      iconColor: 'text-purple-600'
+      iconColor: 'text-purple-600',
+      link: '/dual-energy'
     }
   ];
 
@@ -137,10 +141,14 @@ const MedicalServicesCards = () => {
 
         {/* CTA */}
         <div className="text-center mt-8 md:mt-12">
-          <button className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
-            style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
-            Schedule Your Scan Today
-          </button>
+          {currentService && (
+            <Link href={currentService.link}>
+              <button className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
+                style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+                View {currentService.title} Details
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </section>
