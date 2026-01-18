@@ -73,12 +73,18 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-          <div className="text-lg md:text-xl mt-4 drop-shadow-md max-w-4xl mx-auto space-y-4">
-            <p>Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time.</p>
-            <p>We at Varaha focus on bringing quality diagnosis by providing best quality services.</p>
-            <p>Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines.</p>
-            <p>Our advanced technology gives doctors an edge in diagnosing the illness better.</p>
-          </div>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              We at Varaha focus on bringing quality diagnosis by providing best quality services.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              Our advanced technology gives doctors an edge in diagnosing the illness better.
+            </p>
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
               We provide immediate medical care for emergency patients and our acquiescent staff will be glad to assist you 24x7 and we have an efficient team of radiologist for excellent reporting.
             </p>
@@ -132,7 +138,7 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-[#0056AE] mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
               Advanced Medical Services
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto mb-6"></div>
@@ -237,69 +243,28 @@ export default function AboutUsPage() {
               We have an efficient team of radiologists for reporting, ensuring accurate diagnosis and comprehensive patient care
             </p>
           </motion.div>
-
-          {/* Video Section */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-[#0056AE] mb-4">Experience Our Facility</h3>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Take a virtual tour of our state-of-the-art medical facility and advanced equipment
-              </p>
-            </div>
-            
-            <div className="relative max-w-4xl mx-auto">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#0056AE] to-[#2E92ED] p-2">
-                <div className="relative rounded-2xl overflow-hidden bg-black">
-                  <div className="aspect-video">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src="https://www.youtube.com/embed/kIF3F0o3LpE?rel=0&modestbranding=1&showinfo=0"
-                      title="Medical Facility Tour"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="rounded-2xl"
-                    ></iframe>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#2E92ED] rounded-full opacity-60 animate-pulse"></div>
-              <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-[#0056AE] rounded-full opacity-40 animate-pulse" style={{ animationDelay: '1s' }}></div>
-              <div className="absolute top-1/2 -left-8 w-6 h-6 bg-gradient-to-r from-[#2E92ED] to-[#0056AE] rounded-full opacity-50 animate-bounce" style={{ animationDelay: '0.5s' }}></div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-gradient-to-br from-[#0056AE] to-[#00143F] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30"></div>
+      <section className="py-20 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
             Ready to Experience Excellence in Healthcare?
           </h2>
-          <p className="max-w-2xl mx-auto mb-8 text-blue-100">
+          <p className="max-w-2xl mx-auto mb-8" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
             Discover our comprehensive medical services or get in touch with our team to schedule your consultation.
           </p>
           <div className="flex justify-center gap-4">
             <Link
-              href="/products"
+              href="/services"
               className="bg-[#2E92ED] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-[#0056AE] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Our Services
             </Link>
             <Link
               href="/contact"
-              className="bg-transparent border-2 border-[#2E92ED] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2E92ED] transition-all duration-300"
+              className="bg-transparent border-2 font-bold py-3 px-8 rounded-full text-lg transition-all duration-300" style={{borderColor: '#0056AE', color: '#0056AE'}} onMouseEnter={(e) => {e.target.style.backgroundColor = '#0056AE'; e.target.style.color = 'white';}} onMouseLeave={(e) => {e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#0056AE';}}
             >
               Contact Us
             </Link>
