@@ -131,11 +131,11 @@ export default async function HomePage() {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: '#F8FBFF'}}>
                   <div className="w-2 h-2 rounded-full" style={{backgroundColor: '#2E92ED'}}></div>
-                  <span className="text-sm font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.</span>
+                  <span className="text-sm font-medium" style={{color: '#374151', fontFamily: 'Roboto, sans-serif'}}>Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: '#F8FBFF'}}>
                   <div className="w-2 h-2 rounded-full" style={{backgroundColor: '#2E92ED'}}></div>
-                  <span className="text-sm font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second.</span>
+                  <span className="text-sm font-medium" style={{color: '#374151', fontFamily: 'Roboto, sans-serif'}}>GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second.</span>
                 </div>
               </div>
               
@@ -152,7 +152,7 @@ export default async function HomePage() {
                   ].map((spec, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: '#F8FBFF'}}>
                       <div className="w-2 h-2 rounded-full" style={{backgroundColor: '#2E92ED'}}></div>
-                      <span className="text-sm font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>{spec}</span>
+                      <span className="text-sm font-medium" style={{color: '#374151', fontFamily: 'Roboto, sans-serif'}}>{spec}</span>
                     </div>
                   ))}
                 </div>
@@ -192,7 +192,7 @@ export default async function HomePage() {
                     <svg className="w-4 h-4" style={{color: '#2E92ED'}} fill="currentColor" viewBox="0 0 24 24">
                       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                     </svg>
-                    <span className="text-sm" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>{feature}</span>
+                    <span className="text-sm" style={{color: '#374151', fontFamily: 'Roboto, sans-serif'}}>{feature}</span>
                   </div>
                 ))}
               </div>
@@ -280,7 +280,7 @@ export default async function HomePage() {
             <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto"></div>
           </div>
           
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto px-8 sm:px-12 lg:px-16 xl:px-20">
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
               {/* 24 Hour Reporting */}
               <div className="group perspective-1000">
@@ -376,6 +376,31 @@ export default async function HomePage() {
                     <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
                       <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
                         Dedicated personal care with individual attention to ensure comfort and support throughout your visit
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Emergency Services */}
+              <div className="group perspective-1000">
+                <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
+                  <div className="absolute inset-0 backface-hidden">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center border-t-4 shadow-lg" style={{backgroundColor: '#E8F2FF', borderTopColor: '#0056AE'}}>
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto" style={{backgroundColor: '#0056AE'}}>
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                        EMERGENCY SERVICES
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 backface-hidden rotate-y-180">
+                    <div className="text-center p-6 lg:p-8 rounded-2xl h-full flex flex-col justify-center shadow-lg" style={{backgroundColor: '#0056AE'}}>
+                      <p className="text-sm leading-relaxed text-white" style={{fontFamily: 'Roboto, sans-serif'}}>
+                        Immediate emergency CT scan services available 24/7 for trauma and critical cases
                       </p>
                     </div>
                   </div>

@@ -334,6 +334,21 @@ p {
   .lg\:py-24 {
     padding-block: calc(var(--spacing) * 8);
   }
+  .lg\:px-16 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+}
+
+@media (min-width: 40rem) {
+  .sm\:px-12 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+}
+
+@media (min-width: 80rem) {
+  .xl\:px-20 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
 }
 
 /* Height utilities */
