@@ -80,20 +80,20 @@ export default function HeroClient() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-10 sm:pt-12 max-w-4xl mx-auto"
         >
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>25+</div>
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>10+</div>
             <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>Years Experience</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>500+</div>
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>50000+</div>
             <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>Happy Patients</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>50+</div>
-            <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>Medical Services</div>
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>250+</div>
+            <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>CT Scan Services</div>
           </div>
           <div className="text-center">
             <div className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{color: '#2E92ED', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>24/7</div>
-            <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>Support</div>
+            <div className="text-xs sm:text-sm text-gray-300 mt-1" style={{fontFamily: 'Roboto, sans-serif'}}>Services Available</div>
           </div>
         </motion.div>
       </motion.div>

@@ -8,6 +8,9 @@
   --font-heading: 'Roboto', system-ui, -apple-system, sans-serif;
   --font-secondary: 'Roboto Slab', serif;
 
+  /* Spacing System */
+  --spacing: 0.25rem; /* 4px base unit */
+
   /* Medical Theme - Varaha SDC */
   --color-primary: #0056AE;
   --color-primary-hover: #0156B1;
@@ -315,8 +318,27 @@ p {
   line-height: 1.4;
 }
 
+/* Spacing utilities */
 .p-6 {
-  padding: calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 6);
+}
+
+.py-20 {
+  padding-block: calc(var(--spacing) * 8);
+}
+
+@media (min-width: 64rem) {
+  .lg\:py-20 {
+    padding-block: calc(var(--spacing) * 8);
+  }
+  .lg\:py-24 {
+    padding-block: calc(var(--spacing) * 8);
+  }
+}
+
+/* Height utilities */
+.h-screen {
+  height: 70vh;
 }
 
 /* Print styles */

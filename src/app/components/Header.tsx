@@ -76,7 +76,7 @@ const Header = () => {
                     Varaha SDC
                   </span>
                   <p className={`text-xs -mt-1 ${isScrolled ? 'text-[#2E92ED]' : 'text-[#B8D4F0]'}`} style={{fontFamily: 'Roboto, sans-serif'}}>
-                    Advanced Diagnostic Center
+                    Advanced CT Scan Center
                   </p>
                 </div>
               </Link>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Heart } from "lucide-react";
+import { X, Heart, Activity } from "lucide-react";
 import Image from "next/image";
 
 export default function CardiacPopup() {
@@ -30,10 +30,7 @@ export default function CardiacPopup() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
           <div className="absolute top-2 left-2 bg-[#0056AE] text-white px-2 py-1 rounded text-xs font-medium">
-            TAVI PROTOCOL
-          </div>
-          <div className="absolute bottom-2 left-2 text-white text-sm font-medium">
-            ANGIOGRAPHY
+         CT Scan
           </div>
           <button 
             onClick={() => setIsVisible(false)}
@@ -44,32 +41,42 @@ export default function CardiacPopup() {
         </div>
         
         {/* Content Section */}
-        <div className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center flex-shrink-0">
-              <Heart className="w-5 h-5 text-white" />
-            </div>
-            
-            <div className="flex-1">
-              <h3 className="text-lg font-bold mb-3" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                Advanced Cardiac Imaging
-              </h3>
-              
-              <div className="space-y-2 text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                <p>The 256 slice CT provides a quantum leap in imaging and is now being used to diagnose heart disease.</p>
-                <p>This advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation.</p>
-              </div>
-              
-              <a 
-                href="/book-appointment"
-                className="mt-4 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300"
-                style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
-              >
-                Book Cardiac Scan
-              </a>
-            </div>
-          </div>
-        </div>
+    <div className="p-6">
+  <div className="flex items-start gap-4">
+    {/* CT Design: Changed gradient to Cyan/Blue and Heart to Scan Icon */}
+    <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+      <Activity className="w-5 h-5 text-white" />
+    </div>
+    
+    <div className="flex-1">
+      <h3 className="text-lg font-bold mb-3" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+       Important: Before your CT Scan
+      </h3>
+      
+      <div className="space-y-2 text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+        {/* Bullet Point 1 */}
+        <p className="flex gap-2 items-start">
+          <span className="text-[#0056AE] font-bold">•</span>
+          <span>A Renal Function Test (RFT) is mandatory before contrast scans to ensure kidneys can safely filter the dye.</span>
+        </p>
+        
+        {/* Bullet Point 2 */}
+        <p className="flex gap-2 items-start">
+          <span className="text-[#0056AE] font-bold">•</span>
+          <span>Six hours of fasting is required to prevent nausea from contrast and ensure clear imaging results.</span>
+        </p>
+      </div>
+      
+      <a 
+        href="/book-appointment"
+        className="mt-4 inline-block bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300"
+        style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
+      >
+        Book CT Scan
+      </a>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );

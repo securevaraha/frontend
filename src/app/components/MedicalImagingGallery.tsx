@@ -58,7 +58,7 @@ const MedicalImagingGallery = () => {
     <section className="py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>CT Scan Center Gallery</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>Specialized CT Scan Solutions</h2>
           <p className="text-xl text-gray-600">Advanced CT scan capabilities in cardiac, angiography, and dual energy</p>
         </div>
         
