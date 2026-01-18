@@ -130,11 +130,11 @@ export default function AboutUsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-              Advanced Medical Services
+              Advanced CT Scan Services
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED] mx-auto mb-6"></div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive healthcare solutions with cutting-edge technology and compassionate care
+              Comprehensive CT imaging solutions with cutting-edge technology and expert care
             </p>
           </motion.div>
 
@@ -149,11 +149,13 @@ export default function AboutUsPage() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-red-600"></div>
               <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <Heart className="w-8 h-8 text-white" />
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">EMERGENCY CARE</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">24/7 EMERGENCY SCANS</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Immediate medical care available 24 hours a day for emergency patients
+                Immediate CT scan services available 24 hours a day for emergency and trauma cases
               </p>
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
@@ -168,11 +170,13 @@ export default function AboutUsPage() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0056AE] to-[#2E92ED]"></div>
               <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#0056AE] to-[#2E92ED] rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <Heart className="w-8 h-8 text-white" />
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">CARDIAC</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">CARDIAC CT SCANS</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Advanced scanner achieves whole imaging of the heart within a short time span using low dose radiation, providing visual detail about heart function and 3D images
+                Advanced cardiac CT imaging for detailed heart visualization within seconds using low dose radiation with 3D reconstruction
               </p>
               <div className="absolute inset-0 bg-gradient-to-br from-[#0056AE]/5 to-[#2E92ED]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
@@ -187,11 +191,13 @@ export default function AboutUsPage() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-green-600"></div>
               <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <Zap className="w-8 h-8 text-white" />
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">DUAL ENERGY</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">DUAL ENERGY CT</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Dual energy scans provide better quality scans with low dose radiation
+                Revolutionary dual energy CT technology provides superior image quality with reduced radiation dose
               </p>
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-green-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
@@ -206,11 +212,13 @@ export default function AboutUsPage() {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-600"></div>
               <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-8 h-8 text-white" />
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">COOPERATIVE STAFF</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">EXPERT TECHNICIANS</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                We have a cooperative team of staff who is available 24x7 to guide and assist you in the process
+                Certified CT technicians and radiologists available 24x7 to ensure accurate scanning and reporting
               </p>
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>

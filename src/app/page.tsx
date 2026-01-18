@@ -422,7 +422,8 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="mx-auto px-8 sm:px-12 lg:px-16 xl:px-20">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="group relative p-8 rounded-3xl overflow-hidden" style={{backgroundColor: '#E8F2FF'}}>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{background: 'linear-gradient(135deg, #2E92ED, #0056AE)'}}></div>
               <div className="relative z-10 transform group-hover:scale-105 transition-all duration-500">
@@ -476,9 +477,13 @@ export default async function HomePage() {
               </div>
               <div className="absolute bottom-0 left-0 w-full h-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" style={{backgroundColor: '#0056AE'}}></div>
             </div>
+            </div>
           </div>
         </div>
       </section>
+
+      <MedicalImagingGallery />
+
       {/* Why Choose Us Section */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
