@@ -255,7 +255,7 @@ export default function AboutUsPage() {
             </Link>
             <Link
               href="/contact"
-              className="bg-transparent border-2 font-bold py-3 px-8 rounded-full text-lg transition-all duration-300" style={{borderColor: '#0056AE', color: '#0056AE'}} onMouseEnter={(e) => {e.target.style.backgroundColor = '#0056AE'; e.target.style.color = 'white';}} onMouseLeave={(e) => {e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#0056AE';}}
+              className="bg-transparent border-2 font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hover:bg-[#0056AE] hover:text-white" style={{borderColor: '#0056AE', color: '#0056AE'}}
             >
               Contact Us
             </Link>
