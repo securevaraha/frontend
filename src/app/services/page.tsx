@@ -280,7 +280,7 @@ export default function ServicesPage() {
             Book your appointment for state-of-the-art diagnostic imaging
           </p>
           <a
-            href="/contact"
+            href="https://app.varahasdc.co.in/book-appointment"
             className="inline-block bg-white text-[#0056AE] font-bold py-4 px-8 rounded-full text-lg hover:shadow-lg transition-all duration-300"
             style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
           >

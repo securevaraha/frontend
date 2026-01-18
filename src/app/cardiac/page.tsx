@@ -334,7 +334,7 @@ export default function CardiacPage() {
             Experience the future of cardiac imaging with our revolutionary CT technology. Schedule your cardiac evaluation today.
           </p>
           <a
-            href="/contact"
+            href="https://app.varahasdc.co.in/book-appointment"
             className="inline-block bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-full text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
           >

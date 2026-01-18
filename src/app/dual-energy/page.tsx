@@ -367,7 +367,7 @@ export default function DualEnergyPage() {
             Schedule your appointment today and benefit from our cutting-edge dual energy
           </p>
           <a
-            href="/contact"
+            href="https://app.varahasdc.co.in/book-appointment"
             className="inline-block bg-gradient-to-r from-[#0056AE] to-[#2E92ED] text-white font-bold py-4 px-8 rounded-full text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}
           >
