@@ -337,6 +337,9 @@ p {
   .lg\:px-16 {
     padding-inline: calc(var(--spacing) * 3);
   }
+  .lg\:py-16 {
+    padding-block: calc(var(--spacing) * 8);
+  }
 }
 
 @media (min-width: 40rem) {
