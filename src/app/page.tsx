@@ -125,15 +125,19 @@ export default async function HomePage() {
           {/* First Section - Left Content, Right Image */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-6">
-              <h3 className="text-3xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+              <h4 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
                 Revolution CT Technology
-              </h3>
-              <p className="text-lg mb-4" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.
-              </p>
-              <p className="text-base mb-6" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second.
-              </p>
+              </h4>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: '#F8FBFF'}}>
+                  <div className="w-2 h-2 rounded-full" style={{backgroundColor: '#2E92ED'}}></div>
+                  <span className="text-sm font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>Revolution CT is a breakthrough that puts in your hand uncompromised technology coverage; spatial resolution, temporal resolution and dose performance all in one CT.</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-lg" style={{backgroundColor: '#F8FBFF'}}>
+                  <div className="w-2 h-2 rounded-full" style={{backgroundColor: '#2E92ED'}}></div>
+                  <span className="text-sm font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>GE healthcare's revolution CT scanner can capture a detailed picture of your body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second.</span>
+                </div>
+              </div>
               
               <div>
                 <h4 className="text-2xl font-bold mb-4" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
@@ -277,7 +281,7 @@ export default async function HomePage() {
           </div>
           
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
               {/* 24 Hour Reporting */}
               <div className="group perspective-1000">
                 <div className="relative w-full h-80 transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
