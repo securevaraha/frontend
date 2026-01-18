@@ -353,7 +353,7 @@ p {
 
 /* Height utilities */
 .h-screen {
-  height: 70vh;
+  height: 100vh;
 }
 
 /* Print styles */
