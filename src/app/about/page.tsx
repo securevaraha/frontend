@@ -74,16 +74,7 @@ export default function AboutUsPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time.
-            </p>
-            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              We at Varaha focus on bringing quality diagnosis by providing best quality services.
-            </p>
-            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines.
-            </p>
-            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              Our advanced technology gives doctors an edge in diagnosing the illness better.
+              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time. We at Varaha focus on bringing quality diagnosis by providing best quality services. Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines. Our advanced technology gives doctors an edge in diagnosing the illness better.
             </p>
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
               We provide immediate medical care for emergency patients and our acquiescent staff will be glad to assist you 24x7 and we have an efficient team of radiologist for excellent reporting.

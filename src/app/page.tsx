@@ -422,7 +422,7 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="group relative p-8 rounded-3xl overflow-hidden" style={{backgroundColor: '#E8F2FF'}}>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{background: 'linear-gradient(135deg, #2E92ED, #0056AE)'}}></div>
               <div className="relative z-10 transform group-hover:scale-105 transition-all duration-500">
@@ -457,6 +457,24 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="absolute bottom-0 left-0 w-full h-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" style={{backgroundColor: '#2E92ED'}}></div>
+            </div>
+
+            <div className="group relative p-8 rounded-3xl overflow-hidden" style={{backgroundColor: '#E8F2FF'}}>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{background: 'linear-gradient(135deg, #2E92ED, #0056AE)'}}></div>
+              <div className="relative z-10 transform group-hover:scale-105 transition-all duration-500">
+                <div className="flex items-center mb-6">
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center mr-4 group-hover:rotate-12 transition-transform duration-500" style={{backgroundColor: '#2E92ED'}}>
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold group-hover:text-white transition-colors duration-500" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Fast & Accurate</h3>
+                </div>
+                <p className="text-lg leading-relaxed group-hover:text-white transition-colors duration-500" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                  Our Revolution CT 256 slice technology provides rapid scanning with exceptional accuracy, enabling quick diagnosis and immediate treatment planning for better patient outcomes
+                </p>
+              </div>
+              <div className="absolute bottom-0 left-0 w-full h-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" style={{backgroundColor: '#0056AE'}}></div>
             </div>
           </div>
         </div>
