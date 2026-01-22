@@ -9,6 +9,7 @@ import { Gem, Lightbulb, Handshake, Target, Heart, Zap, Users, UserCheck } from 
 import { ReactNode } from "react";
 
 // A reusable card for our values
+
 const ValueCard = ({
   icon,
   title,
