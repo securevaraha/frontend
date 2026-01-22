@@ -125,8 +125,8 @@ export default function DualEnergyPage() {
                     Dual-Energy KUB (Kidney, Ureter, Bladder) is an advanced X-ray imaging technique that uses two different X-ray energy level in a single scan to differentiate materials, primarily to determine the chemical composition of kidney stones. This helps doctors select appropriate treatments, potentially avoiding unnecessary surgery by identifying stones like uric acid stones that can be dissolved medically, and it offers a low-dose, cost-effective alternative to Dual Energy for stone characterization.
                   </p>
                 </div>
-                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/images/GSI KUB.jpg" alt="Dual Energy KUB Imaging" fill className="object-cover" />
+                <div className="relative h-80 w-full rounded-2xl overflow-hidden shadow-2xl bg-white">
+                  <Image src="/images/GSI KUB.jpg" alt="Dual Energy KUB Imaging" fill className="object-contain p-4" />
                 </div>
               </div>
             </motion.div>

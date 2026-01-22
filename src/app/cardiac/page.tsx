@@ -78,7 +78,7 @@ export default function CardiacPage() {
           <div className="max-w-7xl mx-auto">
             
             {/* Left-Right Layout Container */}
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-12">
               
               {/* Left Side - Content */}
               <div className="space-y-8">
@@ -168,6 +168,9 @@ export default function CardiacPage() {
                     </h3>
                   </div>
                   <div className="bg-white rounded-b-2xl p-6 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
+                    <p className="text-sm mb-4" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                      Cardiac imaging plays an important role in both congenital and acquired heart diseases.
+                    </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{color: '#2E92ED'}} />
@@ -189,132 +192,191 @@ export default function CardiacPage() {
                   </div>
                 </motion.div>
 
-              </div>
-              
-              {/* Right Side - Image Gallery */}
-              <div className="lg:sticky lg:top-8">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h2 className="text-2xl font-bold mb-8 text-center" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
-                    CARDIAC GALLERY
-                  </h2>
-                  
-                  {/* Static Image Display */}
-                  <div className="flex flex-col gap-4">
-                    {cardiacImages.map((image, index) => (
-                      <div
-                        key={index}
-                        className="relative h-48 w-full rounded-lg overflow-hidden shadow-lg"
-                      >
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          className="object-cover"
-                        />
+                {/* Cardiac Images Carousel */}
+                <div className="relative overflow-hidden">
+                  <style jsx>{`
+                    @keyframes scrollCardiac {
+                      0% { transform: translateX(0); }
+                      100% { transform: translateX(calc(-280px * 12)); }
+                    }
+                    .cardiac-carousel {
+                      display: flex;
+                      gap: 1.5rem;
+                      animation: scrollCardiac 30s linear infinite;
+                    }
+                  `}</style>
+                  <div className="cardiac-carousel">
+                    {[
+                      '/images/Cardiac/cardiac1.png',
+                      '/images/Cardiac/cardiac2.png',
+                      '/images/Cardiac/cardiac3.png',
+                      '/images/Cardiac/cardiac4.png',
+                      '/images/Cardiac/cardiac5.png',
+                      '/images/Cardiac/cardiac6.png',
+                      '/images/Cardiac/cardiac7.png',
+                      '/images/Cardiac/cardiac8.png',
+                      '/images/Cardiac/cardiac9.png',
+                      '/images/Cardiac/cardiac10.png',
+                      '/images/Cardiac/cardiac11.png',
+                      '/images/Cardiac/cardiac12.png',
+                      '/images/Cardiac/cardiac1.png',
+                      '/images/Cardiac/cardiac2.png',
+                      '/images/Cardiac/cardiac3.png',
+                      '/images/Cardiac/cardiac4.png',
+                      '/images/Cardiac/cardiac5.png',
+                      '/images/Cardiac/cardiac6.png'
+                    ].map((src, idx) => (
+                      <div key={idx} className="relative h-64 w-64 flex-shrink-0 rounded-xl overflow-hidden shadow-lg bg-white">
+                        <Image src={src} alt={`Cardiac ${idx + 1}`} fill className="object-contain p-2" />
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
+
               </div>
               
             </div>
 
-            {/* Full Width Applications Section */}
-            <motion.div
-              className="mt-16"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6 mb-0">
-                <h3 className="text-2xl md:text-3xl font-bold text-white uppercase text-center" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
-                  CARDIAC CT APPLICATIONS
-                </h3>
-              </div>
-              <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
-                
-                <div className="grid md:grid-cols-3 gap-8">
-                  {/* Coronary Artery Assessment */}
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <Heart className="w-8 h-8" style={{color: '#0056AE'}} />
-                      <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        CORONARY ASSESSMENT
-                      </h4>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Non-invasive coronary artery evaluation</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Stenosis and blockage detection</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Calcium scoring for risk assessment</span>
-                      </li>
-                    </ul>
+            {/* Coronary Angiogram and TAVI Cards */}
+            <div className="space-y-12">
+              {/* CT Coronary Angiogram Card */}
+              <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
+                <div>
+                  <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6">
+                    <h3 className="text-2xl font-bold text-white flex items-center gap-3" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      <Activity className="w-7 h-7" />
+                      Coronary Angiogram
+                    </h3>
                   </div>
-
-                  {/* Cardiac Structure Analysis */}
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <Activity className="w-8 h-8" style={{color: '#2E92ED'}} />
-                      <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        STRUCTURE ANALYSIS
-                      </h4>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Heart chambers assessment</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Heart valve evaluation</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Congenital defect detection</span>
-                      </li>
-                    </ul>
+                  <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
+                    <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                      A CT Coronary Angiogram is a non-invasive imaging test that uses a CT scanner, and contrast dye to create detailed 3D pictures of your heart's arteries, revealing plaque, blockages, or narrowing (stenosis) that can cause heart problems like chest pain.
+                    </p>
                   </div>
-
-                  {/* Advanced Features */}
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <Zap className="w-8 h-8" style={{color: '#0056AE'}} />
-                      <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                        ADVANCED FEATURES
-                      </h4>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Cardiac perfusion imaging</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Myocardial viability assessment</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[#2E92ED] mt-1">•</span>
-                        <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>3D cardiac reconstruction</span>
-                      </li>
-                    </ul>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
+                    <Image src="/images/Cardiac/Caronary Ang1.jpg" alt="Coronary Angiogram 1" fill className="object-contain p-2" />
+                  </div>
+                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
+                    <Image src="/images/Cardiac/Caronary Ang2.jpg" alt="Coronary Angiogram 2" fill className="object-contain p-2" />
                   </div>
                 </div>
               </div>
-            </motion.div>
 
+              {/* TAVI/TAVR Card */}
+              <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
+                <div className="lg:order-2">
+                  <div className="bg-gradient-to-r from-[#2E92ED] to-[#0056AE] rounded-t-2xl p-6">
+                    <h3 className="text-2xl font-bold text-white flex items-center gap-3" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                      <Stethoscope className="w-7 h-7" />
+                      TAVI/TAVR
+                    </h3>
+                  </div>
+                  <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
+                    <p className="text-base leading-relaxed" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
+                      A TAVI (Transcatheter Aortic Valve Implantation) heart procedure, also known as TAVR, is a minimally invasive way to replace a diseased aortic heart valve using a catheter, avoiding open-heart surgery.
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:order-1 grid grid-cols-2 gap-4">
+                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
+                    <Image src="/images/Cardiac tavi Tavr/tavi 1.jpg" alt="TAVI Procedure 1" fill className="object-contain p-2" />
+                  </div>
+                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
+                    <Image src="/images/Cardiac tavi Tavr/tavi 2.jpeg" alt="TAVI Procedure 2" fill className="object-contain p-2" />
+                  </div>
+                  <div className="col-span-2 relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
+                    <Image src="/images/Cardiac tavi Tavr/tavi 3.jpg" alt="TAVI Procedure 3" fill className="object-contain p-2" />
+                  </div>
+                </div>
+              </div>
+
+              {/* CARDIAC CT APPLICATIONS Section */}
+              <div className="mt-12">
+                <div className="bg-gradient-to-r from-[#0056AE] to-[#2E92ED] rounded-t-2xl p-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white uppercase text-center" style={{fontFamily: 'Roboto, sans-serif', fontWeight: 700}}>
+                    CARDIAC CT APPLICATIONS
+                  </h3>
+                </div>
+                <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {/* Coronary Assessment */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <Heart className="w-8 h-8" style={{color: '#0056AE'}} />
+                        <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                          CORONARY ASSESSMENT
+                        </h4>
+                      </div>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Non-invasive coronary artery evaluation</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Stenosis and blockage detection</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Calcium scoring for risk assessment</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Structure Analysis */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <Activity className="w-8 h-8" style={{color: '#2E92ED'}} />
+                        <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                          STRUCTURE ANALYSIS
+                        </h4>
+                      </div>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Heart chambers assessment</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Heart valve evaluation</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Congenital defect detection</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Advanced Features */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <Zap className="w-8 h-8" style={{color: '#0056AE'}} />
+                        <h4 className="text-lg font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
+                          ADVANCED FEATURES
+                        </h4>
+                      </div>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Cardiac perfusion imaging</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>Myocardial viability assessment</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#2E92ED] mt-1">•</span>
+                          <span className="text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>3D cardiac reconstruction</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
