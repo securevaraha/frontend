@@ -193,16 +193,28 @@ export default function CardiacPage() {
                 </motion.div>
 
                 {/* Cardiac Images Carousel */}
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden rounded-2xl" style={{backgroundColor: '#F8FBFF'}}>
                   <style jsx>{`
                     @keyframes scrollCardiac {
                       0% { transform: translateX(0); }
-                      100% { transform: translateX(calc(-280px * 12)); }
+                      100% { transform: translateX(calc(-320px * 12)); }
                     }
                     .cardiac-carousel {
                       display: flex;
                       gap: 1.5rem;
-                      animation: scrollCardiac 30s linear infinite;
+                      padding: 2rem 0;
+                      animation: scrollCardiac 25s linear infinite;
+                    }
+                    .cardiac-carousel:hover {
+                      animation-play-state: paused;
+                    }
+                    .cardiac-image {
+                      transition: all 0.5s ease;
+                    }
+                    .cardiac-image:hover {
+                      transform: scale(1.1) translateY(-10px);
+                      z-index: 10;
+                      box-shadow: 0 20px 40px rgba(0, 86, 174, 0.3);
                     }
                   `}</style>
                   <div className="cardiac-carousel">
@@ -226,8 +238,21 @@ export default function CardiacPage() {
                       '/images/Cardiac/cardiac5.png',
                       '/images/Cardiac/cardiac6.png'
                     ].map((src, idx) => (
-                      <div key={idx} className="relative h-64 w-64 flex-shrink-0 rounded-xl overflow-hidden shadow-lg bg-white">
-                        <Image src={src} alt={`Cardiac ${idx + 1}`} fill className="object-contain p-2" />
+                      <div key={idx} className="cardiac-image group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl flex-shrink-0" style={{width: '300px', height: '300px'}}>
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={src} 
+                            alt={`Cardiac ${(idx % 12) + 1}`} 
+                            fill 
+                            className="object-contain p-2 transition-transform duration-500 group-hover:scale-110" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                          <div className="absolute bottom-2 left-2 right-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
+                              <p className="text-xs font-semibold text-gray-800">Cardiac Scan {(idx % 12) + 1}</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -255,11 +280,37 @@ export default function CardiacPage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
-                    <Image src="/images/Cardiac/Caronary Ang1.jpg" alt="Coronary Angiogram 1" fill className="object-contain p-2" />
+                  <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image 
+                        src="/images/Cardiac/Caronary Ang1.jpg" 
+                        alt="Coronary Angiogram 1" 
+                        fill 
+                        className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 right-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
+                        <p className="text-xs font-semibold text-gray-800">Coronary Angiogram</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
-                    <Image src="/images/Cardiac/Caronary Ang2.jpg" alt="Coronary Angiogram 2" fill className="object-contain p-2" />
+                  <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image 
+                        src="/images/Cardiac/Caronary Ang2.jpg" 
+                        alt="Coronary Angiogram 2" 
+                        fill 
+                        className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 right-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
+                        <p className="text-xs font-semibold text-gray-800">3D Vessel Analysis</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -279,15 +330,56 @@ export default function CardiacPage() {
                     </p>
                   </div>
                 </div>
-                <div className="lg:order-1 grid grid-cols-2 gap-4">
-                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
-                    <Image src="/images/Cardiac tavi Tavr/tavi 1.jpg" alt="TAVI Procedure 1" fill className="object-contain p-2" />
-                  </div>
-                  <div className="relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
-                    <Image src="/images/Cardiac tavi Tavr/tavi 2.jpeg" alt="TAVI Procedure 2" fill className="object-contain p-2" />
-                  </div>
-                  <div className="col-span-2 relative h-48 rounded-xl overflow-hidden shadow-lg bg-white">
-                    <Image src="/images/Cardiac tavi Tavr/tavi 3.jpg" alt="TAVI Procedure 3" fill className="object-contain p-2" />
+                <div className="lg:order-1 relative overflow-hidden rounded-2xl" style={{backgroundColor: '#F8FBFF'}}>
+                  <style jsx>{`
+                    @keyframes scrollTavi {
+                      0% { transform: translateX(0); }
+                      100% { transform: translateX(calc(-320px * 3)); }
+                    }
+                    .tavi-carousel {
+                      display: flex;
+                      gap: 1rem;
+                      padding: 1rem 0;
+                      animation: scrollTavi 12s linear infinite;
+                    }
+                    .tavi-carousel:hover {
+                      animation-play-state: paused;
+                    }
+                    .tavi-image {
+                      transition: all 0.5s ease;
+                    }
+                    .tavi-image:hover {
+                      transform: scale(1.1) translateY(-10px);
+                      z-index: 10;
+                      box-shadow: 0 20px 40px rgba(46, 146, 237, 0.3);
+                    }
+                  `}</style>
+                  <div className="tavi-carousel">
+                    {[
+                      { src: '/images/Cardiac tavi Tavr/tavi 1.jpg', title: 'TAVI Procedure' },
+                      { src: '/images/Cardiac tavi Tavr/tavi 2.jpeg', title: 'Valve Replacement' },
+                      { src: '/images/Cardiac tavi Tavr/tavi 3.jpg', title: 'Complete Analysis' },
+                      { src: '/images/Cardiac tavi Tavr/tavi 1.jpg', title: 'TAVI Procedure' },
+                      { src: '/images/Cardiac tavi Tavr/tavi 2.jpeg', title: 'Valve Replacement' },
+                      { src: '/images/Cardiac tavi Tavr/tavi 3.jpg', title: 'Complete Analysis' }
+                    ].map((item, idx) => (
+                      <div key={idx} className="tavi-image group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl flex-shrink-0" style={{width: '300px', height: '250px'}}>
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={item.src} 
+                            alt={`TAVI ${(idx % 3) + 1}`} 
+                            fill 
+                            className="object-contain p-2 transition-transform duration-500 group-hover:scale-110" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                          <div className="absolute bottom-2 left-2 right-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
+                              <p className="text-xs font-semibold text-gray-800">{item.title}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

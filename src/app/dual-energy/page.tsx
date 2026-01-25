@@ -125,8 +125,21 @@ export default function DualEnergyPage() {
                     Dual-Energy KUB (Kidney, Ureter, Bladder) is an advanced X-ray imaging technique that uses two different X-ray energy level in a single scan to differentiate materials, primarily to determine the chemical composition of kidney stones. This helps doctors select appropriate treatments, potentially avoiding unnecessary surgery by identifying stones like uric acid stones that can be dissolved medically, and it offers a low-dose, cost-effective alternative to Dual Energy for stone characterization.
                   </p>
                 </div>
-                <div className="relative h-80 w-full rounded-2xl overflow-hidden shadow-2xl bg-white">
-                  <Image src="/images/GSI KUB.jpg" alt="Dual Energy KUB Imaging" fill className="object-contain p-4" />
+                <div className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image 
+                      src="/images/GSI KUB.jpg" 
+                      alt="Dual Energy KUB Imaging" 
+                      fill 
+                      className="object-contain transition-transform duration-700 group-hover:scale-110 rotate-90" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                      <p className="text-sm font-semibold text-gray-800">KUB Imaging - Stone Analysis</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -153,8 +166,21 @@ export default function DualEnergyPage() {
                     Dual-Energy CT is a powerful, non-invasive imaging tool that detects and quantifies uric acid crystal deposits (tophi) in gout by using two different X-ray energy levels to differentiate them from other tissues.
                   </p>
                 </div>
-                <div className="lg:order-1 relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/images/GSI GOUT 1.png" alt="Gout Imaging" fill className="object-cover" />
+                <div className="lg:order-1 group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image 
+                      src="/images/GSI GOUT 1.png" 
+                      alt="Gout Imaging" 
+                      fill 
+                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                      <p className="text-sm font-semibold text-gray-800">Gout Detection - Uric Acid Crystals</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -177,8 +203,21 @@ export default function DualEnergyPage() {
                     (DECT) reduces artifacts, especially from metal implants, by acquiring data at two different X-ray energy levels, allowing for material decomposition and reconstruction that minimize beam-hardening streaks, offering clearer views of surrounding tissues, though specialized algorithms like MAR often provide even better results for complex metal artifacts, with optimal artifact reduction.
                   </p>
                 </div>
-                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/images/GSI ARTIFACT 1.jpg" alt="Metal Artifact Reduction" fill className="object-cover" />
+                <div className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image 
+                      src="/images/GSI ARTIFACT 1.jpg" 
+                      alt="Metal Artifact Reduction" 
+                      fill 
+                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                      <p className="text-sm font-semibold text-gray-800">Artifact Reduction - Clear Imaging</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -316,13 +355,24 @@ export default function DualEnergyPage() {
                   <style jsx>{`
                     @keyframes scrollAngio {
                       0% { transform: translateX(0); }
-                      100% { transform: translateX(calc(-280px * 8)); }
+                      100% { transform: translateX(calc(-320px * 8)); }
                     }
                     .angio-carousel {
                       display: flex;
                       gap: 1.5rem;
                       padding: 2rem 0;
-                      animation: scrollAngio 15s linear infinite;
+                      animation: scrollAngio 20s linear infinite;
+                    }
+                    .angio-carousel:hover {
+                      animation-play-state: paused;
+                    }
+                    .angio-image {
+                      transition: all 0.5s ease;
+                    }
+                    .angio-image:hover {
+                      transform: scale(1.1) translateY(-10px);
+                      z-index: 10;
+                      box-shadow: 0 20px 40px rgba(0, 86, 174, 0.3);
                     }
                   `}</style>
                   <div className="angio-carousel">
@@ -344,8 +394,21 @@ export default function DualEnergyPage() {
                       '/images/se007.png',
                       '/images/se008.png'
                     ].map((src, idx) => (
-                      <div key={idx} className="relative h-64 w-64 flex-shrink-0 rounded-xl overflow-hidden shadow-lg">
-                        <Image src={src} alt={`Angiography ${idx + 1}`} fill className="object-cover" />
+                      <div key={idx} className="angio-image group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl flex-shrink-0" style={{width: '300px', height: '300px'}}>
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={src} 
+                            alt={`Angiography ${(idx % 8) + 1}`} 
+                            fill 
+                            className="object-contain p-2 transition-transform duration-500 group-hover:scale-110" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                          <div className="absolute bottom-2 left-2 right-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
+                              <p className="text-xs font-semibold text-gray-800">Angiography {(idx % 8) + 1}</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
