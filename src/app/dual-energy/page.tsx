@@ -22,7 +22,7 @@ export default function DualEnergyPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full flex items-center justify-center text-white">
         <Image
-          src="/images/home.jpg"
+          src="/images/duelenergy.jpeg"
           alt="Dual Energy CT Scan"
           fill
           className="object-cover brightness-[0.4]"

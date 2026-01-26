@@ -39,7 +39,7 @@ export default function AboutUsPage() {
         transition={{ duration: 1 }}
       >
         <Image
-          src="/images/home.jpg"
+          src="/images/aboutus.jpeg"
           alt="Medical imaging equipment"
           fill
           className="object-cover brightness-[0.4]"
