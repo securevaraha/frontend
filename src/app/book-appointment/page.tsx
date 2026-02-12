@@ -90,7 +90,7 @@ export default function BookAppointmentPage() {
       <section className="relative h-[60vh] w-full flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/images/home.jpg"
+            src="/images/services.jpeg"
             alt="Medical imaging equipment"
             className="w-full h-full object-cover brightness-[0.4]"
           />

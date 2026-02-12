@@ -137,7 +137,7 @@ const Footer = () => {
                 <MapPin className="mt-1 flex-shrink-0" style={{color: '#2E92ED'}} size={18} />
                 <div style={{color: '#B8D4F0', fontFamily: 'Roboto, sans-serif'}}>
                   <p className="font-medium text-white mb-1">Location:</p>
-                  <p className="text-sm">Troma Centre, MDM Hospital, Shastri Nagar, Jodhpur, Rajasthan 342001</p>
+                  <p className="text-sm">Trauma Centre, MDM Hospital, Shastri Nagar, Jodhpur, Rajasthan 342001</p>
                 </div>
               </div>
               

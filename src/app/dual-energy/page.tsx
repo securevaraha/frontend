@@ -126,12 +126,12 @@ export default function DualEnergyPage() {
                   </p>
                 </div>
                 <div className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
-                  <div className="relative aspect-[4/3] w-full">
+                  <div className="relative aspect-[3/4] w-full">
                     <Image 
                       src="/images/GSI KUB.jpg" 
                       alt="Dual Energy KUB Imaging" 
                       fill 
-                      className="object-contain transition-transform duration-700 group-hover:scale-110 rotate-90" 
+                      className="object-contain transition-transform duration-700 group-hover:scale-110" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
@@ -238,7 +238,7 @@ export default function DualEnergyPage() {
               <div className="bg-white rounded-b-2xl p-8 shadow-lg border-2 border-t-0" style={{borderColor: '#E8F2FF'}}>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
-                    { icon: Heart, title: 'CARDIAC CASES', items: ['Covers whole heart in one rotation', 'Takes 4000 images in two rotation', 'Two beat motion free coronary images'], color: '#0056AE' },
+                    { icon: Heart, title: 'CARDIAC CASES', items: ['Covers whole heart in two rotation', 'Takes 4000 images in two rotation', 'Two beat motion free coronary images'], color: '#0056AE' },
                     { icon: Zap, title: 'MONOENERGETIC', items: ['Beam hardening artifact elimination', 'Helpful for implant patients'], color: '#2E92ED' },
                     { icon: Brain, title: 'VIRTUAL NCCT', items: ['Virtual non contrast CT scan'], color: '#0056AE' },
                     { icon: Droplets, title: 'CONTRAST SCAN', items: ['Plain and contrast from single scan'], color: '#2E92ED' },
@@ -285,26 +285,6 @@ export default function DualEnergyPage() {
                   </p>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Two Heart Beats Paragraph - Highlighted Box */}
-            <motion.div
-              className="mb-12 p-8 rounded-2xl relative overflow-hidden"
-              style={{background: 'linear-gradient(135deg, #E8F2FF 0%, #F0F8FF 100%)'}}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <Heart className="w-8 h-8" style={{color: '#0056AE'}} />
-                <h3 className="text-2xl font-bold" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>
-                  2 Heart Beats Scanning
-                </h3>
-              </div>
-              <p className="text-base leading-relaxed mb-4" style={{color: '#000000', fontFamily: 'Roboto, sans-serif'}}>
-                All scans including cardiac scans are done within 2 heart beats. In the time it takes for a heart to beat once, GE healthcare's revolution CT scanner can capture a detailed picture of the body. The x-ray tube moves at this speed it can capture thousands of slices or images of the body, per second. The scanner helps the doctors to improve image quality and reduce the amount of radiation the patients receives compared with other scanners
-              </p>
             </motion.div>
 
             {/* Quantum Leap Paragraph - Icon Card */}

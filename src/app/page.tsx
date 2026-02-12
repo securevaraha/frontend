@@ -497,10 +497,10 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             <FeatureCardClient
               icon={<Trophy size={32} className="text-white" />}
-              title="Industry Leaders"
+              title="CT Scan Imaging"
             >
-              Over 10 years of experience in providing advanced medical imaging
-              services with state-of-the-art equipment for accurate CT Scan.
+              Advanced 256-slice CT technology providing high-resolution imaging
+              with minimal radiation exposure for accurate diagnosis.
             </FeatureCardClient>
             
             <FeatureCardClient

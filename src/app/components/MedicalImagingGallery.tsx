@@ -20,7 +20,7 @@ const ImageCard = ({ src, title, description, redirectUrl }: { src: string, titl
           src={src}
           alt={title}
           fill
-          className="object-contain transition-all duration-500 group-hover:scale-110"
+          className="object-cover transition-all duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
@@ -41,7 +41,7 @@ const MedicalImagingGallery = () => {
       redirectUrl: '/cardiac'
     },
     { 
-      src: '/images/angiography_main.png', 
+      src: '/angiofinalimag.png', 
       title: 'Angiography', 
       description: 'Advanced angiography for detailed vascular visualization',
       redirectUrl: '/dual-energy#angiography'
@@ -58,7 +58,7 @@ const MedicalImagingGallery = () => {
     <section className="py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>Specialized CT Scan Solutions</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0056AE'}}>Specialised CT Scan Solutions</h2>
           <p className="text-xl text-gray-600">Advanced CT scan capabilities in cardiac, angiography, and dual energy</p>
         </div>
         

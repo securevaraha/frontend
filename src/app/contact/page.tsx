@@ -56,7 +56,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Address</h3>
                     <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                      Troma Centre, MDM Hospital<br />
+                      Trauma Centre, MDM Hospital<br />
                       Shastri Nagar, Jodhpur, Rajasthan 342001
                     </p>
                   </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold mb-2" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Our Location</h3>
                     <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                      Troma Centre, MDM Hospital<br />
+                      Trauma Centre, MDM Hospital<br />
                       Shastri Nagar, Jodhpur, Rajasthan 342001
                     </p>
                   </div>

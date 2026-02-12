@@ -61,7 +61,7 @@ export default function ContactPageAlt() {
                   <div>
                     <h3 className="font-bold mb-2" style={{color: '#0056AE'}}>Visit Our Center</h3>
                     <p style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-                      Troma Centre, MDM Hospital<br />
+                      Trauma Centre, MDM Hospital<br />
                       Shastri Nagar, Jodhpur, Rajasthan 342001
                     </p>
                   </div>
