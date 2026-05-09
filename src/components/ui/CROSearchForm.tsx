@@ -244,4 +244,5 @@ export default function CROSearchForm({ onPatientFound }: CROSearchFormProps) {
       />
     </>
   );
+  
 }
