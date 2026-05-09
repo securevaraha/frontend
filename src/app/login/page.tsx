@@ -190,11 +190,11 @@ export default function Login() {
             </div>
 
           {/* Role Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
+          <div className="mb-5">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Select Your Role
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-wrap gap-2">
               {roles.map((role) => {
                 const IconComponent = role.icon;
                 return (
@@ -202,16 +202,14 @@ export default function Login() {
                     key={role.id}
                     type="button"
                     onClick={() => handleRoleSelect(role)}
-                    className={`p-3 rounded-xl text-sm transition-all duration-300 border-2 ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border ${
                       selectedRole === role.id
-                        ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-lg`
-                        : `bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200 hover:border-gray-300`
+                        ? `bg-gradient-to-r ${role.color} text-white border-transparent shadow-md`
+                        : `bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200`
                     }`}
                   >
-                    <IconComponent className={`w-5 h-5 mx-auto mb-2 ${
-                      selectedRole === role.id ? 'text-white' : 'text-gray-500'
-                    }`} />
-                    <div className="font-medium">{role.name}</div>
+                    <IconComponent className="w-3.5 h-3.5" />
+                    {role.name}
                   </button>
                 );
               })}
