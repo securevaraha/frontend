@@ -55,7 +55,7 @@ export default function CategoryManagement() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingCategory ? `http://api.varahasdc.co.in/admin/categories/${editingCategory.cat_id}` : 'http://api.varahasdc.co.in/admin/categories';
+      const url = editingCategory ? `https://api.varahasdc.co.in/admin/categories/${editingCategory.cat_id}` : 'https://api.varahasdc.co.in/admin/categories';
       const method = editingCategory ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

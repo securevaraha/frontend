@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       params.append(key, value);
     });
     
-    const response = await fetch(`http://api.varahasdc.co.in/admin/doctor-scan-report?${params}`, {
+    const response = await fetch(`https://api.varahasdc.co.in/admin/doctor-scan-report?${params}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

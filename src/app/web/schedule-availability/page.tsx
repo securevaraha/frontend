@@ -36,7 +36,7 @@ export default function ScheduleAvailabilityPage() {
         params.append('status', statusFilter);
       }
       
-      const response = await fetch(`http://api.varahasdc.co.in/web/schedule?${params}`);
+      const response = await fetch(`https://api.varahasdc.co.in/web/schedule?${params}`);
       const data = await response.json();
       
       if (data.success) {
@@ -75,7 +75,7 @@ export default function ScheduleAvailabilityPage() {
     }
     
     try {
-      const response = await fetch('http://api.varahasdc.co.in/web/schedule', {
+      const response = await fetch('https://api.varahasdc.co.in/web/schedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -103,7 +103,7 @@ export default function ScheduleAvailabilityPage() {
 
   const updateSlotStatus = async (id: number, status: 'available' | 'booked' | 'blocked') => {
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/web/schedule/${id}`, {
+      const response = await fetch(`https://api.varahasdc.co.in/web/schedule/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status })
@@ -126,7 +126,7 @@ export default function ScheduleAvailabilityPage() {
     if (!confirm('Are you sure you want to delete this time slot?')) return;
     
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/web/schedule/${id}`, {
+      const response = await fetch(`https://api.varahasdc.co.in/web/schedule/${id}`, {
         method: 'DELETE'
       });
       

@@ -4,7 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || 'http://api.varahasdc.co.in';
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
   
   // Redirect to external API
   return NextResponse.redirect(`${API_BASE_URL}/superadmin/stats`);

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const apiUrl = `http://api.varahasdc.co.in/superadmin/revenue-report?${searchParams.toString()}`;
+    const apiUrl = `https://api.varahasdc.co.in/superadmin/revenue-report?${searchParams.toString()}`;
     
     const response = await fetch(apiUrl);
     const data = await response.json();

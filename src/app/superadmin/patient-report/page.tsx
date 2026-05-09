@@ -39,7 +39,7 @@ export default function SuperAdminPatientReport() {
   const fetchPatients = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/superadmin/patient-report?from_date=${fromDate}&to_date=${toDate}`);
+      const response = await fetch(`https://api.varahasdc.co.in/superadmin/patient-report?from_date=${fromDate}&to_date=${toDate}`);
       const data = await response.json();
       
       if (data.success) {

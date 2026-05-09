@@ -32,7 +32,7 @@ export default function PatientRegistration() {
 
   const fetchPatients = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/admin/patient-list');
+      const response = await fetch('https://api.varahasdc.co.in/admin/patient-list');
       if (response.ok) {
         const data = await response.json();
         setPatients(data.data || []);

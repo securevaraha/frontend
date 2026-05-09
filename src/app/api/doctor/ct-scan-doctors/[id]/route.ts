@@ -5,7 +5,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = await params;
     const body = await request.json();
     
-    const response = await fetch(`http://api.varahasdc.co.in/doctor/ct-scan-doctors/${id}`, {
+    const response = await fetch(`https://api.varahasdc.co.in/doctor/ct-scan-doctors/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   try {
     const { id } = await params;
     
-    const response = await fetch(`http://api.varahasdc.co.in/doctor/ct-scan-doctors/${id}`, {
+    const response = await fetch(`https://api.varahasdc.co.in/doctor/ct-scan-doctors/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

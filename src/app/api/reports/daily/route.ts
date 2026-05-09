@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Call external API with the date parameter
-    const response = await fetch(`http://api.varahasdc.co.in/admin/daily-revenue-report?from_date=${date}&to_date=${date}`);
+    const response = await fetch(`https://api.varahasdc.co.in/admin/daily-revenue-report?from_date=${date}&to_date=${date}`);
     
     if (!response.ok) {
       throw new Error('External API call failed');

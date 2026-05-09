@@ -4,7 +4,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetch('http://api.varahasdc.co.in/console/save-console', {
+    const response = await fetch('https://api.varahasdc.co.in/console/save-console', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

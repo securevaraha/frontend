@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const from = fromDate || today;
     const to = toDate || today;
 
-    const response = await fetch(`http://api.varahasdc.co.in/reception/patients/list?from=${from}&to=${to}`);
+    const response = await fetch(`https://api.varahasdc.co.in/reception/patients/list?from=${from}&to=${to}`);
     
     if (!response.ok) {
       throw new Error(`API responded with status: ${response.status}`);

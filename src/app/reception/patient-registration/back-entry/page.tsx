@@ -113,7 +113,7 @@ export default function BackEntryPatientRegistration() {
 
   const fetchHospitals = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/reception/hospitals');
+      const response = await fetch('https://api.varahasdc.co.in/reception/hospitals');
       if (response.ok) {
         const data = await response.json();
         setHospitals(data || []);
@@ -125,7 +125,7 @@ export default function BackEntryPatientRegistration() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/reception/doctors');
+      const response = await fetch('https://api.varahasdc.co.in/reception/doctors');
       if (response.ok) {
         const data = await response.json();
         setDoctors(data || []);
@@ -137,7 +137,7 @@ export default function BackEntryPatientRegistration() {
 
   const fetchScans = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/reception/scans');
+      const response = await fetch('https://api.varahasdc.co.in/reception/scans');
       if (response.ok) {
         const data = await response.json();
         setScans(data || []);
@@ -149,7 +149,7 @@ export default function BackEntryPatientRegistration() {
 
   const fetchLastPatient = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/reception/patients/last-enrolled');
+      const response = await fetch('https://api.varahasdc.co.in/reception/patients/last-enrolled');
       if (response.ok) {
         const data = await response.json();
         setLastPatient(data.data);
@@ -161,7 +161,7 @@ export default function BackEntryPatientRegistration() {
 
   const generateCRO = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/reception/patients/generate-cro', {
+      const response = await fetch('https://api.varahasdc.co.in/reception/patients/generate-cro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date: formData.date })
@@ -296,7 +296,7 @@ export default function BackEntryPatientRegistration() {
         admin_id: 1
       };
 
-      const response = await fetch('http://api.varahasdc.co.in/reception/patients/back-entry', {
+      const response = await fetch('https://api.varahasdc.co.in/reception/patients/back-entry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitData)

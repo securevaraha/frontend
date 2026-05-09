@@ -4,7 +4,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   try {
     const { cro } = await params;
     
-    const response = await fetch(`http://api.varahasdc.co.in/console/patient/${encodeURIComponent(cro)}`, {
+    const response = await fetch(`https://api.varahasdc.co.in/console/patient/${encodeURIComponent(cro)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

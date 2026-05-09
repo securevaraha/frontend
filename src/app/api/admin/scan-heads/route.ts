@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // GET - Fetch all scan heads
 export async function GET() {
   try {
-    const response = await fetch('http://api.varahasdc.co.in/admin/scan-heads');
+    const response = await fetch('https://api.varahasdc.co.in/admin/scan-heads');
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetch('http://api.varahasdc.co.in/admin/scan-heads', {
+    const response = await fetch('https://api.varahasdc.co.in/admin/scan-heads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)

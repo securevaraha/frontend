@@ -44,7 +44,7 @@ export default function PaymentDetails() {
 
   const fetchPaymentData = async () => {
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/reception/patients/${patientId}/payment`);
+      const response = await fetch(`https://api.varahasdc.co.in/reception/patients/${patientId}/payment`);
       if (response.ok) {
         const data = await response.json();
         setPatient(data.data.patient);
@@ -72,7 +72,7 @@ export default function PaymentDetails() {
     
     setSaving(true);
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/reception/patients/${patientId}/payment`, {
+      const response = await fetch(`https://api.varahasdc.co.in/reception/patients/${patientId}/payment`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

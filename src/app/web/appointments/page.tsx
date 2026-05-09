@@ -34,7 +34,7 @@ export default function AppointmentsPage() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.varahasdc.co.in';
       
       // Build query parameters
       const params = new URLSearchParams();
@@ -106,7 +106,7 @@ export default function AppointmentsPage() {
 
   const updateAppointmentStatus = async (id: number, status: 'scheduled' | 'completed' | 'cancelled') => {
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.varahasdc.co.in';
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);

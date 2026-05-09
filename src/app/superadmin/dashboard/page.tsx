@@ -29,7 +29,7 @@ export default function SuperAdminDashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.varahasdc.co.in';
       const response = await fetch(`${API_BASE_URL}/superadmin/stats`);
       if (response.ok) {
         const data = await response.json();

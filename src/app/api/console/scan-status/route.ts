@@ -4,7 +4,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetch('http://api.varahasdc.co.in/console/scan-status', {
+    const response = await fetch('https://api.varahasdc.co.in/console/scan-status', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

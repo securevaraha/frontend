@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       limit: limit.toString()
     });
     
-    const response = await fetch(`http://api.varahasdc.co.in/doctor/patient-in-queue?${params}`, {
+    const response = await fetch(`https://api.varahasdc.co.in/doctor/patient-in-queue?${params}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

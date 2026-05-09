@@ -71,7 +71,7 @@ export default function SuperAdminConsoleReport() {
       const params = new URLSearchParams({
         s_date: selectedDate
       });
-      const response = await fetch(`http://api.varahasdc.co.in/superadmin/console-report?${params}`);
+      const response = await fetch(`https://api.varahasdc.co.in/superadmin/console-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setConsoleData(data.data || []);

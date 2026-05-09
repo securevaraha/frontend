@@ -48,7 +48,7 @@ export default function PendingReports() {
   const fetchPendingReports = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://api.varahasdc.co.in/superadmin/pending-reports');
+      const response = await fetch('https://api.varahasdc.co.in/superadmin/pending-reports');
       if (response.ok) {
         const data = await response.json();
         setReports(data.data || []);

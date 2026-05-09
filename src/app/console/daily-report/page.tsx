@@ -85,7 +85,7 @@ export default function ConsoleDailyReport() {
         toDate: toDate.split('-').reverse().join('-')
       });
       
-      const response = await fetch(`http://api.varahasdc.co.in/console/daily-report?${params}`);
+      const response = await fetch(`https://api.varahasdc.co.in/console/daily-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setReports(data.data || []);

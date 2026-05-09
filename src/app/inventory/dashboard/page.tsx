@@ -19,7 +19,7 @@ export default function InventoryDashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/inventory/stats');
+      const response = await fetch('https://api.varahasdc.co.in/inventory/stats');
       const data = await response.json();
       if (data.success) {
         setStats(data.stats);

@@ -64,7 +64,7 @@ export default function EditConsoleRecord({ params }: { params: Promise<{ id: st
 
   const fetchRecord = async () => {
     try {
-      const response = await fetch(`http://api.varahasdc.co.in/console/detail-report`);
+      const response = await fetch(`https://api.varahasdc.co.in/console/detail-report`);
       if (response.ok) {
         const data = await response.json();
         const foundRecord = data.data?.find((r: ConsoleRecord) => r.con_id.toString() === id);
@@ -96,7 +96,7 @@ export default function EditConsoleRecord({ params }: { params: Promise<{ id: st
 
     setSaving(true);
     try {
-      const response = await fetch('http://api.varahasdc.co.in/console/update-console', {
+      const response = await fetch('https://api.varahasdc.co.in/console/update-console', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

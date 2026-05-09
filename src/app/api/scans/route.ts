@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const response = await fetch('http://api.varahasdc.co.in/admin/scans');
+    const response = await fetch('https://api.varahasdc.co.in/admin/scans');
     if (!response.ok) {
       throw new Error('External API call failed');
     }

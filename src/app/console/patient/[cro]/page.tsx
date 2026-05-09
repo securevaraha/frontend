@@ -155,7 +155,7 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
       let status = action;
       if (action === 'Complete') status = 'Complete';
       
-      const response = await fetch('http://api.varahasdc.co.in/console/save-console', {
+      const response = await fetch('https://api.varahasdc.co.in/console/save-console', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

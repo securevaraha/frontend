@@ -83,7 +83,7 @@ export default function RevenueReport() {
         type: reportType
       });
       
-      const response = await fetch(`http://api.varahasdc.co.in/superadmin/revenue-report?${params}`);
+      const response = await fetch(`https://api.varahasdc.co.in/superadmin/revenue-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setRevenueData(data.data || []);

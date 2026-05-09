@@ -30,7 +30,7 @@ export default function ScanHeadManagement() {
   const fetchScanHeads = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://api.varahasdc.co.in/admin/scan-heads');
+      const response = await fetch('https://api.varahasdc.co.in/admin/scan-heads');
       if (response.ok) {
         const data = await response.json();
         setScanHeads(data.data || []);
@@ -61,7 +61,7 @@ export default function ScanHeadManagement() {
   const handleDelete = async (scanHead: ScanHeadData) => {
     if (confirm(`Are you sure you want to delete ${scanHead.head_name}?`)) {
       try {
-        const response = await fetch(`http://api.varahasdc.co.in/admin/scan-heads/${scanHead.id}`, { method: 'DELETE' });
+        const response = await fetch(`https://api.varahasdc.co.in/admin/scan-heads/${scanHead.id}`, { method: 'DELETE' });
         if (response.ok) {
           toast.error('Scan head deleted successfully!');
           fetchScanHeads();
@@ -75,7 +75,7 @@ export default function ScanHeadManagement() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingScanHead ? `http://api.varahasdc.co.in/admin/scan-heads/${editingScanHead.id}` : 'http://api.varahasdc.co.in/admin/scan-heads';
+      const url = editingScanHead ? `https://api.varahasdc.co.in/admin/scan-heads/${editingScanHead.id}` : 'https://api.varahasdc.co.in/admin/scan-heads';
       const method = editingScanHead ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

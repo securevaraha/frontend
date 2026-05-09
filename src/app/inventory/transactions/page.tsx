@@ -64,7 +64,7 @@ export default function InventoryTransactions() {
 
   const fetchItems = async () => {
     try {
-      const response = await fetch('http://api.varahasdc.co.in/inventory/items');
+      const response = await fetch('https://api.varahasdc.co.in/inventory/items');
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
@@ -87,7 +87,7 @@ export default function InventoryTransactions() {
     setSubmitting(true);
     try {
       const endpoint = modalType === 'INWARD' ? '/inward' : '/outward';
-      const response = await fetch(`http://api.varahasdc.co.in/inventory${endpoint}`, {
+      const response = await fetch(`https://api.varahasdc.co.in/inventory${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -127,7 +127,7 @@ export default function InventoryTransactions() {
         if (value && value !== 'ALL') params.append(key, value);
       });
       
-      const response = await fetch(`http://api.varahasdc.co.in/inventory/transactions?${params}`);
+      const response = await fetch(`https://api.varahasdc.co.in/inventory/transactions?${params}`);
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
