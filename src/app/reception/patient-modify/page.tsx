@@ -45,7 +45,7 @@ export default function PatientModify() {
     try {
       const fromFormatted = from.split('-').reverse().join('-');
       const toFormatted = to.split('-').reverse().join('-');
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patient-list?from_date=${fromFormatted}&to_date=${toFormatted}`);
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patient-list?from_date=${fromFormatted}&to_date=${toFormatted}`);
       const data = await response.json();
       setPatients(data.data || []);
     } catch (error) {
@@ -87,7 +87,7 @@ export default function PatientModify() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patients/${editingPatient.patient_id}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patients/${editingPatient.patient_id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -112,7 +112,7 @@ export default function PatientModify() {
     const newStatus = patient.scan_status === 1 ? 0 : 1;
     
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patients/${patient.patient_id}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patients/${patient.patient_id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scan_status: newStatus })

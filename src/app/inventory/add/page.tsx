@@ -29,7 +29,7 @@ export default function AddItem() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://varahasdc.co.in/api/inventory/items', {
+      const response = await fetch('http://api.varahasdc.co.in/inventory/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

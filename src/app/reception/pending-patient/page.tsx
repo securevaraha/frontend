@@ -49,7 +49,7 @@ export default function PendingPatient() {
 
   const fetchPendingPatients = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/patients/list');
+      const response = await fetch('http://api.varahasdc.co.in/reception/patients/list');
       if (response.ok) {
         const data = await response.json();
         setPatients(data.data || []);
@@ -64,7 +64,7 @@ export default function PendingPatient() {
   const updatePatientStatus = async (patientId: number, newStatus: string) => {
     setUpdating(patientId);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patients/${patientId}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patients/${patientId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

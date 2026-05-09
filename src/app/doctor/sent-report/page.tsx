@@ -99,7 +99,7 @@ export default function SentReport() {
         toDate: selectedDate.split('-').reverse().join('-')
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/console/detail-report?${params}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/console/detail-report?${params}`, {
         cache: 'no-cache',
         headers: {
           'Cache-Control': 'no-cache'
@@ -166,7 +166,7 @@ export default function SentReport() {
       formData.append('conId', viewingRecord.con_id.toString());
       formData.append('contactNumber', viewingRecord.contact_number || '');
 
-      const response = await fetch('https://varahasdc.co.in/api/console/upload-report', {
+      const response = await fetch('http://api.varahasdc.co.in/console/upload-report', {
         method: 'POST',
         body: formData
       });
@@ -178,7 +178,7 @@ export default function SentReport() {
         const randomNum = Math.floor(Math.random() * 10000);
         const fileName = `${viewingRecord.c_p_cro.replace(/\//g, '_')}_${reportName.trim()}_${randomNum}.pdf`;
         
-        await fetch('https://varahasdc.co.in/api/console/update-console', {
+        await fetch('http://api.varahasdc.co.in/console/update-console', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

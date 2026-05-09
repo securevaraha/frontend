@@ -6,7 +6,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = await params;
     const { head_name, amount, per_scan } = await request.json();
     
-    const response = await fetch(`https://varahasdc.co.in/api/admin/scan-heads/${id}`, {
+    const response = await fetch(`http://api.varahasdc.co.in/admin/scan-heads/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ head_name, amount, per_scan })
@@ -27,7 +27,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   try {
     const { id } = await params;
     
-    const response = await fetch(`https://varahasdc.co.in/api/admin/scan-heads/${id}`, {
+    const response = await fetch(`http://api.varahasdc.co.in/admin/scan-heads/${id}`, {
       method: 'DELETE'
     });
     

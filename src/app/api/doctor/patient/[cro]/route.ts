@@ -5,7 +5,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const { cro } = await params;
     const decodedCro = decodeURIComponent(cro);
     
-    const response = await fetch(`https://varahasdc.co.in/api/doctor/patient/${encodeURIComponent(decodedCro)}`, {
+    const response = await fetch(`http://api.varahasdc.co.in/doctor/patient/${encodeURIComponent(decodedCro)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       error: 'Failed to fetch patient details',
       details: error instanceof Error ? error.message : String(error),
       requestUrl: request.url,
-      backendUrl: `https://varahasdc.co.in/api/doctor/patient/${encodeURIComponent(decodedCro)}`,
+      backendUrl: `http://api.varahasdc.co.in/doctor/patient/${encodeURIComponent(decodedCro)}`,
       cro: decodedCro
     }, { status: 500 });
   }

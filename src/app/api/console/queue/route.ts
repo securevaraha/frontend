@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit') || '10';
     const search = searchParams.get('search') || '';
 
-    const apiUrl = new URL('https://varahasdc.co.in/api/console/queue');
+    const apiUrl = new URL('http://api.varahasdc.co.in/console/queue');
     apiUrl.searchParams.set('page', page);
     apiUrl.searchParams.set('limit', limit);
     if (search) apiUrl.searchParams.set('search', search);

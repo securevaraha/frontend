@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     console.log('Fetching reception stats from external API...');
-    const response = await fetch('https://varahasdc.co.in/api/reception/stats');
+    const response = await fetch('http://api.varahasdc.co.in/reception/stats');
     console.log('External API response status:', response.status);
     if (!response.ok) {
       const errorText = await response.text();
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
         error: 'Failed to fetch reception statistics',
         details: error instanceof Error ? error.message : 'Unknown error',
         stack: error instanceof Error ? error.stack : undefined,
-        url: 'https://varahasdc.co.in/api/reception/stats',
+        url: 'http://api.varahasdc.co.in/reception/stats',
         timestamp: new Date().toISOString()
       },
       { status: 500 }

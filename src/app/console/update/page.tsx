@@ -123,7 +123,7 @@ export default function ConsoleUpdate() {
         toDate: selectedDate.split('-').reverse().join('-')
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/console/detail-report?${params}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/console/detail-report?${params}`, {
         cache: 'no-cache',
         headers: {
           'Cache-Control': 'no-cache'
@@ -157,7 +157,7 @@ export default function ConsoleUpdate() {
 
     setSaving(true);
     try {
-      const response = await fetch('https://varahasdc.co.in/api/console/update-console', {
+      const response = await fetch('http://api.varahasdc.co.in/console/update-console', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -218,7 +218,7 @@ export default function ConsoleUpdate() {
         toast.success('Report uploaded and WhatsApp notification sent successfully');
         
         // Update the record with report info
-        await fetch('https://varahasdc.co.in/api/console/update-console', {
+        await fetch('http://api.varahasdc.co.in/console/update-console', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

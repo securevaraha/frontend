@@ -47,7 +47,7 @@ export default function PatientRegistrationEdit() {
 
   const fetchPatients = async (fromDate?: string, toDate?: string) => {
     try {
-      let url = 'https://varahasdc.co.in/api/reception/patients/list';
+      let url = 'http://api.varahasdc.co.in/reception/patients/list';
       if (fromDate && toDate) {
         url += `?from=${fromDate}&to=${toDate}`;
       }

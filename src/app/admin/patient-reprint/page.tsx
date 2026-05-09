@@ -68,7 +68,7 @@ export default function PatientReprint() {
         to_date: currentDateRange.to_date
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patient-list?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patient-list?${params}`);
       const data = await response.json();
       
       if (data.success) {
@@ -98,7 +98,7 @@ export default function PatientReprint() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/admin/patient-reprint?cro=${encodeURIComponent(cro)}`);
+      const response = await fetch(`http://api.varahasdc.co.in/admin/patient-reprint?cro=${encodeURIComponent(cro)}`);
       const data = await response.json();
       
       if (data.success) {

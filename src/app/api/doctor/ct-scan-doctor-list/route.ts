@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Call the backend API
-    const response = await fetch(`https://varahasdc.co.in/api/doctor/ct-scan-doctor-list?${params}`, {
+    const response = await fetch(`http://api.varahasdc.co.in/doctor/ct-scan-doctor-list?${params}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

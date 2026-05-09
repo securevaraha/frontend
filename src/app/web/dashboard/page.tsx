@@ -37,7 +37,7 @@ export default function WebDashboard() {
   const fetchDashboardStats = async () => {
     setLoading(true);
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
       
       // Fetch enquiries stats
       const enquiriesResponse = await fetch(`${API_BASE_URL}/web/enquiries/stats`, {

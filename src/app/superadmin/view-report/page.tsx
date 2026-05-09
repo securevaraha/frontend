@@ -47,7 +47,7 @@ export default function ViewReports() {
   const fetchCompletedReports = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://varahasdc.co.in/api/superadmin/view-reports');
+      const response = await fetch('http://api.varahasdc.co.in/superadmin/view-reports');
       if (response.ok) {
         const data = await response.json();
         setReports(data.data || []);

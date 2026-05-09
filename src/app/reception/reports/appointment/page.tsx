@@ -57,8 +57,8 @@ export default function AppointmentReport() {
     try {
       const queryDate = date || selectedDate;
       const url = queryDate 
-        ? `https://varahasdc.co.in/api/reports/appointment?date=${queryDate}`
-        : `https://varahasdc.co.in/api/reports/appointment?date=${getTodayDate()}`;
+        ? `http://api.varahasdc.co.in/reports/appointment?date=${queryDate}`
+        : `http://api.varahasdc.co.in/reports/appointment?date=${getTodayDate()}`;
       
       const response = await fetch(url);
       if (response.ok) {

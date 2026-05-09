@@ -225,7 +225,7 @@ export default function NewPatientRegistration() {
 
   const fetchHospitals = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/hospitals');
+      const response = await fetch('http://api.varahasdc.co.in/reception/hospitals');
       if (response.ok) {
         const data = await response.json();
         setHospitals(Array.isArray(data) ? data : []);
@@ -237,7 +237,7 @@ export default function NewPatientRegistration() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/doctors');
+      const response = await fetch('http://api.varahasdc.co.in/reception/doctors');
       if (response.ok) {
         const data = await response.json();
         setDoctors(Array.isArray(data) ? data : []);
@@ -249,7 +249,7 @@ export default function NewPatientRegistration() {
 
   const fetchScans = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/scans');
+      const response = await fetch('http://api.varahasdc.co.in/reception/scans');
       if (response.ok) {
         const data = await response.json();
         setScans(Array.isArray(data) ? data : []);
@@ -261,7 +261,7 @@ export default function NewPatientRegistration() {
 
   const fetchTimeSlots = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/time-slots');
+      const response = await fetch('http://api.varahasdc.co.in/reception/time-slots');
       if (response.ok) {
         const data = await response.json();
         const slots = Array.isArray(data) ? data : [];
@@ -296,7 +296,7 @@ export default function NewPatientRegistration() {
 
   const fetchLastPatient = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/patients/last-enrolled');
+      const response = await fetch('http://api.varahasdc.co.in/reception/patients/last-enrolled');
       if (response.ok) {
         const data = await response.json();
         setLastPatient(data.data);
@@ -310,7 +310,7 @@ export default function NewPatientRegistration() {
 
   const fetchPatientData = async (patientId: string) => {
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/reception/patients/${patientId}`);
+      const response = await fetch(`http://api.varahasdc.co.in/reception/patients/${patientId}`);
       if (response.ok) {
         const data = await response.json();
         setPatientData(data.data);
@@ -896,13 +896,13 @@ export default function NewPatientRegistration() {
 
       let response;
       if (isEditMode && editPatientId) {
-        response = await fetch(`https://varahasdc.co.in/api/reception/patients/${editPatientId}`, {
+        response = await fetch(`http://api.varahasdc.co.in/reception/patients/${editPatientId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(submitData)
         });
       } else {
-        response = await fetch('https://varahasdc.co.in/api/reception/patients', {
+        response = await fetch('http://api.varahasdc.co.in/reception/patients', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(submitData)

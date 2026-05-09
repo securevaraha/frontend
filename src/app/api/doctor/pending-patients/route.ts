@@ -4,7 +4,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const queryString = searchParams.toString();
-    const apiUrl = `https://varahasdc.co.in/api/doctor/pending-patients${queryString ? `?${queryString}` : ''}`;
+    const apiUrl = `http://api.varahasdc.co.in/doctor/pending-patients${queryString ? `?${queryString}` : ''}`;
     
     console.log('Fetching pending patients from:', apiUrl);
     
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     console.error('Pending patients API error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
-      url: 'https://varahasdc.co.in/api/doctor/pending-patients'
+      url: 'http://api.varahasdc.co.in/doctor/pending-patients'
     });
     
     return NextResponse.json({ 

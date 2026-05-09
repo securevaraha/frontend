@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Call live backend API directly
-    const response = await fetch('https://varahasdc.co.in/api/web/enquiries', {
+    const response = await fetch('http://api.varahasdc.co.in/web/enquiries', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, phone, email, message })

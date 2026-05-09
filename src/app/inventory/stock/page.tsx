@@ -62,7 +62,7 @@ export default function StockList() {
 
   const fetchItems = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/inventory/items');
+      const response = await fetch('http://api.varahasdc.co.in/inventory/items');
       const data = await response.json();
       if (data.success) {
         setItems(data.data);

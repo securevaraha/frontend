@@ -83,7 +83,7 @@ export default function DailyRevenueReport() {
         type: reportType
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/admin/daily-revenue-report?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/admin/daily-revenue-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setRevenueData(data.data || []);
@@ -400,7 +400,7 @@ export default function DailyRevenueReport() {
     let paidAmount = 0;
     
     try {
-      const paidResponse = await fetch(`https://varahasdc.co.in/api/admin/paid-patients?s_date=${selectedDate}`);
+      const paidResponse = await fetch(`http://api.varahasdc.co.in/admin/paid-patients?s_date=${selectedDate}`);
       if (paidResponse.ok) {
         const paidData = await paidResponse.json();
         if (paidData.success) {

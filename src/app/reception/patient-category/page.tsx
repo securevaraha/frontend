@@ -55,7 +55,7 @@ export default function PatientCategory() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingCategory ? `https://varahasdc.co.in/api/admin/categories/${editingCategory.cat_id}` : 'https://varahasdc.co.in/api/admin/categories';
+      const url = editingCategory ? `http://api.varahasdc.co.in/admin/categories/${editingCategory.cat_id}` : 'http://api.varahasdc.co.in/admin/categories';
       const method = editingCategory ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

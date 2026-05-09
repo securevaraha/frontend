@@ -57,7 +57,7 @@ export default function InventoryReport() {
 
   const fetchItems = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/inventory/items');
+      const response = await fetch('http://api.varahasdc.co.in/inventory/items');
       if (response.ok) {
         const data = await response.json();
         setItems(data.data || []);
@@ -76,7 +76,7 @@ export default function InventoryReport() {
         if (value && value !== 'ALL') params.append(key, value);
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/inventory/transactions?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/inventory/transactions?${params}`);
       if (response.ok) {
         const data = await response.json();
         setTransactions(data.data || []);

@@ -48,7 +48,7 @@ export default function BookAppointmentPage() {
 
   const fetchScans = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/web/scans');
+      const response = await fetch('http://api.varahasdc.co.in/web/scans');
       const data = await response.json();
       if (data.success) {
         setScans(data.scans || []);
@@ -63,7 +63,7 @@ export default function BookAppointmentPage() {
     
     setLoadingSlots(true);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/web/available-slots?date=${date}`);
+      const response = await fetch(`http://api.varahasdc.co.in/web/available-slots?date=${date}`);
       const data = await response.json();
       
       if (data.success) {
@@ -264,7 +264,7 @@ export default function BookAppointmentPage() {
                 }
                 
                 try {
-                  const response = await fetch('https://varahasdc.co.in/api/web/book-appointment', {
+                  const response = await fetch('http://api.varahasdc.co.in/web/book-appointment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)

@@ -41,7 +41,7 @@ export default function ReceptionDoctors() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/doctors');
+      const response = await fetch('http://api.varahasdc.co.in/admin/doctors');
       if (response.ok) {
         const data = await response.json();
         setDoctors(data || []);
@@ -84,7 +84,7 @@ export default function ReceptionDoctors() {
   const handleDelete = async (doctor: DoctorData) => {
     if (confirm(`Are you sure you want to delete Dr. ${doctor.dname}?`)) {
       try {
-        const response = await fetch(`https://varahasdc.co.in/api/admin/doctors/${doctor.d_id}`, { method: 'DELETE' });
+        const response = await fetch(`http://api.varahasdc.co.in/admin/doctors/${doctor.d_id}`, { method: 'DELETE' });
         if (response.ok) {
           toast.error('Doctor deleted successfully!');
           fetchDoctors();
@@ -98,7 +98,7 @@ export default function ReceptionDoctors() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingDoctor ? `https://varahasdc.co.in/api/admin/doctors/${editingDoctor.d_id}` : 'https://varahasdc.co.in/api/admin/doctors';
+      const url = editingDoctor ? `http://api.varahasdc.co.in/admin/doctors/${editingDoctor.d_id}` : 'http://api.varahasdc.co.in/admin/doctors';
       const method = editingDoctor ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

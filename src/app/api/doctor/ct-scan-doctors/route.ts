@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const response = await fetch('https://varahasdc.co.in/api/doctor/ct-scan-doctors', {
+    const response = await fetch('http://api.varahasdc.co.in/doctor/ct-scan-doctors', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetch('https://varahasdc.co.in/api/doctor/ct-scan-doctors', {
+    const response = await fetch('http://api.varahasdc.co.in/doctor/ct-scan-doctors', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -61,7 +61,7 @@ export default function RevenueReport() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/reception/reports/revenue?date=${date}`);
+      const response = await fetch(`http://api.varahasdc.co.in/reception/reports/revenue?date=${date}`);
       
       if (response.ok) {
         const data = await response.json();

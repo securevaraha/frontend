@@ -50,7 +50,7 @@ export default function ReceptionScans() {
 
   const fetchScans = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/scans');
+      const response = await fetch('http://api.varahasdc.co.in/admin/scans');
       if (response.ok) {
         const data = await response.json();
         setScans(data.data || []);
@@ -64,7 +64,7 @@ export default function ReceptionScans() {
 
   const fetchScanHeads = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/scan-heads');
+      const response = await fetch('http://api.varahasdc.co.in/admin/scan-heads');
       if (response.ok) {
         const data = await response.json();
         setScanHeads(data.data || []);
@@ -97,7 +97,7 @@ export default function ReceptionScans() {
   const handleDelete = async (scan: ScanData) => {
     if (confirm(`Are you sure you want to delete ${scan.s_name}?`)) {
       try {
-        const response = await fetch(`https://varahasdc.co.in/api/admin/scans/${scan.s_id}`, { method: 'DELETE' });
+        const response = await fetch(`http://api.varahasdc.co.in/admin/scans/${scan.s_id}`, { method: 'DELETE' });
         if (response.ok) {
           toast.success('Scan deleted successfully!');
           fetchScans();
@@ -111,7 +111,7 @@ export default function ReceptionScans() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingScan ? `https://varahasdc.co.in/api/admin/scans/${editingScan.s_id}` : 'https://varahasdc.co.in/api/admin/scans';
+      const url = editingScan ? `http://api.varahasdc.co.in/admin/scans/${editingScan.s_id}` : 'http://api.varahasdc.co.in/admin/scans';
       const method = editingScan ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

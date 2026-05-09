@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Upload to backend API
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
     const uploadFormData = new FormData();
     uploadFormData.append('report', report);
     uploadFormData.append('reportName', reportName);

@@ -25,7 +25,7 @@ export default function InwardPage() {
 
   const fetchItems = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/inventory/items');
+      const response = await fetch('http://api.varahasdc.co.in/inventory/items');
       const data = await response.json();
       if (data.success) {
         setItems(data.data);
@@ -44,7 +44,7 @@ export default function InwardPage() {
       const item = items.find(i => i.id === selectedItem);
       if (!item) return;
 
-      const response = await fetch(`https://varahasdc.co.in/api/inventory/items/${selectedItem}`, {
+      const response = await fetch(`http://api.varahasdc.co.in/inventory/items/${selectedItem}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

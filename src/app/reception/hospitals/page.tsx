@@ -31,7 +31,7 @@ export default function ReceptionHospitals() {
 
   const fetchHospitals = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/hospitals');
+      const response = await fetch('http://api.varahasdc.co.in/admin/hospitals');
       if (response.ok) {
         const data = await response.json();
         setHospitals(data.data || []);
@@ -58,7 +58,7 @@ export default function ReceptionHospitals() {
   const handleDelete = async (hospital: HospitalData) => {
     if (confirm(`Are you sure you want to delete ${hospital.h_name}?`)) {
       try {
-        const response = await fetch(`https://varahasdc.co.in/api/admin/hospitals/${hospital.h_id}`, { method: 'DELETE' });
+        const response = await fetch(`http://api.varahasdc.co.in/admin/hospitals/${hospital.h_id}`, { method: 'DELETE' });
         if (response.ok) {
           toast.error('Hospital deleted successfully!');
           fetchHospitals();
@@ -72,7 +72,7 @@ export default function ReceptionHospitals() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingHospital ? `https://varahasdc.co.in/api/admin/hospitals/${editingHospital.h_id}` : 'https://varahasdc.co.in/api/admin/hospitals';
+      const url = editingHospital ? `http://api.varahasdc.co.in/admin/hospitals/${editingHospital.h_id}` : 'http://api.varahasdc.co.in/admin/hospitals';
       const method = editingHospital ? 'PUT' : 'POST';
       const response = await fetch(url, {
         method,

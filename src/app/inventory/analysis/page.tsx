@@ -54,7 +54,7 @@ export default function InventoryAnalysis() {
         if (value) params.append(key, value);
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/inventory/analysis?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/inventory/analysis?${params}`);
       if (response.ok) {
         const data = await response.json();
         if (data.success) {

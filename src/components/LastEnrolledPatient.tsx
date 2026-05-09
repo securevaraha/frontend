@@ -17,7 +17,7 @@ export default function LastEnrolledPatient() {
 
   const fetchLastPatient = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/reception/patients/last-enrolled');
+      const response = await fetch('http://api.varahasdc.co.in/reception/patients/last-enrolled');
       if (response.ok) {
         const data = await response.json();
         setLastPatient(data.data);

@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const fromDate = searchParams.get('from_date');
     const toDate = searchParams.get('to_date');
     
-    let apiUrl = `https://varahasdc.co.in/api/doctor/completed-reports?page=${page}&limit=${limit}`;
+    let apiUrl = `http://api.varahasdc.co.in/doctor/completed-reports?page=${page}&limit=${limit}`;
     if (fromDate) apiUrl += `&from_date=${fromDate}`;
     if (toDate) apiUrl += `&to_date=${toDate}`;
     

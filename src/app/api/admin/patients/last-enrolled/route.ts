@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const response = await fetch('https://varahasdc.co.in/api/admin/patients/last-enrolled');
+    const response = await fetch('http://api.varahasdc.co.in/admin/patients/last-enrolled');
     const data = await response.json();
     
     if (response.ok) {

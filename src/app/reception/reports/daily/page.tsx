@@ -68,7 +68,7 @@ export default function DailyReport() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/reception/reports/daily?date=${date}`);
+      const response = await fetch(`http://api.varahasdc.co.in/reception/reports/daily?date=${date}`);
       
       if (response.ok) {
         const data = await response.json();

@@ -31,7 +31,7 @@ export default function SuperAdminAppointments() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
       const response = await fetch(`${API_BASE_URL}/appointments`);
       
       if (response.ok) {
@@ -122,7 +122,7 @@ export default function SuperAdminAppointments() {
 
   const updateAppointmentStatus = async (id: number, status: string) => {
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://varahasdc.co.in/api';
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api.varahasdc.co.in';
       const response = await fetch(`${API_BASE_URL}/appointments/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

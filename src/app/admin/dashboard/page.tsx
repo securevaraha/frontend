@@ -28,7 +28,7 @@ export default function AdminDashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/stats');
+      const response = await fetch('http://api.varahasdc.co.in/admin/stats');
       if (response.ok) {
         const data = await response.json();
         setStats(data);

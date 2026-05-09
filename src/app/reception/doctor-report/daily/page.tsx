@@ -35,7 +35,7 @@ export default function DoctorDailyReport() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://varahasdc.co.in/api/reception/reports/doctor?startDate=${start}&endDate=${end}`);
+      const response = await fetch(`http://api.varahasdc.co.in/reception/reports/doctor?startDate=${start}&endDate=${end}`);
       
       if (response.ok) {
         const data = await response.json();
@@ -70,7 +70,7 @@ export default function DoctorDailyReport() {
     }
 
     // Use server-side Excel generation (matches PHP exactly)
-    const url = `https://varahasdc.co.in/api/reception/reports/doctor/excel?startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://api.varahasdc.co.in/reception/reports/doctor/excel?startDate=${startDate}&endDate=${endDate}`;
     window.open(url, '_blank');
   };
 

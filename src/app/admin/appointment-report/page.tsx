@@ -56,7 +56,7 @@ export default function AppointmentReport() {
       const params = new URLSearchParams({
         s_date: selectedDate
       });
-      const response = await fetch(`https://varahasdc.co.in/api/admin/appointment-report?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/admin/appointment-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setAppointments(data.data || []);

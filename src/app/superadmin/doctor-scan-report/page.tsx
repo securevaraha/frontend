@@ -61,7 +61,7 @@ export default function DoctorScanReport() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/doctor/ct-scan-doctors');
+      const response = await fetch('http://api.varahasdc.co.in/doctor/ct-scan-doctors');
       if (response.ok) {
         const data = await response.json();
         setDoctors(data.data || []);
@@ -73,7 +73,7 @@ export default function DoctorScanReport() {
 
   const fetchScanHeads = async () => {
     try {
-      const response = await fetch('https://varahasdc.co.in/api/admin/scan-heads');
+      const response = await fetch('http://api.varahasdc.co.in/admin/scan-heads');
       if (response.ok) {
         const data = await response.json();
         setScanHeads(data.data || []);
@@ -92,7 +92,7 @@ export default function DoctorScanReport() {
         if (value && value !== 'All') params.append(key, value);
       });
       
-      const response = await fetch(`https://varahasdc.co.in/api/superadmin/doctor-scan-report?${params}`);
+      const response = await fetch(`http://api.varahasdc.co.in/superadmin/doctor-scan-report?${params}`);
       if (response.ok) {
         const data = await response.json();
         setReports(data.data || []);

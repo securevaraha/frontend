@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const response = await fetch('https://varahasdc.co.in/api/console/stats', {
+    const response = await fetch('http://api.varahasdc.co.in/console/stats', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       details: error.message,
       stack: error.stack,
       query: Object.fromEntries(new URL(request.url).searchParams),
-      fetchUrl: 'https://varahasdc.co.in/api/console/stats',
+      fetchUrl: 'http://api.varahasdc.co.in/console/stats',
       errorType: 'External API Error'
     }, { status: 500 });
   }
