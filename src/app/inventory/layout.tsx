@@ -17,7 +17,7 @@ export default function InventoryLayout({
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-      router.push('/login');
+      router.push('/vdc_login');
       return;
     }
     
@@ -26,7 +26,7 @@ export default function InventoryLayout({
       // Force inventory role for inventory pages
       setUser({ ...parsedUser, admin_type: 'inventory' });
     } catch (error) {
-      router.push('/login');
+      router.push('/vdc_login');
     } finally {
       setLoading(false);
     }

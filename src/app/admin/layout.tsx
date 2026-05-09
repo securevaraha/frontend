@@ -17,7 +17,7 @@ export default function AdminLayout({
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-      router.push('/login');
+      router.push('/vdc_login');
       return;
     }
     
@@ -26,7 +26,7 @@ export default function AdminLayout({
       // Force admin role for admin pages
       setUser({ ...parsedUser, admin_type: 'admin' });
     } catch (error) {
-      router.push('/login');
+      router.push('/vdc_login');
     } finally {
       setLoading(false);
     }

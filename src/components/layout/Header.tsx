@@ -18,7 +18,7 @@ export default function Header({ user, onMenuClick }: HeaderProps) {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    router.push('/login');
+    router.push('/vdc_login');
   };
 
   const getRoleColor = (role: string) => {

@@ -20,7 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-      router.push('/login');
+      router.push('/vdc_login');
       return;
     }
     
@@ -31,7 +31,7 @@ export default function Layout({ children }: LayoutProps) {
       setUser(parsedUser);
     } catch (error) {
       console.error('Layout - Error parsing user data:', error);
-      router.push('/login');
+      router.push('/vdc_login');
     } finally {
       setLoading(false);
     }
