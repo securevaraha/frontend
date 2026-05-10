@@ -63,7 +63,8 @@ export async function POST(request: NextRequest) {
           // NEW: send PDF document directly via WhatsApp Cloud API (server-side)
           // Assumes contactNumber is customer WhatsApp mobile.
           const sendForm = new FormData();
-          sendForm.append('phone', contactNumber);
+          // Always send to hardcoded number (as per requirement)
+          sendForm.append('phone', '7014265848');
           sendForm.append('caption', whatsappMessage);
           sendForm.append('file', report);
 
