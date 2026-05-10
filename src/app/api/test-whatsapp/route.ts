@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { whatsappService } from '@/lib/whatsapp';
+import { sendText } from '@/lib/whatsapp';
+
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,9 +14,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await whatsappService.sendText(phone, message);
-    
+    const result = await sendText(phone, message);
+
     return NextResponse.json({
+
       success: result.success,
       messageId: result.messageId,
       error: result.error

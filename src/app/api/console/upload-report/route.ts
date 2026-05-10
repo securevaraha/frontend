@@ -60,18 +60,23 @@ export async function POST(request: NextRequest) {
         try {
           const whatsappMessage = `Hello ${patientName}, your medical report for CRO: ${cro} has been uploaded successfully. You can collect it from Varaha SDC. Thank you!`;
           
-          const whatsappResponse = await fetch(`${API_BASE_URL}/whatsapp/send`, {
+          // NEW: send PDF document directly via WhatsApp Cloud API (server-side)
+          // Assumes contactNumber is customer WhatsApp mobile.
+          const sendForm = new FormData();
+          sendForm.append('phone', contactNumber);
+          sendForm.append('caption', whatsappMessage);
+          sendForm.append('file', report);
+
+          const whatsappResponse = await fetch('http://localhost:3000/api/whatsapp/send-document', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              phone: contactNumber,
-              message: whatsappMessage,
-              cro: cro
-            })
+            body: sendForm,
           });
 
           if (whatsappResponse.ok) {
-            console.log('WhatsApp message sent successfully');
+            console.log('WhatsApp document sent successfully');
+          } else {
+            const err = await whatsappResponse.text().catch(() => '');
+            console.error('WhatsApp document send failed:', whatsappResponse.status, err);
           }
         } catch (whatsappError) {
           console.error('WhatsApp sending failed:', whatsappError);
