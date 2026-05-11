@@ -31,6 +31,9 @@ interface ConsoleRecord {
   age?: string;
   gender?: string;
   scan_type?: string;
+  whatsapp_sent?: number;
+  blob_url?: string;
+  report_filename?: string;
 }
 
 export default function SentReport() {
@@ -157,54 +160,44 @@ export default function SentReport() {
     }
 
     setUploading(true);
+    // Create a Vercel-style blob URL from the selected file
+    const blobUrl = URL.createObjectURL(uploadFile);
+
     try {
       const formData = new FormData();
-      formData.append('report', uploadFile);
-      formData.append('reportName', reportName.trim());
-      formData.append('cro', viewingRecord.c_p_cro);
-      formData.append('patientName', viewingRecord.patient_name);
-      formData.append('conId', viewingRecord.con_id.toString());
-      formData.append('contactNumber', viewingRecord.contact_number || '');
+      formData.append('report',      uploadFile);
+      formData.append('reportName',  reportName.trim());
+      formData.append('cro',         viewingRecord.c_p_cro);
+      formData.append('patientName', `${viewingRecord.pre} ${viewingRecord.patient_name}`.trim());
+      formData.append('conId',       viewingRecord.con_id.toString());
+      formData.append('blobUrl',     blobUrl);
 
-      const response = await fetch('https://api.varahasdc.co.in/console/upload-report', {
+      const response = await fetch('/api/console/upload-report', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
-      if (response.ok) {
-        toast.success('Report uploaded and WhatsApp notification sent successfully');
-        
-        // Update the record with report info
-        const randomNum = Math.floor(Math.random() * 10000);
-        const fileName = `${viewingRecord.c_p_cro.replace(/\//g, '_')}_${reportName.trim()}_${randomNum}.pdf`;
-        
-        await fetch('https://api.varahasdc.co.in/console/update-console', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            con_id: viewingRecord.con_id,
-            onWhatsappSent: true,
-            reportFileName: fileName,
-            reportFilePath: `/uploads/reports/${fileName}`
-          })
-        });
-        
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        const msg = data.whatsappSent
+          ? 'Report uploaded & sent on WhatsApp ✅'
+          : 'Report uploaded (WhatsApp send failed — check backend logs)';
+        toast.success(msg);
         setUploadFile(null);
         setReportName('');
         const fileInput = document.getElementById('reportFile') as HTMLInputElement;
         if (fileInput) fileInput.value = '';
-        
-        // Navigate back to list
+        await fetchRecords();
         router.push('/doctor/sent-report');
-        
       } else {
-        const errorData = await response.json();
-        toast.error(errorData.error || 'Failed to upload report');
+        toast.error(data.error || 'Failed to upload report');
       }
     } catch (error) {
       console.error('Error uploading report:', error);
       toast.error('Error uploading report');
     } finally {
+      URL.revokeObjectURL(blobUrl);
       setUploading(false);
     }
   };
@@ -238,34 +231,48 @@ export default function SentReport() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">CRO Number</label>
-                <input
-                  type="text"
-                  value={viewingRecord.c_p_cro}
-                  readOnly
-                  disabled={isDoctor}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
-                />
+                <input type="text" value={viewingRecord.c_p_cro} readOnly disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
-                <input
-                  type="text"
-                  value={`${viewingRecord.pre} ${viewingRecord.patient_name}`}
-                  readOnly
-                  disabled={isDoctor}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
-                />
+                <input type="text" value={`${viewingRecord.pre} ${viewingRecord.patient_name}`} readOnly disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                <input type="text" value={viewingRecord.contact_number || '-'} readOnly disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                  <input type="text" value={viewingRecord.age || '-'} readOnly disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                  <input type="text" value={viewingRecord.gender || '-'} readOnly disabled={isDoctor}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
-                <input
-                  type="text"
-                  value={viewingRecord.doctor_name || '-'}
-                  readOnly
-                  disabled={isDoctor}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60"
-                />
+                <input type="text" value={viewingRecord.doctor_name || '-'} readOnly disabled={isDoctor}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 disabled:opacity-60" />
               </div>
+              {/* WhatsApp sent status + blob download */}
+              {viewingRecord.whatsapp_sent === 1 && (
+                <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <span className="text-sm font-semibold text-green-700">✅ WhatsApp Sent</span>
+                  {viewingRecord.blob_url && (
+                    <a href={viewingRecord.blob_url} target="_blank" rel="noopener noreferrer"
+                      className="text-sm font-semibold text-blue-600 underline hover:text-blue-800">
+                      ⬇ Download Report
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -568,19 +575,20 @@ export default function SentReport() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CRO</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Allot Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reg. Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scan Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Console Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsApp</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Report</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center">
+                  <td colSpan={9} className="px-6 py-12 text-center">
                     <div className="flex items-center justify-center space-x-2">
                       <RefreshCw className="h-5 w-5 animate-spin text-emerald-500" />
                       <span className="text-gray-500">Loading sent reports...</span>
@@ -589,7 +597,7 @@ export default function SentReport() {
                 </tr>
               ) : filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={9} className="px-6 py-12 text-center text-gray-500">
                     No sent reports found
                   </td>
                 </tr>
@@ -609,18 +617,18 @@ export default function SentReport() {
                       {formatDate(record.date)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
-                      {formatDate(record.allot_date)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
                       {formatDate(record.scan_date)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
                       {formatDate(record.added_on)}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                      {record.contact_number || '-'}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-3 py-1 text-xs font-bold rounded-full border ${
-                        record.status === 'Complete' 
-                          ? 'bg-green-100 text-green-900 border-green-300' 
+                        record.status === 'Complete'
+                          ? 'bg-green-100 text-green-900 border-green-300'
                           : record.status === 'Pending'
                           ? 'bg-yellow-100 text-yellow-900 border-yellow-300'
                           : 'bg-gray-100 text-gray-900 border-gray-300'
@@ -628,8 +636,22 @@ export default function SentReport() {
                         {record.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
-                      {record.start_time} - {record.stop_time}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.whatsapp_sent === 1 ? (
+                        <span className="px-2 py-1 text-xs font-bold rounded-full bg-green-100 text-green-800 border border-green-300">✅ Sent</span>
+                      ) : (
+                        <span className="px-2 py-1 text-xs font-bold rounded-full bg-gray-100 text-gray-500 border border-gray-300">Pending</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.blob_url ? (
+                        <a href={record.blob_url} target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-medium">
+                          ⬇ Download
+                        </a>
+                      ) : (
+                        <span className="text-xs text-gray-400">—</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
