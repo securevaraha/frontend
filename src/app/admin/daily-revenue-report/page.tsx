@@ -289,13 +289,14 @@ export default function DailyRevenueReport() {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const billNo = diffDays + 85;
     const billNumber = billNo === 85 ? '85 (A)' : billNo;
+    const billYear = dateParts[2]; // year from selected date e.g. 2025
     
     const globalMaxColumns = Math.max(...revenueData.map(table => 
       table.summaryRows ? Math.max(...table.summaryRows.map(row => row.scanCode.split('+').length)) : 0
     ));
     const totalCols = globalMaxColumns + 5;
     
-    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body><table border="1"><tr><th colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:left;" colspan="${totalCols}">Bill No. :- 2023/VDC_MDM/CT${billNumber}</th></tr><tr><th style="text-align:center;" colspan="${totalCols}">&nbsp;</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
+    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body><table border="1"><tr><th colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:left;" colspan="${totalCols}">Bill No. :- ${billYear}/VDC_MDM/CT${billNumber}</th></tr><tr><th style="text-align:center;" colspan="${totalCols}">&nbsp;</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
     
     let grandTotalScans = 0;
     let grandTotalForms = 0;
