@@ -68,7 +68,12 @@ export async function POST(request: NextRequest) {
           sendForm.append('caption', whatsappMessage);
           sendForm.append('file', report);
 
-          const whatsappResponse = await fetch('http://localhost:3000/api/whatsapp/send-document', {
+          const whatsappUrl = process.env.NEXT_PUBLIC_SITE_URL
+            ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/whatsapp/send-document`
+            : 'https://varahasdc.co.in/api/whatsapp/send-document';
+
+          console.log('WhatsApp send url:', whatsappUrl);
+          const whatsappResponse = await fetch(whatsappUrl, {
             method: 'POST',
             body: sendForm,
           });
