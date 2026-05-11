@@ -160,9 +160,6 @@ export default function SentReport() {
     }
 
     setUploading(true);
-    // Create a Vercel-style blob URL from the selected file
-    const blobUrl = URL.createObjectURL(uploadFile);
-
     try {
       const formData = new FormData();
       formData.append('report',      uploadFile);
@@ -170,7 +167,6 @@ export default function SentReport() {
       formData.append('cro',         viewingRecord.c_p_cro);
       formData.append('patientName', `${viewingRecord.pre} ${viewingRecord.patient_name}`.trim());
       formData.append('conId',       viewingRecord.con_id.toString());
-      formData.append('blobUrl',     blobUrl);
 
       const response = await fetch('/api/console/upload-report', {
         method: 'POST',
@@ -181,7 +177,7 @@ export default function SentReport() {
 
       if (response.ok && data.success) {
         const msg = data.whatsappSent
-          ? 'Report uploaded & sent on WhatsApp ✅'
+          ? `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo || '7014265848'}`
           : 'Report uploaded (WhatsApp send failed — check backend logs)';
         toast.success(msg);
         setUploadFile(null);
@@ -197,7 +193,6 @@ export default function SentReport() {
       console.error('Error uploading report:', error);
       toast.error('Error uploading report');
     } finally {
-      URL.revokeObjectURL(blobUrl);
       setUploading(false);
     }
   };
@@ -265,7 +260,7 @@ export default function SentReport() {
               {viewingRecord.whatsapp_sent === 1 && (
                 <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
                   <span className="text-sm font-semibold text-green-700">✅ WhatsApp Sent</span>
-                  {viewingRecord.blob_url && (
+                  {viewingRecord.blob_url && viewingRecord.blob_url.startsWith('https://') && (
                     <a href={viewingRecord.blob_url} target="_blank" rel="noopener noreferrer"
                       className="text-sm font-semibold text-blue-600 underline hover:text-blue-800">
                       ⬇ Download Report
@@ -644,7 +639,7 @@ export default function SentReport() {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {record.blob_url ? (
+                      {record.blob_url && record.blob_url.startsWith('https://') ? (
                         <a href={record.blob_url} target="_blank" rel="noopener noreferrer"
                           className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-medium">
                           ⬇ Download

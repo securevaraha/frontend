@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
     const cro         = formData.get('cro');
     const patientName = formData.get('patientName');
     const conId       = formData.get('conId');
-    const blobUrl     = formData.get('blobUrl'); // Vercel blob URL passed from frontend
 
     if (!report || !reportName || !cro || !conId) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -23,7 +22,6 @@ export async function POST(request: NextRequest) {
     backendForm.append('cro',         cro as string);
     backendForm.append('patientName', (patientName as string) || '');
     backendForm.append('conId',       conId as string);
-    backendForm.append('blobUrl',     (blobUrl as string) || '');
 
     const backendRes = await fetch(`${API_BASE_URL}/console/upload-report`, {
       method: 'POST',
@@ -40,10 +38,10 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      success:          true,
-      fileName:         data.fileName,
-      blobUrl:          data.blobUrl,
-      whatsappSent:     data.whatsappSent,
+      success:           true,
+      fileName:          data.fileName,
+      blobUrl:           data.blobUrl,   // real URL: https://api.varahasdc.co.in/uploads/reports/xxx.pdf
+      whatsappSent:      data.whatsappSent,
       whatsappMessageId: data.whatsappMessageId,
     });
 
