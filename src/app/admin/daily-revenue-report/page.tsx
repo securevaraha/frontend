@@ -379,20 +379,50 @@ export default function DailyRevenueReport() {
     htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
 
     // Summary for the period section
+    // Col layout: A-H = PARTICULAR(colspan 8) | I = SCAN | J = empty | K = AMOUNT | L = empty | M = empty
     htmlContent += `<tr><th style="background-color:#2F75B5; color:white" colspan="${totalCols}">SUMMARY FOR THE PERIOD</th></tr>`;
-    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}"><B>PARTICULAR</B></td><td style="text-align:center"><B>SCAN</B></td><td></td><td style="text-align:center"><B>AMOUNT</B></td><td></td><td></td></tr>`;
-    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">GROSS TOTAL</td><td style="text-align:center">${grandTotalScans}</td><td></td><td style="text-align:right">${grandTotalAmount.toFixed(2)}</td><td></td><td></td></tr>`;
-    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">(-) 25% FREE SHARE OF MDM</td><td style="text-align:center">${parseFloat((grandTotalScans * 0.25).toFixed(2))}</td><td></td><td style="text-align:right">${(grandTotalAmount * 0.25).toFixed(2)}</td><td></td><td></td></tr>`;
+
+    // Header row: PARTICULAR | SCAN | (empty) | AMOUNT | (empty) | (empty)
     htmlContent += `<tr>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET RECEIVABLE</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:center">${parseFloat((grandTotalScans - grandTotalScans * 0.25).toFixed(2))}</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${netReceivable.toFixed(2)}</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `<th style="border:1px solid black; text-align:left" colspan="${FIXED_SCAN_COLS}"><B>PARTICULAR</B></th>`;
+    htmlContent += `<th style="border:1px solid black; text-align:center"><B>SCAN</B></th>`;
+    htmlContent += `<th style="border:1px solid black;"></th>`;
+    htmlContent += `<th style="border:1px solid black; text-align:center"><B>AMOUNT</B></th>`;
+    htmlContent += `<th style="border:1px solid black;"></th>`;
+    htmlContent += `<th style="border:1px solid black;"></th>`;
     htmlContent += `</tr>`;
-    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
-    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+
+    // GROSS TOTAL row
+    htmlContent += `<tr>`;
+    htmlContent += `<td style="border:1px solid black;" colspan="${FIXED_SCAN_COLS}">GROSS TOTAL</td>`;
+    htmlContent += `<td style="border:1px solid black; text-align:center">${grandTotalScans}</td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `<td style="border:1px solid black; text-align:right">${grandTotalAmount.toFixed(2)}</td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `</tr>`;
+
+    // (-) 25% FREE SHARE row
+    htmlContent += `<tr>`;
+    htmlContent += `<td style="border:1px solid black;" colspan="${FIXED_SCAN_COLS}">(-) 25% FREE SHARE OF MDM</td>`;
+    htmlContent += `<td style="border:1px solid black; text-align:center">${parseFloat((grandTotalScans * 0.25).toFixed(2))}</td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `<td style="border:1px solid black; text-align:right">${(grandTotalAmount * 0.25).toFixed(2)}</td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `<td style="border:1px solid black;"></td>`;
+    htmlContent += `</tr>`;
+
+    // NET RECEIVABLE row
+    htmlContent += `<tr>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET RECEIVABLE</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center">${parseFloat((grandTotalScans - grandTotalScans * 0.25).toFixed(2))}</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:right">${netReceivable.toFixed(2)}</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `</tr>`;
+    htmlContent += `<tr><td colspan="${totalCols}">&nbsp;</td></tr>`;
+    htmlContent += `<tr><td colspan="${totalCols}">&nbsp;</td></tr>`;
 
     // Convert amount to words
     const numberToWords = (amount: number) => {
@@ -437,8 +467,12 @@ export default function DailyRevenueReport() {
       }
     } catch (e) { console.error('Error fetching paid patients:', e); }
 
+    // RUPEES IN WORDS
     htmlContent += `<tr><th colspan="${FIXED_SCAN_COLS}" style="text-align:left"><u>RUPEES ${numberToWords(netReceivable).toUpperCase()}</u></th><th colspan="5"></th></tr>`;
-    htmlContent += `<tr><th colspan="${FIXED_SCAN_COLS}" style="text-align:left">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</th><th colspan="5" style="text-align:right">For : VARAHA SDC</th></tr>`;
+    // * Total line with For : VARAHA SDC on right
+    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">* Total</td><td colspan="5" style="text-align:right">For : VARAHA SDC</td></tr>`;
+    // *TOTAL PAID PATIENT line
+    htmlContent += `<tr><td colspan="${totalCols}">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</td></tr>`;
     htmlContent += `</table></body></html>`;
 
     const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
