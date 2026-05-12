@@ -289,155 +289,162 @@ export default function DailyRevenueReport() {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const billNo = diffDays + 85;
     const billNumber = billNo === 85 ? '85 (A)' : billNo;
-    const billYear = dateParts[2]; // year from selected date e.g. 2025
-    
-    const globalMaxColumns = Math.max(...revenueData.map(table => 
-      table.summaryRows ? Math.max(...table.summaryRows.map(row => row.scanCode.split('+').length)) : 0
-    ));
-    const totalCols = globalMaxColumns + 5;
-    
-    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body><table border="1"><tr><th colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr><tr><th style="text-margin:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:left;" colspan="${totalCols}">Bill No. :- ${billYear}/VDC_MDM/CT${billNumber}</th></tr><tr><th style="text-align:center;" colspan="${totalCols}">&nbsp;</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr><tr><th style="text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr><tr><th style="background-color:#FFEA00; color:black;text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
-    
-    let grandTotalScans = 0;
-    let grandTotalForms = 0;
+    const billYear = dateParts[2];
+
+    // Fixed 8 scan columns (A-H) + Scan Code(I) + No.of Scan(J) + Patient/Forms(K) + Rate(L) + Amount(M) = 13 cols
+    const FIXED_SCAN_COLS = 8;
+    const totalCols = FIXED_SCAN_COLS + 5; // always 13
+
+    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body><table border="1">`;
+    htmlContent += `<tr><th colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr>`;
+    htmlContent += `<tr><th style="text-margin:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr>`;
+    htmlContent += `<tr><th style="text-margin:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr>`;
+    htmlContent += `<tr><th style="background-color:#FFEA00; color:black;text-align:left;" colspan="${totalCols}">Bill No. :- ${billYear}/VDC_MDM/CT${billNumber}</th></tr>`;
+    htmlContent += `<tr><th style="text-align:center;" colspan="${totalCols}">&nbsp;</th></tr>`;
+    htmlContent += `<tr><th style="text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr>`;
+    htmlContent += `<tr><th style="text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr>`;
+    htmlContent += `<tr><th style="background-color:#FFEA00; color:black;text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
+
+    let grandTotalScans  = 0;
+    let grandTotalForms  = 0;
     let grandTotalAmount = 0;
-    
+
     revenueData.forEach(table => {
       if (!table.summaryRows || table.summaryRows.length === 0) return;
-      
-      const maxScanColumns = Math.max(...table.summaryRows.map(row => row.scanCode.split('+').length));
-      
-      htmlContent += `<tr><th style="background-color:#FFEA00; color:black">(${table.hospitalName} ${table.category})</th></tr>`;
+
+      // Hospital header spans all 13 cols
+      htmlContent += `<tr><th style="background-color:#FFEA00; color:black" colspan="${totalCols}">(${table.hospitalName} ${table.category})</th></tr>`;
+
+      // Column headers — always 8 scan name cols then 5 fixed cols
       htmlContent += '<tr>';
-      
-      for (let i = 1; i <= maxScanColumns; i++) {
+      for (let i = 1; i <= FIXED_SCAN_COLS; i++) {
         htmlContent += `<th style="background-color:#2F75B5; color:white">${i}. SCAN NAME</th>`;
       }
-      
-      htmlContent += `<th style="background-color:#2F75B5; color:white">SCAN NO. ( Scan Code)</th><th style="background-color:#2F75B5; color:white">NO. OF SCAN</th><th style="background-color:#2F75B5; color:white">PATIENT/ FORMS</th><th style="background-color:#2F75B5; color:white">RATE</th><th style="background-color:#2F75B5; color:white">AMOUNT</th></tr>`;
-      
-      let totalScans = 0;
+      htmlContent += `<th style="background-color:#2F75B5; color:white">SCAN NO. (Scan Code)</th>`;
+      htmlContent += `<th style="background-color:#2F75B5; color:white">NO. OF SCAN</th>`;
+      htmlContent += `<th style="background-color:#2F75B5; color:white">PATIENT/ FORMS</th>`;
+      htmlContent += `<th style="background-color:#2F75B5; color:white">RATE</th>`;
+      htmlContent += `<th style="background-color:#2F75B5; color:white">AMOUNT</th>`;
+      htmlContent += '</tr>';
+
+      let totalScans   = 0;
       let totalPatients = 0;
-      let totalAmount = 0;
-      
+      let totalAmount  = 0;
+
       table.summaryRows.forEach(row => {
         htmlContent += '<tr>';
-        
-        for (let i = 0; i < maxScanColumns; i++) {
+        // Always emit exactly FIXED_SCAN_COLS scan name cells
+        for (let i = 0; i < FIXED_SCAN_COLS; i++) {
           htmlContent += `<td>${row.scanNames[i] || '..'}</td>`;
         }
-        
-        htmlContent += `<td style="text-align:center">${row.scanCode}</td><td style="text-align:center">${row.numberOfScans}</td><td style="text-align:center">${row.patientCount}</td><td style="text-align:center">${row.rate}</td><td style="text-align:right">${row.amount}</td></tr>`;
-        
-        totalScans += row.numberOfScans;
+        htmlContent += `<td style="text-align:center">${row.scanCode}</td>`;
+        htmlContent += `<td style="text-align:center">${row.numberOfScans}</td>`;
+        htmlContent += `<td style="text-align:center">${row.patientCount}</td>`;
+        htmlContent += `<td style="text-align:center">${row.rate}</td>`;
+        htmlContent += `<td style="text-align:right">${row.amount}</td>`;
+        htmlContent += '</tr>';
+
+        totalScans    += row.numberOfScans;
         totalPatients += row.patientCount;
-        totalAmount += row.amount;
+        totalAmount   += row.amount;
       });
-      
-      htmlContent += `<tr><th style="background-color:#FFEA00; color:black; text-align:left" colspan="${maxScanColumns}">Total </th><th style="background-color:#FFEA00; color:black;text-align:center"> </th><th style="background-color:#FFEA00; color:black;text-align:center">${totalScans}</th><th style="background-color:#FFEA00; color:black;text-align:center">${totalPatients}</th><th style="background-color:#FFEA00; color:black;text-align:center"> </th><th style="background-color:#FFEA00; color:black;text-align:right">${totalAmount.toFixed(2)}</th></tr><tr><th colspan="${maxScanColumns + 5}">&nbsp;</th></tr>`;
-      
-      grandTotalScans += totalScans;
-      grandTotalForms += totalPatients;
+
+      // Table total row — colspan 8 for scan name cols
+      htmlContent += `<tr>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">Total</th>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${totalScans}</th>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${totalPatients}</th>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
+      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${totalAmount.toFixed(2)}</th>`;
+      htmlContent += `</tr>`;
+      htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+
+      grandTotalScans  += totalScans;
+      grandTotalForms  += totalPatients;
       grandTotalAmount += totalAmount;
     });
-    
-    const netReceivable = parseFloat((grandTotalAmount - (grandTotalAmount * 0.25)).toFixed(2));
-    
-    // Convert amount to words (proper conversion)
+
+    const netReceivable = parseFloat((grandTotalAmount - grandTotalAmount * 0.25).toFixed(2));
+
+    // NET AMOUNT row
+    htmlContent += `<tr>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET AMOUNT</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalScans}</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalForms}</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${grandTotalAmount.toFixed(2)}</th>`;
+    htmlContent += `</tr>`;
+    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+
+    // Summary for the period section
+    htmlContent += `<tr><th style="background-color:#2F75B5; color:white" colspan="${totalCols}">SUMMARY FOR THE PERIOD</th></tr>`;
+    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}"><B>PARTICULAR</B></td><td style="text-align:center"><B>SCAN</B></td><td></td><td style="text-align:center"><B>AMOUNT</B></td><td></td><td></td></tr>`;
+    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">GROSS TOTAL</td><td style="text-align:center">${grandTotalScans}</td><td></td><td style="text-align:right">${grandTotalAmount.toFixed(2)}</td><td></td><td></td></tr>`;
+    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">(-) 25% FREE SHARE OF MDM</td><td style="text-align:center">${parseFloat((grandTotalScans * 0.25).toFixed(2))}</td><td></td><td style="text-align:right">${(grandTotalAmount * 0.25).toFixed(2)}</td><td></td><td></td></tr>`;
+    htmlContent += `<tr>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET RECEIVABLE</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:center">${parseFloat((grandTotalScans - grandTotalScans * 0.25).toFixed(2))}</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${netReceivable.toFixed(2)}</th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `<th style="background-color:#FFEA00; color:black;"></th>`;
+    htmlContent += `</tr>`;
+    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+
+    // Convert amount to words
     const numberToWords = (amount: number) => {
       const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
       const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-      
       const convertHundreds = (num: number): string => {
         let result = '';
-        if (num >= 100) {
-          result += ones[Math.floor(num / 100)] + ' Hundred ';
-          num %= 100;
-        }
-        if (num >= 20) {
-          result += tens[Math.floor(num / 10)] + ' ';
-          num %= 10;
-        }
-        if (num > 0) {
-          result += ones[num] + ' ';
-        }
+        if (num >= 100) { result += ones[Math.floor(num / 100)] + ' Hundred '; num %= 100; }
+        if (num >= 20)  { result += tens[Math.floor(num / 10)] + ' '; num %= 10; }
+        if (num > 0)    { result += ones[num] + ' '; }
         return result;
       };
-      
       if (amount === 0) return 'Zero Rupees Only';
-      
       const rupees = Math.floor(amount);
-      const paisa = Math.round((amount - rupees) * 100);
-      
+      const paisa  = Math.round((amount - rupees) * 100);
       let result = '';
-      let tempAmount = rupees;
-      const crores = Math.floor(tempAmount / 10000000);
-      tempAmount %= 10000000;
-      const lakhs = Math.floor(tempAmount / 100000);
-      tempAmount %= 100000;
-      const thousands = Math.floor(tempAmount / 1000);
-      tempAmount %= 1000;
-      const hundreds = tempAmount;
-      
-      if (crores > 0) result += convertHundreds(crores) + 'Crore ';
-      if (lakhs > 0) result += convertHundreds(lakhs) + 'Lakh ';
+      let tmp = rupees;
+      const crores    = Math.floor(tmp / 10000000); tmp %= 10000000;
+      const lakhs     = Math.floor(tmp / 100000);   tmp %= 100000;
+      const thousands = Math.floor(tmp / 1000);     tmp %= 1000;
+      if (crores    > 0) result += convertHundreds(crores)    + 'Crore ';
+      if (lakhs     > 0) result += convertHundreds(lakhs)     + 'Lakh ';
       if (thousands > 0) result += convertHundreds(thousands) + 'Thousand ';
-      if (hundreds > 0) result += convertHundreds(hundreds);
-      
+      if (tmp       > 0) result += convertHundreds(tmp);
       result = result.trim();
-      if (result) result += ' Rupees';
-      else result = 'Zero Rupees';
-      
-      if (paisa > 0) {
-        result += ' And ' + convertHundreds(paisa).trim() + ' Paisa';
-      }
-      
+      result = result ? result + ' Rupees' : 'Zero Rupees';
+      if (paisa > 0) result += ' And ' + convertHundreds(paisa).trim() + ' Paisa';
       return result + ' Only';
     };
-    
-    // Fetch paid patients data from API
-    let paidPatients = 0;
-    let paidScans = 0;
-    let paidAmount = 0;
-    
+
+    // Fetch paid patients
+    let paidPatients = 0, paidScans = 0, paidAmount = 0;
     try {
       const paidResponse = await fetch(`https://api.varahasdc.co.in/admin/paid-patients?s_date=${selectedDate}`);
       if (paidResponse.ok) {
         const paidData = await paidResponse.json();
         if (paidData.success) {
           paidPatients = paidData.tot_patient || 0;
-          paidScans = paidData.tot_scan || 0;
-          paidAmount = parseFloat((paidData.tot_amt || 0).toFixed(2));
+          paidScans    = paidData.tot_scan    || 0;
+          paidAmount   = parseFloat((paidData.tot_amt || 0).toFixed(2));
         }
       }
-    } catch (error) {
-      console.error('Error fetching paid patients data:', error);
-    }
-    
-    htmlContent += `<tr><th style="background-color:#FFEA00; color:black; text-align:left" colspan="${globalMaxColumns}">NET AMOUNT</th><th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalScans}</th><th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalForms}</th><th style="background-color:#FFEA00; color:black;text-align:center"> </th><th style="background-color:#FFEA00; color:black;text-align:right">${grandTotalAmount.toFixed(2)}</th></tr><tr><th colspan="${totalCols}">&nbsp;</th></tr><tr><th style="background-color:#2F75B5; color:white" colspan="${totalCols}">SUMMARY FOR THE PERIOD</th></tr><tr><td><B>PARTICULAR</td>`;
-    
-    for (let i = 1; i < globalMaxColumns; i++) {
-      htmlContent += '<td></td>';
-    }
-    
-    htmlContent += `<td style="text-align:center"><B>SCAN</td><td></td><td style="text-align:center"><B>AMOUNT</td></tr><tr><td>GROSS TOTAL</td>`;
-    
-    for (let i = 1; i < globalMaxColumns; i++) {
-      htmlContent += '<td></td>';
-    }
-    
-    htmlContent += `<td style="text-align:center">${grandTotalScans}</td><td></td><td style="text-align:right">${grandTotalAmount.toFixed(2)}</td></tr><tr><td>(-) 25% FREE SHARE OF MDM</td>`;
-    
-    for (let i = 1; i < globalMaxColumns; i++) {
-      htmlContent += '<td></td>';
-    }
-    
-    htmlContent += `<td style="text-align:center">${parseFloat((grandTotalScans * 0.25).toFixed(2))}</td><td></td><td style="text-align:right">${(grandTotalAmount * 0.25).toFixed(2)}</td></tr><tr><th colspan="${globalMaxColumns}" style="background-color:#FFEA00; color:black; text-align:left">NET RECEIVABLE</th><th style="background-color:#FFEA00; color:black; text-align:center">${parseFloat((grandTotalScans - (grandTotalScans * 0.25)).toFixed(2))}</th><th style="background-color:#FFEA00; color:black;"></th><th style="background-color:#FFEA00; color:black;text-align:right">${netReceivable.toFixed(2)}</th></tr><tr><th colspan="${totalCols}">&nbsp;</th></tr><tr><th colspan="${totalCols}">&nbsp;</th></tr><tr><th colspan="${globalMaxColumns}" style="text-align:left"><u>RUPEES ${numberToWords(netReceivable).toUpperCase()}</u></th><th colspan="4"></th></tr><tr><th colspan="${globalMaxColumns}" style="text-align:left">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</th><th colspan="4" style="text-align:right">For : VARAHA SDC</th></tr></table></body></html>`;
-    
+    } catch (e) { console.error('Error fetching paid patients:', e); }
+
+    htmlContent += `<tr><th colspan="${FIXED_SCAN_COLS}" style="text-align:left"><u>RUPEES ${numberToWords(netReceivable).toUpperCase()}</u></th><th colspan="5"></th></tr>`;
+    htmlContent += `<tr><th colspan="${FIXED_SCAN_COLS}" style="text-align:left">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</th><th colspan="5" style="text-align:right">For : VARAHA SDC</th></tr>`;
+    htmlContent += `</table></body></html>`;
+
     const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
+    const url  = window.URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
     a.download = `DAILY SUMMARY REPORT-${selectedDate}.xls`;
     a.click();
     window.URL.revokeObjectURL(url);
