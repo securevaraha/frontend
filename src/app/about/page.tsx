@@ -75,13 +75,25 @@ export default function AboutUsPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              Varaha SDC brings an advanced technology (256 slice) machine to the city for the first time. We at Varaha focus on bringing quality diagnosis by providing best quality services. Our CT machine i.e GE Revolution CT 256 slice dual energy provides high quality scans with low dose radiations compared to other machines. Our advanced technology gives doctors an edge in diagnosing the illness better.
+              At Varaha SDC, we believe that accurate diagnosis is the first step toward better health—and every patient deserves care they can trust.
             </p>
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              We provide immediate medical care for emergency patients and our acquiescent staff will be glad to assist you 24x7 and we have an efficient team of radiologist for excellent reporting.
+              We are proud to bring one of the city's most advanced imaging technologies, the 256-slice CT scanner, to serve our community. With the GE Revolution CT 256-slice Dual Energy system, we are able to deliver highly detailed and precise scans while keeping radiation exposure as low as possible. This means safer imaging and more reliable results for you and your loved ones.
             </p>
             <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
-              We focus on bringing quality diagnosis services by providing accurate and timely test results to our valued customers. With a commitment to excellence and a wide range of comprehensive test panels, varaha is your trusted partner in promoting good health and overall well-being. We strive to provide high quality services near you while assuring affordability.
+              But for us, technology is only part of the story.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              What truly defines Varaha SDC is our commitment to people. Whether you're visiting for a routine test or an emergency situation, our caring and dedicated team is here for you—24 hours a day, 7 days a week. From the moment you walk in, our staff ensures that you feel comfortable, supported, and well-informed throughout your experience.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              Behind every report is a team of experienced radiologists who work diligently to provide accurate and timely results, helping doctors make confident decisions about your care.
+            </p>
+            <p className="text-lg leading-relaxed" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>
+              At Varaha SDC, we strive to combine advanced technology with a human touch. We are committed to offering high-quality diagnostic services that are not only reliable but also affordable and accessible to everyone in our community.
+            </p>
+            <p className="text-lg leading-relaxed font-medium" style={{color: '#0056AE', fontFamily: 'Roboto, sans-serif'}}>
+              Your health matters to us—and we are here to support you every step of the way.
             </p>
           </motion.div>
         </div>

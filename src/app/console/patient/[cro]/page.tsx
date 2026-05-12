@@ -79,22 +79,29 @@ export default function ConsolePatient({ params }: { params: Promise<{ cro: stri
         
         // Bind console data to form if it exists
         if (data.data.console) {
-          const console = data.data.console;
+          const consoleRecord = data.data.console;
+          const patient = data.data.patient;
+
+          // date_of_examination comes from patient_new.scan_date (saved by save-console)
+          const scanDate = patient?.scan_date
+            ? patient.scan_date.substring(0, 10)   // trim to YYYY-MM-DD if ISO string
+            : new Date().toLocaleDateString('en-CA');
+
           setFormData({
-            examination_id: console.examination_id || '',
-            number_scan: console.number_scan || '',
-            number_film: console.number_films || '',
-            number_contrast: console.number_contrast || '',
-            technician_name: console.technician_name || '',
-            nursing_name: console.nursing_name || '',
-            issue_cd: console.issue_cd || 'NO',
-            remark: console.remark || '',
-            console_date: new Date().toLocaleDateString('en-CA'),
-            console_time: new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false }),
-            date_of_examination: console.added_on || new Date().toLocaleDateString('en-CA')
+            examination_id: consoleRecord.examination_id || '',
+            number_scan:    consoleRecord.number_scan    || '',
+            number_film:    consoleRecord.number_films   || '',
+            number_contrast: consoleRecord.number_contrast || '',
+            technician_name: consoleRecord.technician_name || '',
+            nursing_name:   consoleRecord.nursing_name   || '',
+            issue_cd:       consoleRecord.issue_cd       || 'NO',
+            remark:         consoleRecord.remark         || '',
+            console_date:   new Date().toLocaleDateString('en-CA'),
+            console_time:   new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Calcutta', hour12: false }),
+            date_of_examination: scanDate,
           });
-          setStartTime(console.start_time || '');
-          setStopTime(console.stop_time || '');
+          setStartTime(consoleRecord.start_time || '');
+          setStopTime(consoleRecord.stop_time   || '');
         }
       } else {
         const errorData = await response.json().catch(() => ({}));

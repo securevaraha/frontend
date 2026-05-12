@@ -166,111 +166,90 @@ export default function DailyRevenueReport() {
       return;
     }
 
-    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body>`;
-    
+    const B  = 'border:1px solid black;';
+    const BH = `${B} background-color:#2F75B5; color:white;`;
+    const BY = `${B} background-color:#FFEA00; color:black;`;
+
+    let htmlContent = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Detail</x:Name><x:WorksheetOptions><x:DefaultColumnWidth>12</x:DefaultColumnWidth></x:WorksheetOptions><x:Columns><x:Column x:Index="1"><x:Width>400</x:Width></x:Column></x:Columns></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"></head><body>`;
+
     revenueData.forEach(table => {
       if (!table.patients || table.patients.length === 0) return;
-      
+
       const maxScans = Math.max(...table.patients.map(p => p.total_scan || p.totalScans || 0));
       const totalCols = 10 + maxScans;
-      console.log('Testing',maxScans,totalCols);
-      htmlContent += `
-        <table border="1">
-          <tr><th colspan="${totalCols}" style="background-color:#2F75B5; color:white">VARAHA SDC : IMAGING UNDER P.P.P. MODE</th></tr>
-          <tr><th colspan="${totalCols}" style="background-color:#2F75B5; color:white">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL</th></tr>
-          <tr><th style="text-margin:center; background-color:#FFEA00; color:black" colspan="${totalCols}">${table.hospitalName} (${table.category}) ${selectedDate}</th></tr>
-          <tr>
-            <th style="background-color:#2F75B5; color:white">S.No</th>
-            <th style="background-color:#2F75B5; color:white">DATE</th>
-            <th style="background-color:#2F75B5; color:white">CRO NO. / REG. NO.</th>
-            <th style="background-color:#2F75B5; color:white">PATIENT ID</th>
-            <th style="background-color:#2F75B5; color:white">NAME OF PATIENT</th>
-            <th style="background-color:#2F75B5; color:white">AGE</th>
-            <th style="background-color:#2F75B5; color:white">GENDER</th>
-      `;
-      
+
+      htmlContent += `<table border="1" style="border-collapse:collapse;">`;
+      htmlContent += `<tr><th style="${BH} text-align:center;" colspan="${totalCols}">VARAHA SDC : IMAGING UNDER P.P.P. MODE</th></tr>`;
+      htmlContent += `<tr><th style="${BH} text-align:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL</th></tr>`;
+      htmlContent += `<tr><th style="${BY} text-align:center;" colspan="${totalCols}">${table.hospitalName} (${table.category}) ${selectedDate}</th></tr>`;
+
+      // Column headers
+      htmlContent += `<tr>`;
+      htmlContent += `<th style="${BH} text-align:center;">S.No</th>`;
+      htmlContent += `<th style="${BH}">DATE</th>`;
+      htmlContent += `<th style="${BH}">CRO NO. / REG. NO.</th>`;
+      htmlContent += `<th style="${BH}">PATIENT ID</th>`;
+      htmlContent += `<th style="${BH}">NAME OF PATIENT</th>`;
+      htmlContent += `<th style="${BH}">AGE</th>`;
+      htmlContent += `<th style="${BH}">GENDER</th>`;
       for (let i = 1; i <= maxScans; i++) {
-        htmlContent += `<th style="background-color:#2F75B5; color:white">Scan Type ${i}</th>`;
+        htmlContent += `<th style="${BH}">SCAN-${i}</th>`;
       }
-      
-      htmlContent += `
-            <th style="background-color:#2F75B5; color:white">TOTAL SCAN</th>
-            <th style="background-color:#2F75B5; color:white">AMOUNT</th>
-            <th style="background-color:#2F75B5; color:white">CATEGORY</th>
-          </tr>
-      `;
-      
-      let totalScans = 0;
+      htmlContent += `<th style="${BH}">TOTAL SCAN</th>`;
+      htmlContent += `<th style="${BH}">AMOUNT</th>`;
+      htmlContent += `<th style="${BH}">CATEGORY</th>`;
+      htmlContent += `</tr>`;
+
+      let totalScans  = 0;
       let totalAmount = 0;
-      
+
       table.patients.forEach((patient, index) => {
-        const patientScans = patient.scanNames || (patient.scan_names || patient.scan_type || '').split(',').map(s => s.trim()).filter(s => s);
-        const age = (patient.age || '').toString().replace('ear', '');
-        const gender = (patient.gender || '').substring(0, 1);
+        const patientScans = patient.scanNames || (patient.scan_names || patient.scan_type || '').split(',').map((s: string) => s.trim()).filter((s: string) => s);
+        const age      = (patient.age || '').toString().replace('ear', '');
+        const gender   = (patient.gender || '').substring(0, 1);
         const patientId = patient.patientId || patient.examination_id || patient.patient_id || '';
-        
-        htmlContent += `
-          <tr>
-            <td>${patient.sno || index + 1}</td>
-            <td>${selectedDate}</td>
-            <td>${patient.cro || ''}</td>
-            <td>${patientId}</td>
-            <td>${patient.patientName || patient.patient_name || ''}</td>
-            <td>${age}</td>
-            <td>${gender}</td>
-        `;
-        
-        // Fill scan columns with actual scan names
-        for (let i = 0; i < maxScans; i++) {
-          const scanName = patientScans[i] || '';
-          htmlContent += `<td>${scanName}</td>`;
-        }
-        
         const patientTotalScans = parseInt(String(patient.totalScans || patient.total_scan || 0));
-        const patientAmount = parseFloat(String(patient.amount || 0));
-        
-        htmlContent += `
-            <td style='text-align:right'>${patientTotalScans}</td>
-            <td style='text-align:right'>${patientAmount.toFixed(2)}</td>
-            <td>${patient.category}</td>
-          </tr>
-        `;
-        
-        totalScans += patientTotalScans;
+        const patientAmount     = parseFloat(String(patient.amount || 0));
+
+        htmlContent += `<tr>`;
+        htmlContent += `<td style="${B} text-align:center;">${patient.sno || index + 1}</td>`;
+        htmlContent += `<td style="${B}">${selectedDate}</td>`;
+        htmlContent += `<td style="${B}">${patient.cro || ''}</td>`;
+        htmlContent += `<td style="${B}">${patientId}</td>`;
+        htmlContent += `<td style="${B}">${patient.patientName || patient.patient_name || ''}</td>`;
+        htmlContent += `<td style="${B} text-align:center;">${age}</td>`;
+        htmlContent += `<td style="${B} text-align:center;">${gender}</td>`;
+        for (let i = 0; i < maxScans; i++) {
+          htmlContent += `<td style="${B}">${patientScans[i] || ''}</td>`;
+        }
+        htmlContent += `<td style="${B} text-align:center;">${patientTotalScans}</td>`;
+        htmlContent += `<td style="${B} text-align:right;">${patientAmount.toFixed(2)}</td>`;
+        htmlContent += `<td style="${B}">${patient.category}</td>`;
+        htmlContent += `</tr>`;
+
+        totalScans  += patientTotalScans;
         totalAmount += patientAmount;
       });
-      
-      htmlContent += `
-        <tr>
-          <th style="background-color:#FFEA00; color:black"> </th>
-          <th style="background-color:#FFEA00; color:black"> </th>
-          <th style="background-color:#FFEA00; color:black"> </th>
-          <th style="background-color:#FFEA00; color:black"> </th>
-          <th style="background-color:#FFEA00; color:black"></th>
-          <th style="background-color:#FFEA00; color:black"></th>
-          <th style="background-color:#FFEA00; color:black"></th>
-      `;
-      
-      for (let i = 1; i < maxScans; i++) {
-        htmlContent += `<th style="background-color:#FFEA00; color:black"></th>`;
-      }
-      
-      htmlContent += `
-          <th style="background-color:#FFEA00; color:black">Total </th>
-          <th style="background-color:#FFEA00; color:black;text-align:right">${totalScans} </th>
-          <th style="background-color:#FFEA00; color:black;text-align:right">${totalAmount.toFixed(2)}  </th>
-          <th style="background-color:#FFEA00; color:black"> </th>
-        </tr>
-        </table><br><br>
-      `;
+
+      // Total row — yellow only on label cell, rest plain
+      htmlContent += `<tr>`;
+      for (let i = 0; i < 7; i++) htmlContent += `<th style="${BY}"></th>`;
+      for (let i = 1; i < maxScans; i++) htmlContent += `<th style="${BY}"></th>`;
+      htmlContent += `<th style="${BY}">Total</th>`;
+      htmlContent += `<th style="${BY} text-align:center;">${totalScans}</th>`;
+      htmlContent += `<th style="${BY} text-align:right;">${totalAmount.toFixed(2)}</th>`;
+      htmlContent += `<th style="${BY}"></th>`;
+      htmlContent += `</tr>`;
+
+      htmlContent += `</table><br><br>`;
     });
-    
+
     htmlContent += '</body></html>';
-    
+
     const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
+    const url  = window.URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
     a.download = `DAILY REVENUE REPORT-${selectedDate}.xls`;
     a.click();
     window.URL.revokeObjectURL(url);
@@ -295,15 +274,15 @@ export default function DailyRevenueReport() {
     const FIXED_SCAN_COLS = 8;
     const totalCols = FIXED_SCAN_COLS + 5; // always 13
 
-    let htmlContent = `<html><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"><body><table border="1">`;
-    htmlContent += `<tr><th colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr>`;
-    htmlContent += `<tr><th style="text-margin:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr>`;
-    htmlContent += `<tr><th style="text-margin:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr>`;
-    htmlContent += `<tr><th style="background-color:#FFEA00; color:black;text-align:left;" colspan="${totalCols}">Bill No. :- ${billYear}/VDC_MDM/CT${billNumber}</th></tr>`;
-    htmlContent += `<tr><th style="text-align:center;" colspan="${totalCols}">&nbsp;</th></tr>`;
-    htmlContent += `<tr><th style="text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr>`;
-    htmlContent += `<tr><th style="text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr>`;
-    htmlContent += `<tr><th style="background-color:#FFEA00; color:black;text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
+    let htmlContent = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Summary</x:Name><x:WorksheetOptions><x:DefaultColumnWidth>12</x:DefaultColumnWidth></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><meta http-equiv="Content-Type" content="text/html; charset=Windows-1252"></head><body><table border="1" style="border-collapse:collapse;">`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:center;" colspan="${totalCols}">VARAHA SDC : 256 SLICE CT SCAN</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:center;" colspan="${totalCols}">(IMAGING UNDER P.P.P MODE)</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:center;" colspan="${totalCols}">RAJASTHAN MEDICARE RELIEF SOCIETY, MDM HOSPITAL , Jodhpur</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left;" colspan="${totalCols}">Bill No. :- ${billYear}/VDC_MDM/CT${billNumber}</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:center;" colspan="${totalCols}">&nbsp;</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:right;" colspan="${totalCols}">RMRS, MDM Hospital, Jodhpur</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; text-align:right;" colspan="${totalCols}">SUMMARY FOR THE PERIOD OF</th></tr>`;
+    htmlContent += `<tr><th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:right;" colspan="${totalCols}">${selectedDate}</th></tr>`;
 
     let grandTotalScans  = 0;
     let grandTotalForms  = 0;
@@ -312,19 +291,23 @@ export default function DailyRevenueReport() {
     revenueData.forEach(table => {
       if (!table.summaryRows || table.summaryRows.length === 0) return;
 
-      // Hospital header spans all 13 cols
-      htmlContent += `<tr><th style="background-color:#FFEA00; color:black" colspan="${totalCols}">(${table.hospitalName} ${table.category})</th></tr>`;
+      // Hospital header — yellow background only on col A, rest plain bordered empty cells
+      htmlContent += `<tr><th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left;">(${table.hospitalName} ${table.category})</th>`;
+      for (let i = 1; i < totalCols; i++) {
+        htmlContent += `<td style="border:1px solid black;"></td>`;
+      }
+      htmlContent += `</tr>`;
 
       // Column headers — always 8 scan name cols then 5 fixed cols
       htmlContent += '<tr>';
       for (let i = 1; i <= FIXED_SCAN_COLS; i++) {
-        htmlContent += `<th style="background-color:#2F75B5; color:white">${i}. SCAN NAME</th>`;
+        htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">${i}. SCAN NAME</th>`;
       }
-      htmlContent += `<th style="background-color:#2F75B5; color:white">SCAN NO. (Scan Code)</th>`;
-      htmlContent += `<th style="background-color:#2F75B5; color:white">NO. OF SCAN</th>`;
-      htmlContent += `<th style="background-color:#2F75B5; color:white">PATIENT/ FORMS</th>`;
-      htmlContent += `<th style="background-color:#2F75B5; color:white">RATE</th>`;
-      htmlContent += `<th style="background-color:#2F75B5; color:white">AMOUNT</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">SCAN NO. (Scan Code)</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">NO. OF SCAN</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">PATIENT/ FORMS</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">RATE</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#2F75B5; color:white;">AMOUNT</th>`;
       htmlContent += '</tr>';
 
       let totalScans   = 0;
@@ -333,15 +316,14 @@ export default function DailyRevenueReport() {
 
       table.summaryRows.forEach(row => {
         htmlContent += '<tr>';
-        // Always emit exactly FIXED_SCAN_COLS scan name cells
         for (let i = 0; i < FIXED_SCAN_COLS; i++) {
-          htmlContent += `<td>${row.scanNames[i] || '..'}</td>`;
+          htmlContent += `<td style="border:1px solid black;">${row.scanNames[i] || '..'}</td>`;
         }
-        htmlContent += `<td style="text-align:center">${row.scanCode}</td>`;
-        htmlContent += `<td style="text-align:center">${row.numberOfScans}</td>`;
-        htmlContent += `<td style="text-align:center">${row.patientCount}</td>`;
-        htmlContent += `<td style="text-align:center">${row.rate}</td>`;
-        htmlContent += `<td style="text-align:right">${row.amount}</td>`;
+        htmlContent += `<td style="border:1px solid black; text-align:center;">${row.scanCode}</td>`;
+        htmlContent += `<td style="border:1px solid black; text-align:center;">${row.numberOfScans}</td>`;
+        htmlContent += `<td style="border:1px solid black; text-align:center;">${row.patientCount}</td>`;
+        htmlContent += `<td style="border:1px solid black; text-align:center;">${row.rate}</td>`;
+        htmlContent += `<td style="border:1px solid black; text-align:right;">${row.amount}</td>`;
         htmlContent += '</tr>';
 
         totalScans    += row.numberOfScans;
@@ -349,16 +331,16 @@ export default function DailyRevenueReport() {
         totalAmount   += row.amount;
       });
 
-      // Table total row — colspan 8 for scan name cols
+      // Table total row
       htmlContent += `<tr>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">Total</th>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${totalScans}</th>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${totalPatients}</th>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
-      htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${totalAmount.toFixed(2)}</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left;" colspan="${FIXED_SCAN_COLS}">Total</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;"> </th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;">${totalScans}</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;">${totalPatients}</th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;"> </th>`;
+      htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:right;">${totalAmount.toFixed(2)}</th>`;
       htmlContent += `</tr>`;
-      htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+      htmlContent += `<tr><td style="border:1px solid black;" colspan="${totalCols}">&nbsp;</td></tr>`;
 
       grandTotalScans  += totalScans;
       grandTotalForms  += totalPatients;
@@ -369,60 +351,51 @@ export default function DailyRevenueReport() {
 
     // NET AMOUNT row
     htmlContent += `<tr>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET AMOUNT</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalScans}</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center">${grandTotalForms}</th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:center"> </th>`;
-    htmlContent += `<th style="background-color:#FFEA00; color:black;text-align:right">${grandTotalAmount.toFixed(2)}</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left;" colspan="${FIXED_SCAN_COLS}">NET AMOUNT</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;"> </th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;">${grandTotalScans}</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;">${grandTotalForms}</th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center;"> </th>`;
+    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:right;">${grandTotalAmount.toFixed(2)}</th>`;
     htmlContent += `</tr>`;
-    htmlContent += `<tr><th colspan="${totalCols}">&nbsp;</th></tr>`;
+    htmlContent += `<tr><td style="border:1px solid black;" colspan="${totalCols}">&nbsp;</td></tr>`;
 
     // Summary for the period section
-    // Col layout: A-H = PARTICULAR(colspan 8) | I = SCAN | J = empty | K = AMOUNT | L = empty | M = empty
-    htmlContent += `<tr><th style="background-color:#2F75B5; color:white" colspan="${totalCols}">SUMMARY FOR THE PERIOD</th></tr>`;
+    // Each row has exactly 13 individual cells (no colspan):
+    // A=value  B-J=empty(9 cells)  K=SCAN value  L=empty  M=AMOUNT value
+    const B   = 'border:1px solid black;';
+    const BG_BLUE = `${B} background-color:#2F75B5; color:white;`;
+    const BG_YEL  = `${B} background-color:#FFEA00; color:black;`;
 
-    // Header row: PARTICULAR | SCAN | (empty) | AMOUNT | (empty) | (empty)
-    htmlContent += `<tr>`;
-    htmlContent += `<th style="border:1px solid black; text-align:left" colspan="${FIXED_SCAN_COLS}"><B>PARTICULAR</B></th>`;
-    htmlContent += `<th style="border:1px solid black; text-align:center"><B>SCAN</B></th>`;
-    htmlContent += `<th style="border:1px solid black;"></th>`;
-    htmlContent += `<th style="border:1px solid black; text-align:center"><B>AMOUNT</B></th>`;
-    htmlContent += `<th style="border:1px solid black;"></th>`;
-    htmlContent += `<th style="border:1px solid black;"></th>`;
-    htmlContent += `</tr>`;
+    // helper: build a full 13-cell row with value in col A, SCAN in col K(index 10), AMOUNT in col M(index 12)
+    const summaryRow = (tag: string, aStyle: string, aVal: string, kStyle: string, kVal: string, mStyle: string, mVal: string) => {
+      let r = `<tr><${tag} style="${aStyle}">${aVal}</${tag}>`;
+      for (let i = 1; i <= 9; i++) r += `<${tag} style="${B}"></${tag}>`; // B-J empty
+      r += `<${tag} style="${kStyle} text-align:center;">${kVal}</${tag}>`; // K
+      r += `<${tag} style="${B}"></${tag}>`;                                 // L empty
+      r += `<${tag} style="${mStyle} text-align:center;">${mVal}</${tag}>`; // M
+      r += `</tr>`;
+      return r;
+    };
 
-    // GROSS TOTAL row
-    htmlContent += `<tr>`;
-    htmlContent += `<td style="border:1px solid black;" colspan="${FIXED_SCAN_COLS}">GROSS TOTAL</td>`;
-    htmlContent += `<td style="border:1px solid black; text-align:center">${grandTotalScans}</td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `<td style="border:1px solid black; text-align:right">${grandTotalAmount.toFixed(2)}</td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `</tr>`;
+    htmlContent += `<tr><th style="${BG_BLUE} text-align:center;" colspan="${totalCols}">SUMMARY FOR THE PERIOD</th></tr>`;
 
-    // (-) 25% FREE SHARE row
-    htmlContent += `<tr>`;
-    htmlContent += `<td style="border:1px solid black;" colspan="${FIXED_SCAN_COLS}">(-) 25% FREE SHARE OF MDM</td>`;
-    htmlContent += `<td style="border:1px solid black; text-align:center">${parseFloat((grandTotalScans * 0.25).toFixed(2))}</td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `<td style="border:1px solid black; text-align:right">${(grandTotalAmount * 0.25).toFixed(2)}</td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `<td style="border:1px solid black;"></td>`;
-    htmlContent += `</tr>`;
+    // Header row
+    htmlContent += summaryRow('th', `${B} text-align:left;`, '<B>PARTICULAR</B>', B, '<B>SCAN</B>', B, '<B>AMOUNT</B>');
 
-    // NET RECEIVABLE row
-    htmlContent += `<tr>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:left" colspan="${FIXED_SCAN_COLS}">NET RECEIVABLE</th>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:center">${parseFloat((grandTotalScans - grandTotalScans * 0.25).toFixed(2))}</th>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black; text-align:right">${netReceivable.toFixed(2)}</th>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
-    htmlContent += `<th style="border:1px solid black; background-color:#FFEA00; color:black;"></th>`;
-    htmlContent += `</tr>`;
-    htmlContent += `<tr><td colspan="${totalCols}">&nbsp;</td></tr>`;
-    htmlContent += `<tr><td colspan="${totalCols}">&nbsp;</td></tr>`;
+    // GROSS TOTAL
+    htmlContent += summaryRow('td', B, 'GROSS TOTAL', B, `${grandTotalScans}`, B, `${grandTotalAmount.toFixed(2)}`);
+
+    // (-) 25% FREE SHARE
+    htmlContent += summaryRow('td', B, '(-) 25% FREE SHARE OF MDM', B,
+      `${parseFloat((grandTotalScans * 0.25).toFixed(2))}`, B, `${(grandTotalAmount * 0.25).toFixed(2)}`);
+
+    // NET RECEIVABLE
+    htmlContent += summaryRow('th', `${BG_YEL} text-align:left;`, 'NET RECEIVABLE', BG_YEL,
+      `${parseFloat((grandTotalScans - grandTotalScans * 0.25).toFixed(2))}`, BG_YEL, `${netReceivable.toFixed(2)}`);
+
+    htmlContent += `<tr><td style="${B}" colspan="${totalCols}">&nbsp;</td></tr>`;
+    htmlContent += `<tr><td style="${B}" colspan="${totalCols}">&nbsp;</td></tr>`;
 
     // Convert amount to words
     const numberToWords = (amount: number) => {
@@ -468,11 +441,11 @@ export default function DailyRevenueReport() {
     } catch (e) { console.error('Error fetching paid patients:', e); }
 
     // RUPEES IN WORDS
-    htmlContent += `<tr><th colspan="${FIXED_SCAN_COLS}" style="text-align:left"><u>RUPEES ${numberToWords(netReceivable).toUpperCase()}</u></th><th colspan="5"></th></tr>`;
+    htmlContent += `<tr><th style="${B} text-align:left;" colspan="${FIXED_SCAN_COLS}"><u>RUPEES ${numberToWords(netReceivable).toUpperCase()}</u></th><th style="${B}" colspan="5"></th></tr>`;
     // * Total line with For : VARAHA SDC on right
-    htmlContent += `<tr><td colspan="${FIXED_SCAN_COLS}">* Total</td><td colspan="5" style="text-align:right">For : VARAHA SDC</td></tr>`;
+    htmlContent += `<tr><td style="${B}" colspan="${FIXED_SCAN_COLS}">* Total</td><td style="${B} text-align:right;" colspan="5">For : VARAHA SDC</td></tr>`;
     // *TOTAL PAID PATIENT line
-    htmlContent += `<tr><td colspan="${totalCols}">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</td></tr>`;
+    htmlContent += `<tr><td style="${B}" colspan="${totalCols}">*TOTAL PAID PATIENT = ${paidPatients}, TOTAL SCAN = ${paidScans}, TOTAL AMOUNT = ${paidAmount.toFixed(2)}</td></tr>`;
     htmlContent += `</table></body></html>`;
 
     const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
