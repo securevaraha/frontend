@@ -177,7 +177,7 @@ export default function SentReport() {
 
       if (response.ok && data.success) {
         const msg = data.whatsappSent
-          ? `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo || '7014265848'}`
+          ? `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo || 'patient'}`
           : 'Report uploaded (WhatsApp send failed — check backend logs)';
         toast.success(msg);
         setUploadFile(null);

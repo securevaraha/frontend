@@ -46,14 +46,15 @@ async function uploadMediaToWhatsApp(fileBuffer, mimeType, fileName) {
   return data.id;
 }
 
+
+
 // POST /whatsapp/send-document
 // multipart/form-data: phone, caption, file (PDF)
 router.post('/send-document', upload.single('file'), async (req, res) => {
   try {
-    const { phone, caption } = req.body;
+    const { caption } = req.body;
     const file = req.file;
 
-    if (!phone?.trim()) return res.status(400).json({ error: 'phone is required' });
     if (!caption?.trim()) return res.status(400).json({ error: 'caption is required' });
     if (!file) return res.status(400).json({ error: 'file (PDF) is required' });
 
@@ -61,7 +62,7 @@ router.post('/send-document', upload.single('file'), async (req, res) => {
     const phoneNumberId = requireEnv(process.env.WHATSAPP_PHONE_NUMBER_ID, 'WHATSAPP_PHONE_NUMBER_ID');
 
     const mediaId = await uploadMediaToWhatsApp(file.buffer, file.mimetype, file.originalname);
-    const to = normalizeIndiaMobile(phone);
+    const to = normalizeIndiaMobile(req.body.phone || '');
 
     const msgRes = await fetch(
       `https://graph.facebook.com/${GRAPH_VERSION}/${phoneNumberId}/messages`,
@@ -131,6 +132,68 @@ router.post('/send-text', async (req, res) => {
   }
 });
 
+// POST /whatsapp/send-report
+// multipart/form-data: phone, patient_name, file (PDF)
+// Uses the varahasdc_scanreport template
+router.post('/send-report', upload.single('file'), async (req, res) => {
+  try {
+    const { phone, patient_name } = req.body;
+    const file = req.file;
+
+    if (!phone?.trim()) return res.status(400).json({ error: 'phone is required' });
+    if (!patient_name?.trim()) return res.status(400).json({ error: 'patient_name is required' });
+    if (!file) return res.status(400).json({ error: 'file (PDF) is required' });
+
+    const token = requireEnv(process.env.WHATSAPP_ACCESS_TOKEN, 'WHATSAPP_ACCESS_TOKEN');
+    const phoneNumberId = requireEnv(process.env.WHATSAPP_PHONE_NUMBER_ID, 'WHATSAPP_PHONE_NUMBER_ID');
+
+    const mediaId = await uploadMediaToWhatsApp(file.buffer, file.mimetype, file.originalname);
+    const to = normalizeIndiaMobile(phone);
+
+    const msgRes = await fetch(
+      `https://graph.facebook.com/${GRAPH_VERSION}/${phoneNumberId}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messaging_product: 'whatsapp',
+          to,
+          type: 'template',
+          template: {
+            name: 'varahasdc_scanreport',
+            language: { code: 'en' },
+            components: [
+              {
+                type: 'header',
+                parameters: [
+                  { type: 'document', document: { id: mediaId, filename: file.originalname } }
+                ]
+              },
+              {
+                type: 'body',
+                parameters: [
+                  { type: 'text', text: patient_name }
+                ]
+              }
+            ]
+          }
+        }),
+      }
+    );
+
+    const msgData = await msgRes.json().catch(() => ({}));
+    if (!msgRes.ok) return res.status(500).json({ error: 'Failed to send report', details: msgData });
+
+    res.json({ success: true, mediaId, messageId: msgData?.messages?.[0]?.id });
+  } catch (error) {
+    console.error('send-report error:', error);
+    res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+});
+
 // GET /whatsapp/test
 router.get('/test', (req, res) => {
   res.json({
@@ -138,6 +201,7 @@ router.get('/test', (req, res) => {
     endpoints: [
       'POST /whatsapp/send-text  — { phone, message }',
       'POST /whatsapp/send-document  — multipart: phone, caption, file',
+      'POST /whatsapp/send-report  — multipart: phone, patient_name, file (uses varahasdc_scanreport template)',
     ],
   });
 });

@@ -3,13 +3,19 @@ const mysql = require('mysql2/promise');
 const router = express.Router();
 
 // ── WhatsApp helper ───────────────────────────────────────────────────────────
-async function sendWhatsAppReport(buffer, mimeType, fileName) {
+async function sendWhatsAppReport(buffer, mimeType, fileName, patientName, contactNumber) {
   const token    = process.env.WHATSAPP_ACCESS_TOKEN;
   const phoneId  = process.env.WHATSAPP_PHONE_NUMBER_ID;
   const graphVer = process.env.WHATSAPP_GRAPH_VERSION || 'v25.0';
-  const toPhone  = '917014265848'; // hardcoded for testing
 
   if (!token || !phoneId) throw new Error('WhatsApp env vars not configured');
+  if (!contactNumber) throw new Error('Patient contact number is missing');
+
+  // Normalize phone number
+  const digits = contactNumber.replace(/[^0-9]/g, '');
+  let toPhone = digits;
+  if (digits.length === 10) toPhone = `91${digits}`;
+  if (!toPhone) throw new Error('Invalid contact number');
 
   // 1. Upload PDF buffer to WhatsApp Media API
   const form = new FormData();
@@ -27,20 +33,47 @@ async function sendWhatsAppReport(buffer, mimeType, fileName) {
   const mediaId = mediaData?.id;
   if (!mediaId) throw new Error('WhatsApp media upload: no id returned');
 
-  // 2. Send document message with caption
-  const caption = 'Thank you for choosing us Varaha SDC\nVisit us: https://varahasdc.co.in/';
+  // 2. Send document message
   const msgRes  = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       messaging_product: 'whatsapp',
       to: toPhone,
-      type: 'document',
-      document: { id: mediaId, caption, filename: fileName },
+      type: 'template',
+      template: {
+        name: 'varahasdc_scanreport',
+        language: { code: 'en' },
+        components: [
+          {
+            type: 'body',
+            parameters: [
+              { type: 'text', text: patientName || 'Patient' }
+            ]
+          }
+        ]
+      }
     }),
   });
   const msgData = await msgRes.json().catch(() => ({}));
-  if (!msgRes.ok) throw new Error(`WhatsApp send failed: ${JSON.stringify(msgData)}`);
+  console.log('WhatsApp template response:', JSON.stringify(msgData));
+  if (!msgRes.ok) {
+    console.error('Template send failed, falling back to document send:', JSON.stringify(msgData));
+    // Fallback: send as plain document
+    const fallbackRes = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messaging_product: 'whatsapp',
+        to: toPhone,
+        type: 'document',
+        document: { id: mediaId, caption: `Hello ${patientName || 'Patient'}, Please find your scan report attached. Thank you for choosing Varaha SDC.\nBook an appointment: https://varahasdc.co.in/`, filename: fileName },
+      }),
+    });
+    const fallbackData = await fallbackRes.json().catch(() => ({}));
+    if (!fallbackRes.ok) throw new Error(`WhatsApp fallback send failed: ${JSON.stringify(fallbackData)}`);
+    return fallbackData?.messages?.[0]?.id;
+  }
   return msgData?.messages?.[0]?.id;
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -876,14 +909,23 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
     const baseUrl  = process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
     const blobUrl  = `${baseUrl}/uploads/reports/${fileName}`;
 
-    // 2. Send PDF via WhatsApp (non-fatal)
+    // Get patient contact number from DB
+    connection = await mysql.createConnection(dbConfig);
+    const [patientRows] = await connection.execute(
+      'SELECT contact_number FROM patient_new WHERE cro = ?', [cro]
+    );
+    const contactNumber = patientRows[0]?.contact_number || '';
+
+    // 2. Send PDF via WhatsApp using varahasdc_scanreport template (non-fatal)
     let whatsappMessageId = null;
     let whatsappSent      = false;
+    let whatsappError     = null;
     try {
-      whatsappMessageId = await sendWhatsAppReport(file.buffer, file.mimetype, fileName);
+      whatsappMessageId = await sendWhatsAppReport(file.buffer, file.mimetype, fileName, patientName, contactNumber);
       whatsappSent      = true;
-      console.log('WhatsApp sent, messageId:', whatsappMessageId);
+      console.log('WhatsApp sent via template, messageId:', whatsappMessageId);
     } catch (waErr) {
+      whatsappError = waErr.message;
       console.error('WhatsApp send failed:', waErr.message);
     }
 
@@ -899,9 +941,10 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
       message:           'Report uploaded successfully',
       fileName,
       blobUrl,
-      sentTo:            '7014265848',
+      sentTo:            contactNumber,
       whatsappSent,
       whatsappMessageId,
+      whatsappError,
     });
 
   } catch (error) {
