@@ -167,6 +167,7 @@ export default function SentReport() {
       formData.append('cro',         viewingRecord.c_p_cro);
       formData.append('patientName', `${viewingRecord.pre} ${viewingRecord.patient_name}`.trim());
       formData.append('conId',       viewingRecord.con_id.toString());
+      formData.append('contactNumber', viewingRecord.contact_number || '');
 
       const response = await fetch('/api/console/upload-report', {
         method: 'POST',
@@ -176,9 +177,14 @@ export default function SentReport() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        const msg = data.whatsappSent
-          ? `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo || 'patient'}`
-          : 'Report uploaded (WhatsApp send failed — check backend logs)';
+        let msg;
+        if (data.whatsappSent) {
+          msg = `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo}`;
+        } else if (data.whatsappError?.includes('contact number')) {
+          msg = 'Report uploaded ✅ | WhatsApp not sent — mobile number not available';
+        } else {
+          msg = `Report uploaded ✅ | WhatsApp failed: ${data.whatsappError || 'unknown error'}`;
+        }
         toast.success(msg);
         setUploadFile(null);
         setReportName('');

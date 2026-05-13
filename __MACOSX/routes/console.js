@@ -887,7 +887,7 @@ const upload  = multer({ storage: multer.memoryStorage() });
 router.post('/upload-report', upload.single('report'), async (req, res) => {
   let connection;
   try {
-    const { reportName, cro, patientName, conId } = req.body;
+    const { reportName, cro, patientName, conId, contactNumber } = req.body;
     const file = req.file;
 
     if (!reportName || !cro || !conId) {
@@ -909,24 +909,23 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
     const baseUrl  = process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
     const blobUrl  = `${baseUrl}/uploads/reports/${fileName}`;
 
-    // Get patient contact number from DB
-    connection = await mysql.createConnection(dbConfig);
-    const [patientRows] = await connection.execute(
-      'SELECT contact_number FROM patient_new WHERE cro = ?', [cro]
-    );
-    const contactNumber = patientRows[0]?.contact_number || '';
-
     // 2. Send PDF via WhatsApp using varahasdc_scanreport template (non-fatal)
     let whatsappMessageId = null;
     let whatsappSent      = false;
     let whatsappError     = null;
-    try {
-      whatsappMessageId = await sendWhatsAppReport(file.buffer, file.mimetype, fileName, patientName, contactNumber);
-      whatsappSent      = true;
-      console.log('WhatsApp sent via template, messageId:', whatsappMessageId);
-    } catch (waErr) {
-      whatsappError = waErr.message;
-      console.error('WhatsApp send failed:', waErr.message);
+    const phoneToSend     = contactNumber || '';
+
+    if (!phoneToSend || phoneToSend.trim().length < 10) {
+      whatsappError = 'Patient contact number is missing or invalid';
+    } else {
+      try {
+        whatsappMessageId = await sendWhatsAppReport(file.buffer, file.mimetype, fileName, patientName, phoneToSend);
+        whatsappSent      = true;
+        console.log('WhatsApp sent via template, messageId:', whatsappMessageId);
+      } catch (waErr) {
+        whatsappError = waErr.message;
+        console.error('WhatsApp send failed:', waErr.message);
+      }
     }
 
     // 3. Save report_filename, blob_url, whatsapp_sent to DB
@@ -941,7 +940,7 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
       message:           'Report uploaded successfully',
       fileName,
       blobUrl,
-      sentTo:            contactNumber,
+      sentTo:            phoneToSend,
       whatsappSent,
       whatsappMessageId,
       whatsappError,
