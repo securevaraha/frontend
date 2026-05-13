@@ -15,7 +15,8 @@ function normalizeIndiaMobile(phone) {
   if (!digits) throw new Error('Phone number is empty');
   if (digits.startsWith('91') && digits.length === 12) return digits;
   if (digits.length === 10) return `91${digits}`;
-  return digits;
+  if (digits.startsWith('0') && digits.length === 11) return `91${digits.slice(1)}`;
+  return `91${digits}`;
 }
 
 async function uploadMediaToWhatsApp(fileBuffer, mimeType, fileName) {

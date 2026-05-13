@@ -11,11 +11,19 @@ async function sendWhatsAppReport(buffer, mimeType, fileName, patientName, conta
   if (!token || !phoneId) throw new Error('WhatsApp env vars not configured');
   if (!contactNumber) throw new Error('Patient contact number is missing');
 
-  // Normalize phone number
+  // Normalize phone number - always ensure 91 prefix
   const digits = contactNumber.replace(/[^0-9]/g, '');
-  let toPhone = digits;
-  if (digits.length === 10) toPhone = `91${digits}`;
-  if (!toPhone) throw new Error('Invalid contact number');
+  let toPhone;
+  if (digits.startsWith('91') && digits.length === 12) {
+    toPhone = digits;
+  } else if (digits.length === 10) {
+    toPhone = `91${digits}`;
+  } else if (digits.startsWith('0') && digits.length === 11) {
+    toPhone = `91${digits.slice(1)}`;
+  } else {
+    toPhone = `91${digits}`;
+  }
+  if (toPhone.length < 12) throw new Error(`Invalid contact number: ${contactNumber}`);
 
   // 1. Upload PDF buffer to WhatsApp Media API
   const form = new FormData();
@@ -915,8 +923,10 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
     let whatsappError     = null;
     const phoneToSend     = contactNumber || '';
 
+    console.log('upload-report: contactNumber from req.body =', contactNumber, '| phoneToSend =', phoneToSend);
+
     if (!phoneToSend || phoneToSend.trim().length < 10) {
-      whatsappError = 'Patient contact number is missing or invalid';
+      whatsappError = `Patient contact number is missing or invalid (received: "${phoneToSend}")`;
     } else {
       try {
         whatsappMessageId = await sendWhatsAppReport(file.buffer, file.mimetype, fileName, patientName, phoneToSend);
@@ -941,6 +951,7 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
       fileName,
       blobUrl,
       sentTo:            phoneToSend,
+      contactNumberReceived: contactNumber,
       whatsappSent,
       whatsappMessageId,
       whatsappError,
