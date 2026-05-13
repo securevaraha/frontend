@@ -20,6 +20,8 @@ interface ReportData {
   receivedAmount: number;
   dueAmount: number;
   contactNumber: string;
+  registrationDate: string;
+  registrationTime: string;
 }
 
 interface ReportSummary {
@@ -130,8 +132,8 @@ export default function DailyReport() {
         </head>
         <body>
           <table>
-            <tr><th colspan="14" class="header">VARAHA SDC</th></tr>
-            <tr><th colspan="14" class="header">DAILY REPORT Date: ${selectedDate}</th></tr>
+            <tr><th colspan="16" class="header">VARAHA SDC</th></tr>
+            <tr><th colspan="16" class="header">DAILY REPORT Date: ${selectedDate}</th></tr>
             <tr>
               <th>S.No</th>
               <th>CRO</th>
@@ -147,6 +149,8 @@ export default function DailyReport() {
               <th>Received Amount</th>
               <th>Due Amount</th>
               <th>Contact Number</th>
+              <th>Registration Date</th>
+              <th>Registration Time</th>
             </tr>
     `;
 
@@ -168,6 +172,8 @@ export default function DailyReport() {
           <td class="amount">₹${row.receivedAmount.toLocaleString()}</td>
           <td class="amount">₹${row.dueAmount.toLocaleString()}</td>
           <td>${row.contactNumber}</td>
+          <td>${row.registrationDate || ''}</td>
+          <td>${row.registrationTime || ''}</td>
         </tr>
       `;
     });
@@ -179,7 +185,7 @@ export default function DailyReport() {
     const totalScans = reportData.reduce((sum, row) => sum + (row.totalScan || 0), 0);
 
     htmlContent += `
-            <tr><td colspan="14"></td></tr>
+            <tr><td colspan="16"></td></tr>
             <tr style="font-weight: bold; background-color: #f0f0f0;">
               <td class="center">-</td>
               <td class="center">-</td>
@@ -195,6 +201,8 @@ export default function DailyReport() {
               <td class="amount">₹${totalReceived.toLocaleString()}</td>
               <td class="amount">₹${totalDue.toLocaleString()}</td>
               <td class="center">${reportData.length}</td>
+              <td class="center">-</td>
+              <td class="center">-</td>
             </tr>
           </table>
         </body>
@@ -302,6 +310,8 @@ export default function DailyReport() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Receive Amount</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Amount</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Number</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reg. Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reg. Time</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -330,6 +340,8 @@ export default function DailyReport() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">₹{row.receivedAmount.toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">₹{row.dueAmount.toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{row.contactNumber}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{row.registrationDate}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{row.registrationTime}</td>
                       </tr>
                     ));
                   })()}
