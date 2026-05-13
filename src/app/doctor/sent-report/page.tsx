@@ -180,11 +180,12 @@ export default function SentReport() {
         let msg;
         if (data.whatsappSent) {
           msg = `Report uploaded & sent on WhatsApp ✅ → ${data.sentTo}`;
-        } else if (data.whatsappError?.includes('contact number')) {
+        } else if (data.whatsappError?.includes('contact number') || data.whatsappError?.includes('missing')) {
           msg = 'Report uploaded ✅ | WhatsApp not sent — mobile number not available';
         } else {
-          msg = `Report uploaded ✅ | WhatsApp failed: ${data.whatsappError || 'unknown error'}`;
+          msg = `Report uploaded ✅ | WhatsApp not sent: ${data.whatsappError || 'no error details returned'}`;
         }
+        console.log('Upload response:', JSON.stringify(data));
         toast.success(msg);
         setUploadFile(null);
         setReportName('');
