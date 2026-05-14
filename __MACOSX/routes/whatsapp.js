@@ -135,7 +135,7 @@ router.post('/send-text', async (req, res) => {
 
 // POST /whatsapp/send-report
 // multipart/form-data: phone, patient_name, file (PDF)
-// Uses the varahasdc_scanreport template
+// Uses the varahasdc_scanreport_utility template
 router.post('/send-report', upload.single('file'), async (req, res) => {
   try {
     const { phone, patient_name } = req.body;
@@ -164,7 +164,7 @@ router.post('/send-report', upload.single('file'), async (req, res) => {
           to,
           type: 'template',
           template: {
-            name: 'varahasdc_scanreport',
+            name: 'varahasdc_scanreport_utility',
             language: { code: 'en' },
             components: [
               {
@@ -202,7 +202,7 @@ router.get('/test', (req, res) => {
     endpoints: [
       'POST /whatsapp/send-text  — { phone, message }',
       'POST /whatsapp/send-document  — multipart: phone, caption, file',
-      'POST /whatsapp/send-report  — multipart: phone, patient_name, file (uses varahasdc_scanreport template)',
+      'POST /whatsapp/send-report  — multipart: phone, patient_name, file (uses varahasdc_scanreport_utility template)',
     ],
   });
 });
