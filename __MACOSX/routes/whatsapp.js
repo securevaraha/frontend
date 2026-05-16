@@ -165,7 +165,7 @@ router.post('/send-report', upload.single('file'), async (req, res) => {
           type: 'template',
           template: {
             name: 'varahasdc_scanreport_utility',
-            language: { code: 'en' },
+  language: { code: 'en_US' },
             components: [
               {
                 type: 'header',

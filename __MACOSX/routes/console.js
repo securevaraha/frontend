@@ -50,8 +50,8 @@ async function sendWhatsAppReport(buffer, mimeType, fileName, patientName, conta
       to: toPhone,
       type: 'template',
       template: {
-        name: 'varahasdc_scanreport',
-        language: { code: 'en' },
+        name: 'varahasdc_scanreport_utility',
+      language: { code: 'en_US' },
         components: [
           {
             type: 'body',
@@ -917,7 +917,7 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
     const baseUrl  = process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
     const blobUrl  = `${baseUrl}/uploads/reports/${fileName}`;
 
-    // 2. Send PDF via WhatsApp using varahasdc_scanreport template (non-fatal)
+    // 2. Send PDF via WhatsApp using varahasdc_scanreport_utility template (non-fatal)
     let whatsappMessageId = null;
     let whatsappSent      = false;
     let whatsappError     = null;
