@@ -41,46 +41,60 @@ async function sendWhatsAppReport(buffer, mimeType, fileName, patientName, conta
   const mediaId = mediaData?.id;
   if (!mediaId) throw new Error('WhatsApp media upload: no id returned');
 
-  // 2. Send document message
+  // 2. Send template message with document header
+  // Use public URL for document since media ID may not work with templates
+  const baseUrl = process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
+  const documentUrl = `${baseUrl}/uploads/reports/${fileName}`;
+
+  const templatePayload = {
+    messaging_product: 'whatsapp',
+    to: toPhone,
+    type: 'template',
+    template: {
+      name: 'varahasdc_scanreport_utility',
+      language: { code: 'en' },
+      components: [
+        {
+          type: 'header',
+          parameters: [
+            { type: 'document', document: { link: documentUrl, filename: fileName } }
+          ]
+        },
+        {
+          type: 'body',
+          parameters: [
+            { type: 'text', text: patientName || 'Patient' }
+          ]
+        }
+      ]
+    }
+  };
+  console.log('WhatsApp template payload:', JSON.stringify(templatePayload));
+
   const msgRes  = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messaging_product: 'whatsapp',
-      to: toPhone,
-      type: 'template',
-      template: {
-        name: 'varahasdc_scanreport_utility',
-      language: { code: 'en_US' },
-        components: [
-          {
-            type: 'body',
-            parameters: [
-              { type: 'text', text: patientName || 'Patient' }
-            ]
-          }
-        ]
-      }
-    }),
+    body: JSON.stringify(templatePayload),
   });
   const msgData = await msgRes.json().catch(() => ({}));
   console.log('WhatsApp template response:', JSON.stringify(msgData));
   if (!msgRes.ok) {
-    console.error('Template send failed, falling back to document send:', JSON.stringify(msgData));
-    // Fallback: send as plain document
-    const fallbackRes = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
+    console.error('Template send failed:', JSON.stringify(msgData));
+    // Fallback: send document directly (works within 24hr window)
+    const docRes = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messaging_product: 'whatsapp',
         to: toPhone,
         type: 'document',
-        document: { id: mediaId, caption: `Hello ${patientName || 'Patient'}, Please find your scan report attached. Thank you for choosing Varaha SDC.\nBook an appointment: https://varahasdc.co.in/`, filename: fileName },
+        document: { id: mediaId, caption: `Hello ${patientName || 'Patient'}, Please find your scan report attached. Thank you for choosing Varaha SDC.`, filename: fileName },
       }),
     });
-    const fallbackData = await fallbackRes.json().catch(() => ({}));
-    if (!fallbackRes.ok) throw new Error(`WhatsApp fallback send failed: ${JSON.stringify(fallbackData)}`);
-    return fallbackData?.messages?.[0]?.id;
+    const docData = await docRes.json().catch(() => ({}));
+    console.log('WhatsApp document fallback response:', JSON.stringify(docData));
+    if (!docRes.ok) throw new Error(`WhatsApp send failed. Template error: ${JSON.stringify(msgData)}. Document fallback error: ${JSON.stringify(docData)}`);
+    return docData?.messages?.[0]?.id;
   }
   return msgData?.messages?.[0]?.id;
 }
@@ -181,10 +195,12 @@ router.get('/queue', async (req, res) => {
 });
 
 // Get patient details for console
-router.get('/patient/:cro', async (req, res) => {
+router.get('/patient/*', async (req, res) => {
   let connection;
   try {
-    const { cro } = req.params;
+    const rawParam = req.params[0];
+    const cro = rawParam;
+    console.log('Patient lookup - rawParam:', rawParam, '| originalUrl:', req.originalUrl, '| cro:', cro);
 
     connection = await mysql.createConnection(dbConfig);
 
@@ -195,13 +211,26 @@ router.get('/patient/:cro', async (req, res) => {
         time_slot2.time_slot,
         doctor.dname as doctor_name
       FROM patient_new 
-      JOIN time_slot2 ON time_slot2.time_id = patient_new.allot_time 
+      LEFT JOIN time_slot2 ON time_slot2.time_id = patient_new.allot_time 
       LEFT JOIN doctor ON doctor.d_id = patient_new.doctor_name
       WHERE patient_new.cro = ?
     `, [cro]);
+    console.log('Patient query result count:', patients.length, '| cro searched:', cro);
 
     if (patients.length === 0) {
-      return res.status(404).json({ error: 'Patient not found' });
+      return res.status(200).json({
+        success: false,
+        error: 'Patient not found',
+        debug: {
+          cro_searched: cro,
+          rawParam: rawParam,
+          originalUrl: req.originalUrl,
+          path: req.path,
+          fullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+          paramsAll: JSON.stringify(req.params),
+          query: `SELECT * FROM patient_new WHERE cro = '${cro}'`
+        }
+      });
     }
 
     // Get scan details
@@ -923,7 +952,7 @@ router.post('/upload-report', upload.single('report'), async (req, res) => {
     let whatsappError     = null;
     const phoneToSend     = contactNumber || '';
 
-    console.log('upload-report: contactNumber from req.body =', contactNumber, '| phoneToSend =', phoneToSend);
+    console.log('upload-report: contactNumber =', contactNumber, '| patientName =', patientName, '| phoneToSend =', phoneToSend);
 
     if (!phoneToSend || phoneToSend.trim().length < 10) {
       whatsappError = `Patient contact number is missing or invalid (received: "${phoneToSend}")`;

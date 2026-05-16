@@ -126,6 +126,7 @@ const accountsRoutes = require('./routes/accounts');
 const receptionRoutes = require('./routes/reception');
 const inventoryRoutes = require('./routes/inventory');
 const webRoutes = require('./routes/web');
+const whatsappRoutes = require('./routes/whatsapp');
 
 // Use routes
 app.use('/auth', authRoutes);
@@ -140,6 +141,7 @@ app.use('/accounts', accountsRoutes);
 app.use('/reception', receptionRoutes);
 app.use('/inventory', inventoryRoutes);
 app.use('/web', webRoutes);
+app.use('/whatsapp', whatsappRoutes);
 
 // Add /api prefix routes for cPanel
 app.use('/api/auth', authRoutes);
@@ -154,6 +156,7 @@ app.use('/api/accounts', accountsRoutes);
 app.use('/api/reception', receptionRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/web', webRoutes);
+app.use('/api/whatsapp', whatsappRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

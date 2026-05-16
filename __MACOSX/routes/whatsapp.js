@@ -165,7 +165,7 @@ router.post('/send-report', upload.single('file'), async (req, res) => {
           type: 'template',
           template: {
             name: 'varahasdc_scanreport_utility',
-  language: { code: 'en_US' },
+            language: { code: 'en' },
             components: [
               {
                 type: 'header',
@@ -195,6 +195,109 @@ router.post('/send-report', upload.single('file'), async (req, res) => {
   }
 });
 
+// ============================================
+// WEBHOOK ENDPOINTS (Meta WhatsApp Cloud API)
+// ============================================
+
+// Store recent webhook events in memory (last 50)
+const webhookEvents = [];
+
+// GET /whatsapp/webhook-logs - View recent webhook events
+router.get('/webhook-logs', (req, res) => {
+  res.json({
+    success: true,
+    total: webhookEvents.length,
+    events: webhookEvents
+  });
+});
+
+// GET /whatsapp/webhook - Verification endpoint (Meta sends this to verify your webhook URL)
+router.get('/webhook', (req, res) => {
+  const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || 'varahasdc_webhook_token';
+
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+
+  if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    console.log('Webhook verified successfully');
+    return res.status(200).send(challenge);
+  }
+
+  console.error('Webhook verification failed:', { mode, token });
+  return res.sendStatus(403);
+});
+
+// POST /whatsapp/webhook - Receive delivery status & incoming messages from Meta
+router.post('/webhook', async (req, res) => {
+  try {
+    const body = req.body;
+    console.log('[Webhook POST received]', JSON.stringify(body).substring(0, 500));
+
+    // Store raw event for debugging
+    webhookEvents.unshift({
+      type: 'raw',
+      body: body,
+      receivedAt: new Date().toISOString()
+    });
+    if (webhookEvents.length > 50) webhookEvents.pop();
+
+    // Always respond 200 immediately to Meta
+    res.sendStatus(200);
+
+    if (!body?.object || !body?.entry) return;
+
+    for (const entry of body.entry) {
+      const changes = entry.changes || [];
+      for (const change of changes) {
+        const value = change.value;
+        if (!value) continue;
+
+        // Handle message status updates (sent, delivered, read, failed)
+        if (value.statuses) {
+          for (const status of value.statuses) {
+            const event = {
+              type: 'status',
+              messageId: status.id,
+              recipient: status.recipient_id,
+              status: status.status,
+              timestamp: status.timestamp,
+              error: status.errors?.[0] || null,
+              receivedAt: new Date().toISOString()
+            };
+            webhookEvents.unshift(event);
+            if (webhookEvents.length > 50) webhookEvents.pop();
+            console.log(`[WhatsApp Status] ID: ${status.id} | To: ${status.recipient_id} | Status: ${status.status}`);
+
+            if (status.status === 'failed') {
+              console.error(`[WhatsApp FAILED] To: ${status.recipient_id} | Error: ${status.errors?.[0]?.code} - ${status.errors?.[0]?.title}`);
+            }
+          }
+        }
+
+        // Handle incoming messages (when patient replies)
+        if (value.messages) {
+          for (const message of value.messages) {
+            const event = {
+              type: 'incoming_message',
+              from: message.from,
+              messageType: message.type,
+              text: message.text?.body || null,
+              timestamp: message.timestamp,
+              receivedAt: new Date().toISOString()
+            };
+            webhookEvents.unshift(event);
+            if (webhookEvents.length > 50) webhookEvents.pop();
+            console.log(`[WhatsApp Incoming] From: ${message.from} | Type: ${message.type} | Text: ${message.text?.body || '(non-text)'}`);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Webhook processing error:', error);
+  }
+});
+
 // GET /whatsapp/test
 router.get('/test', (req, res) => {
   res.json({
@@ -203,6 +306,8 @@ router.get('/test', (req, res) => {
       'POST /whatsapp/send-text  — { phone, message }',
       'POST /whatsapp/send-document  — multipart: phone, caption, file',
       'POST /whatsapp/send-report  — multipart: phone, patient_name, file (uses varahasdc_scanreport_utility template)',
+      'GET  /whatsapp/webhook  — Meta webhook verification',
+      'POST /whatsapp/webhook  — Meta webhook callback (delivery status & incoming messages)',
     ],
   });
 });

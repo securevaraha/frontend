@@ -610,17 +610,13 @@ router.post('/schedule', async (req, res) => {
       });
     }
 
-    // Validate date is tomorrow or future
-    const slotDate = new Date(date);
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-    
-    if (slotDate < tomorrow) {
+    // Validate date is today or future (IST)
+    const todayIST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Calcutta' });
+    if (date < todayIST) {
       return res.status(400).json({
         success: false,
         error: 'Invalid date',
-        message: 'Slots can only be created for tomorrow or future dates',
+        message: 'Slots can only be created for today or future dates',
         code: 'INVALID_DATE'
       });
     }
