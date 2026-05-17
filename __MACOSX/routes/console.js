@@ -42,61 +42,52 @@ async function sendWhatsAppReport(buffer, mimeType, fileName, patientName, conta
   if (!mediaId) throw new Error('WhatsApp media upload: no id returned');
 
   // 2. Send template message with document header
-  // Use public URL for document since media ID may not work with templates
-  const baseUrl = process.env.API_BASE_URL || 'https://api.varahasdc.co.in';
-  const documentUrl = `${baseUrl}/uploads/reports/${fileName}`;
+  // Try multiple language codes since we're not sure which one Meta registered
+  const languages = ['en_US', 'en'];
+  let lastError = '';
+  
+  for (const langCode of languages) {
+    const templatePayload = {
+      messaging_product: 'whatsapp',
+      to: toPhone,
+      type: 'template',
+      template: {
+        name: 'varahasdc_scanreport_utility',
+        language: { code: langCode },
+        components: [
+          {
+            type: 'header',
+            parameters: [
+              { type: 'document', document: { id: mediaId, filename: fileName } }
+            ]
+          },
+          {
+            type: 'body',
+            parameters: [
+              { type: 'text', parameter_name: 'patient_name', text: patientName || 'Patient' }
+            ]
+          }
+        ]
+      }
+    };
+    console.log(`WhatsApp template attempt (${langCode}):`, JSON.stringify(templatePayload));
 
-  const templatePayload = {
-    messaging_product: 'whatsapp',
-    to: toPhone,
-    type: 'template',
-    template: {
-      name: 'varahasdc_scanreport_utility',
-      language: { code: 'en' },
-      components: [
-        {
-          type: 'header',
-          parameters: [
-            { type: 'document', document: { link: documentUrl, filename: fileName } }
-          ]
-        },
-        {
-          type: 'body',
-          parameters: [
-            { type: 'text', text: patientName || 'Patient' }
-          ]
-        }
-      ]
-    }
-  };
-  console.log('WhatsApp template payload:', JSON.stringify(templatePayload));
-
-  const msgRes  = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(templatePayload),
-  });
-  const msgData = await msgRes.json().catch(() => ({}));
-  console.log('WhatsApp template response:', JSON.stringify(msgData));
-  if (!msgRes.ok) {
-    console.error('Template send failed:', JSON.stringify(msgData));
-    // Fallback: send document directly (works within 24hr window)
-    const docRes = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
+    const msgRes = await fetch(`https://graph.facebook.com/${graphVer}/${phoneId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messaging_product: 'whatsapp',
-        to: toPhone,
-        type: 'document',
-        document: { id: mediaId, caption: `Hello ${patientName || 'Patient'}, Please find your scan report attached. Thank you for choosing Varaha SDC.`, filename: fileName },
-      }),
+      body: JSON.stringify(templatePayload),
     });
-    const docData = await docRes.json().catch(() => ({}));
-    console.log('WhatsApp document fallback response:', JSON.stringify(docData));
-    if (!docRes.ok) throw new Error(`WhatsApp send failed. Template error: ${JSON.stringify(msgData)}. Document fallback error: ${JSON.stringify(docData)}`);
-    return docData?.messages?.[0]?.id;
+    const msgData = await msgRes.json().catch(() => ({}));
+    console.log(`WhatsApp template response (${langCode}):`, JSON.stringify(msgData));
+    
+    if (msgRes.ok) {
+      return msgData?.messages?.[0]?.id;
+    }
+    lastError = msgData?.error?.error_data?.details || msgData?.error?.message || JSON.stringify(msgData);
+    console.error(`Template failed with ${langCode}:`, lastError);
   }
-  return msgData?.messages?.[0]?.id;
+  
+  throw new Error(`Template failed with all languages. Last error: ${lastError}`);
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
