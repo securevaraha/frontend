@@ -1,9 +1,19 @@
 const express = require('express');
+const mysql = require('mysql2/promise');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 const GRAPH_VERSION = process.env.WHATSAPP_GRAPH_VERSION || 'v25.0';
+
+const dbConfig = {
+  host: 'localhost',
+  user: 'varaosrc_prc',
+  password: 'PRC!@#456&*(',
+  database: 'varaosrc_hospital_management',
+  port: 3306,
+  connectTimeout: 30000
+};
 
 function requireEnv(value, name) {
   if (!value) throw new Error(`Missing env var: ${name}`);
@@ -202,13 +212,191 @@ router.post('/send-report', upload.single('file'), async (req, res) => {
 // Store recent webhook events in memory (last 50)
 const webhookEvents = [];
 
-// GET /whatsapp/webhook-logs - View recent webhook events
-router.get('/webhook-logs', (req, res) => {
-  res.json({
-    success: true,
-    total: webhookEvents.length,
-    events: webhookEvents
-  });
+// GET /whatsapp/webhook-logs - View recent webhook events (from DB)
+router.get('/webhook-logs', async (req, res) => {
+  let connection;
+  try {
+    const { page = 1, limit = 50, status, from, to } = req.query;
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+    connection = await mysql.createConnection(dbConfig);
+
+    let whereClause = 'WHERE 1=1';
+    const params = [];
+
+    if (status) {
+      whereClause += ' AND status = ?';
+      params.push(status);
+    }
+    if (from) {
+      whereClause += ' AND DATE(received_at) >= ?';
+      params.push(from);
+    }
+    if (to) {
+      whereClause += ' AND DATE(received_at) <= ?';
+      params.push(to);
+    }
+
+    const [countResult] = await connection.execute(
+      `SELECT COUNT(*) as total FROM whatsapp_logs ${whereClause}`, params
+    );
+    const total = countResult[0].total;
+
+    const [logs] = await connection.execute(
+      `SELECT * FROM whatsapp_logs ${whereClause} ORDER BY received_at DESC LIMIT ? OFFSET ?`,
+      [...params, parseInt(limit), offset]
+    );
+
+    res.json({
+      success: true,
+      total,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      totalPages: Math.ceil(total / parseInt(limit)),
+      logs
+    });
+  } catch (error) {
+    // If table doesn't exist, return in-memory events
+    if (error.code === 'ER_NO_SUCH_TABLE') {
+      return res.json({ success: true, total: webhookEvents.length, logs: webhookEvents, source: 'memory' });
+    }
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// GET /whatsapp/webhook-logs/export - Export logs as CSV
+router.get('/webhook-logs/export', async (req, res) => {
+  let connection;
+  try {
+    const { from, to, status } = req.query;
+    connection = await mysql.createConnection(dbConfig);
+
+    let whereClause = 'WHERE 1=1';
+    const params = [];
+
+    if (status) {
+      whereClause += ' AND status = ?';
+      params.push(status);
+    }
+    if (from) {
+      whereClause += ' AND DATE(received_at) >= ?';
+      params.push(from);
+    }
+    if (to) {
+      whereClause += ' AND DATE(received_at) <= ?';
+      params.push(to);
+    }
+
+    const [logs] = await connection.execute(
+      `SELECT * FROM whatsapp_logs ${whereClause} ORDER BY received_at DESC`, params
+    );
+
+    // Generate CSV
+    const headers = 'ID,Type,Message ID,From,To,Status,Error Code,Error Title,Text,Timestamp,Received At\n';
+    const rows = logs.map(log =>
+      `${log.id},${log.event_type},${log.message_id || ''},${log.from_number || ''},${log.to_number || ''},${log.status || ''},${log.error_code || ''},"${(log.error_title || '').replace(/"/g, '""')}","${(log.text_body || '').replace(/"/g, '""')}",${log.timestamp || ''},${log.received_at}`
+    ).join('\n');
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename=whatsapp_logs_${new Date().toISOString().split('T')[0]}.csv`);
+    res.send(headers + rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// GET /whatsapp/webhook-logs/stats - Get message stats
+router.get('/webhook-logs/stats', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const today = new Date().toISOString().split('T')[0];
+
+    const [stats] = await connection.execute(`
+      SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN event_type = 'incoming_message' THEN 1 ELSE 0 END) as incoming,
+        SUM(CASE WHEN event_type = 'status' AND status = 'sent' THEN 1 ELSE 0 END) as sent,
+        SUM(CASE WHEN event_type = 'status' AND status = 'delivered' THEN 1 ELSE 0 END) as delivered,
+        SUM(CASE WHEN event_type = 'status' AND status = 'read' THEN 1 ELSE 0 END) as read_count,
+        SUM(CASE WHEN event_type = 'status' AND status = 'failed' THEN 1 ELSE 0 END) as failed,
+        SUM(CASE WHEN DATE(received_at) = ? THEN 1 ELSE 0 END) as today_total
+      FROM whatsapp_logs
+    `, [today]);
+
+    res.json({
+      success: true,
+      stats: stats[0]
+    });
+  } catch (error) {
+    if (error.code === 'ER_NO_SUCH_TABLE') {
+      return res.json({ success: true, stats: { total: 0, incoming: 0, sent: 0, delivered: 0, read_count: 0, failed: 0, today_total: 0 } });
+    }
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// GET /whatsapp/subscribe-app - Subscribe app to WABA for webhook events
+router.get('/subscribe-app', async (req, res) => {
+  try {
+    const token = process.env.WHATSAPP_ACCESS_TOKEN;
+    const wabaId = process.env.WHATSAPP_WABA_ID || '840959442374614';
+
+    if (!token) return res.status(500).json({ error: 'WHATSAPP_ACCESS_TOKEN not set' });
+
+    const response = await fetch(`https://graph.facebook.com/v25.0/${wabaId}/subscribed_apps`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await response.json();
+
+    res.json({
+      success: response.ok,
+      wabaId,
+      response: data
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /whatsapp/setup-db - Create whatsapp_logs table
+router.get('/setup-db', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS whatsapp_logs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        event_type VARCHAR(50) NOT NULL,
+        message_id VARCHAR(255) DEFAULT NULL,
+        from_number VARCHAR(20) DEFAULT NULL,
+        to_number VARCHAR(20) DEFAULT NULL,
+        status VARCHAR(20) DEFAULT NULL,
+        message_type VARCHAR(20) DEFAULT NULL,
+        text_body TEXT DEFAULT NULL,
+        error_code VARCHAR(20) DEFAULT NULL,
+        error_title VARCHAR(255) DEFAULT NULL,
+        timestamp VARCHAR(20) DEFAULT NULL,
+        received_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_event_type (event_type),
+        INDEX idx_status (status),
+        INDEX idx_received_at (received_at),
+        INDEX idx_from (from_number),
+        INDEX idx_to (to_number)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    `);
+    res.json({ success: true, message: 'whatsapp_logs table created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) await connection.end();
+  }
 });
 
 // GET /whatsapp/webhook - Verification endpoint (Meta sends this to verify your webhook URL)
@@ -230,22 +418,17 @@ router.get('/webhook', (req, res) => {
 
 // POST /whatsapp/webhook - Receive delivery status & incoming messages from Meta
 router.post('/webhook', async (req, res) => {
+  let connection;
   try {
     const body = req.body;
     console.log('[Webhook POST received]', JSON.stringify(body).substring(0, 500));
-
-    // Store raw event for debugging
-    webhookEvents.unshift({
-      type: 'raw',
-      body: body,
-      receivedAt: new Date().toISOString()
-    });
-    if (webhookEvents.length > 50) webhookEvents.pop();
 
     // Always respond 200 immediately to Meta
     res.sendStatus(200);
 
     if (!body?.object || !body?.entry) return;
+
+    connection = await mysql.createConnection(dbConfig);
 
     for (const entry of body.entry) {
       const changes = entry.changes || [];
@@ -256,21 +439,14 @@ router.post('/webhook', async (req, res) => {
         // Handle message status updates (sent, delivered, read, failed)
         if (value.statuses) {
           for (const status of value.statuses) {
-            const event = {
-              type: 'status',
-              messageId: status.id,
-              recipient: status.recipient_id,
-              status: status.status,
-              timestamp: status.timestamp,
-              error: status.errors?.[0] || null,
-              receivedAt: new Date().toISOString()
-            };
-            webhookEvents.unshift(event);
-            if (webhookEvents.length > 50) webhookEvents.pop();
             console.log(`[WhatsApp Status] ID: ${status.id} | To: ${status.recipient_id} | Status: ${status.status}`);
-
-            if (status.status === 'failed') {
-              console.error(`[WhatsApp FAILED] To: ${status.recipient_id} | Error: ${status.errors?.[0]?.code} - ${status.errors?.[0]?.title}`);
+            try {
+              await connection.execute(
+                `INSERT INTO whatsapp_logs (event_type, message_id, to_number, status, error_code, error_title, timestamp, received_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
+                ['status', status.id || '', status.recipient_id || '', status.status || '', status.errors?.[0]?.code || null, status.errors?.[0]?.title || null, status.timestamp || '']
+              );
+            } catch (dbErr) {
+              console.error('DB insert error (status):', dbErr.message);
             }
           }
         }
@@ -278,23 +454,23 @@ router.post('/webhook', async (req, res) => {
         // Handle incoming messages (when patient replies)
         if (value.messages) {
           for (const message of value.messages) {
-            const event = {
-              type: 'incoming_message',
-              from: message.from,
-              messageType: message.type,
-              text: message.text?.body || null,
-              timestamp: message.timestamp,
-              receivedAt: new Date().toISOString()
-            };
-            webhookEvents.unshift(event);
-            if (webhookEvents.length > 50) webhookEvents.pop();
             console.log(`[WhatsApp Incoming] From: ${message.from} | Type: ${message.type} | Text: ${message.text?.body || '(non-text)'}`);
+            try {
+              await connection.execute(
+                `INSERT INTO whatsapp_logs (event_type, message_id, from_number, message_type, text_body, timestamp, received_at) VALUES (?, ?, ?, ?, ?, ?, NOW())`,
+                ['incoming_message', message.id || '', message.from || '', message.type || '', message.text?.body || null, message.timestamp || '']
+              );
+            } catch (dbErr) {
+              console.error('DB insert error (message):', dbErr.message);
+            }
           }
         }
       }
     }
   } catch (error) {
     console.error('Webhook processing error:', error);
+  } finally {
+    if (connection) try { await connection.end(); } catch(e) {}
   }
 });
 

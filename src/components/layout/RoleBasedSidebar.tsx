@@ -10,7 +10,7 @@ import {
   Activity, ClipboardList, UserPlus, Search, Camera,
   Clock, Edit, Tag, RotateCcw, TrendingUp, Scan,
   Package, Plus, List, ArrowDown, ArrowUp, Globe,
-  MessageSquare, CalendarCheck, CalendarClock
+  MessageSquare, CalendarCheck, CalendarClock, Phone
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -193,7 +193,8 @@ export default function RoleBasedSidebar({ userRole, onClose }: SidebarProps) {
         { id: 'dashboard', label: 'Dashboard', icon: BarChart3, href: '/web/dashboard' },
         { id: 'enquiries', label: 'Enquiries', icon: MessageSquare, href: '/web/enquiries' },
         { id: 'appointments', label: 'Appointments', icon: CalendarCheck, href: '/web/appointments' },
-        { id: 'schedule-availability', label: 'Schedule Availability', icon: CalendarClock, href: '/web/schedule-availability' }
+        { id: 'schedule-availability', label: 'Schedule Availability', icon: CalendarClock, href: '/web/schedule-availability' },
+        { id: 'whatsapp-logs', label: 'WhatsApp Logs', icon: Phone, href: '/web/whatsapp-logs' }
       ]
     }
   };
