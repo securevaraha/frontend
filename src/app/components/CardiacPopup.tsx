@@ -63,7 +63,7 @@ export default function CardiacPopup() {
         {/* Bullet Point 2 */}
         <p className="flex gap-2 items-start">
           <span className="text-[#0056AE] font-bold">•</span>
-          <span>Six hours of fasting is required to prevent nausea from contrast and ensure clear imaging results.</span>
+          <span>For coronary and abdominal patients, six hours of fasting is required to prevent nausea from contrast and ensure clear imaging results.</span>
         </p>
       </div>
       

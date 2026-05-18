@@ -1092,7 +1092,8 @@ export default function NewPatientRegistration() {
     
     <table>
       <tr>
-        <td colspan="6" align="right">For Varaha SDC, Jodhpur</span></td>
+        <td colspan="3" align="left"><span style="font-size:9px; color:#25D366; font-weight:bold;">📱 We will provide CT Scan Reports on WhatsApp</span></td>
+        <td colspan="3" align="right">For Varaha SDC, Jodhpur</span></td>
       </tr>
               <tr>
         <td></td>
@@ -1169,7 +1170,8 @@ export default function NewPatientRegistration() {
     
     <table>
       <tr>
-        <td colspan="6" align="right">For Varaha SDC, Jodhpur</span></td>
+        <td colspan="3" align="left"><span style="font-size:9px; color:#25D366; font-weight:bold;">📱 We will provide CT Scan Reports on WhatsApp</span></td>
+        <td colspan="3" align="right">For Varaha SDC, Jodhpur</span></td>
       </tr>
          <tr>
         <td></td>

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, RefreshCw, ArrowLeft, FileText, Eye, Upload } from 'lucide-react';
+import { Search, RefreshCw, ArrowLeft, FileText, Eye, Upload, Download } from 'lucide-react';
 import { useToastContext } from '@/context/ToastContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import * as XLSX from 'xlsx';
 
 interface ConsoleRecord {
   con_id: number;
@@ -152,6 +153,61 @@ export default function SentReport() {
   }, [searchTerm, selectedDate]);
 
   const isDoctor = user?.role === 'doctor' || user?.admin_type === 'doctor';
+
+  const handleExportExcel = () => {
+    if (filteredRecords.length === 0) return;
+
+    const exportData = filteredRecords.map((record, index) => ({
+      'S.No': index + 1,
+      'CRO': record.c_p_cro,
+      'Patient Name': `${record.pre} ${record.patient_name}`,
+      'Doctor': record.doctor_name || '-',
+      'Reg. Date': formatDate(record.date),
+      'Scan Date': formatDate(record.scan_date),
+      'Console Date': formatDate(record.added_on),
+      'Contact': record.contact_number || '-',
+      'Status': record.status,
+      'WhatsApp': record.whatsapp_sent === 1 ? 'Sent' : 'Pending',
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(exportData);
+
+    // Auto-fit column widths
+    const colWidths = Object.keys(exportData[0]).map(key => {
+      const maxLen = Math.max(
+        key.length,
+        ...exportData.map(row => String((row as any)[key] || '').length)
+      );
+      return { wch: maxLen + 2 };
+    });
+    ws['!cols'] = colWidths;
+
+    // Add borders to all cells
+    const range = XLSX.utils.decode_range(ws['!ref'] || 'A1');
+    for (let R = range.s.r; R <= range.e.r; R++) {
+      for (let C = range.s.c; C <= range.e.c; C++) {
+        const addr = XLSX.utils.encode_cell({ r: R, c: C });
+        if (!ws[addr]) ws[addr] = { v: '' };
+        ws[addr].s = {
+          border: {
+            top: { style: 'thin' },
+            bottom: { style: 'thin' },
+            left: { style: 'thin' },
+            right: { style: 'thin' },
+          },
+          alignment: { horizontal: 'center', vertical: 'center' },
+          ...(R === 0 ? { font: { bold: true }, fill: { fgColor: { rgb: 'D9E1F2' } } } : {}),
+        };
+      }
+    }
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sent Reports');
+
+    const dateStr = selectedDate.split('-').reverse().join('-');
+    XLSX.writeFile(wb, `Sent_Reports_${dateStr}.xlsx`);
+    toast.success('Excel exported successfully!');
+  };
 
   const handleFileUpload = async () => {
     if (!uploadFile || !reportName.trim() || !viewingRecord) {
@@ -522,14 +578,24 @@ export default function SentReport() {
             <h1 className="text-xl sm:text-3xl font-bold mb-2">Sent Report</h1>
             <p className="text-emerald-100 text-sm sm:text-base">View sent reports and patient details</p>
           </div>
-          <button
-            onClick={fetchRecords}
-            disabled={loading}
-            className="flex items-center justify-center space-x-2 px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-colors disabled:opacity-50 text-sm sm:text-base"
-          >
-            <RefreshCw className={`h-4 w-4 sm:h-5 sm:w-5 ${loading ? 'animate-spin' : ''}`} />
-            <span>Refresh</span>
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleExportExcel}
+              disabled={loading || filteredRecords.length === 0}
+              className="flex items-center justify-center space-x-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors disabled:opacity-50 text-sm sm:text-base"
+            >
+              <Download className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span>Export</span>
+            </button>
+            <button
+              onClick={fetchRecords}
+              disabled={loading}
+              className="flex items-center justify-center space-x-2 px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-colors disabled:opacity-50 text-sm sm:text-base"
+            >
+              <RefreshCw className={`h-4 w-4 sm:h-5 sm:w-5 ${loading ? 'animate-spin' : ''}`} />
+              <span>Refresh</span>
+            </button>
+          </div>
         </div>
       </div>
 
