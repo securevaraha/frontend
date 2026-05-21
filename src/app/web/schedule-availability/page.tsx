@@ -294,6 +294,7 @@ export default function ScheduleAvailabilityPage() {
             <table className="w-full">
               <thead className="bg-gradient-to-r from-cyan-50 to-blue-50">
                 <tr>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Time Slot</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
@@ -318,6 +319,12 @@ export default function ScheduleAvailabilityPage() {
                       isExpired ? 'opacity-50 bg-gray-100' : 
                       index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
                     }`}>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span className="font-medium text-gray-700">{selectedDate}</span>
+                        </div>
+                      </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MessageSquare, Search, Phone, Mail, User, Download } from 'lucide-react';
+import { MessageSquare, Search, Phone, Mail, User, Trash2, Download } from 'lucide-react';
 import Pagination from '../../../components/ui/Pagination';
 
 interface Enquiry {
@@ -66,6 +66,25 @@ export default function EnquiriesPage() {
   };
 
 
+
+  const deleteEnquiry = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this enquiry?')) return;
+    try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.varahasdc.co.in';
+      const response = await fetch(`${API_BASE_URL}/web/enquiries/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (response.ok) {
+        fetchEnquiries();
+      } else {
+        alert('Failed to delete enquiry');
+      }
+    } catch (error) {
+      console.error('Error deleting enquiry:', error);
+      alert('Error deleting enquiry. Please try again.');
+    }
+  };
 
   // Add search trigger
   useEffect(() => {
@@ -175,6 +194,7 @@ export default function EnquiriesPage() {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact Info</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Enquiry</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -227,6 +247,15 @@ export default function EnquiriesPage() {
                           {new Date(enquiry.createdAt).toLocaleTimeString()}
                         </div>
                       </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => deleteEnquiry(enquiry.id)}
+                        className="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition-colors"
+                        title="Delete enquiry"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
                     </td>
                   </tr>
                 ))}

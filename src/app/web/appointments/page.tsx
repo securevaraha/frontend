@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CalendarCheck, Search, Filter, Calendar, Clock, User, Phone, FileText, CheckCircle, XCircle, Download } from 'lucide-react';
+import { CalendarCheck, Search, Filter, Calendar, Clock, User, Phone, FileText, CheckCircle, XCircle, Trash2, Download } from 'lucide-react';
 import Pagination from '../../../components/ui/Pagination';
 
 interface Appointment {
@@ -132,6 +132,25 @@ export default function AppointmentsPage() {
       } else {
         console.error('Error updating appointment status:', error);
       }
+    }
+  };
+
+  const deleteAppointment = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this appointment?')) return;
+    try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.varahasdc.co.in';
+      const response = await fetch(`${API_BASE_URL}/web/appointments/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (response.ok) {
+        fetchAppointments();
+      } else {
+        alert('Failed to delete appointment');
+      }
+    } catch (error) {
+      console.error('Error deleting appointment:', error);
+      alert('Error deleting appointment. Please try again.');
     }
   };
 
@@ -317,6 +336,13 @@ export default function AppointmentsPage() {
                             </button>
                           </>
                         )}
+                        <button
+                          onClick={() => deleteAppointment(appointment.id)}
+                          className="px-3 py-1 bg-gray-500 text-white text-xs rounded-lg hover:bg-gray-600 transition-colors"
+                          title="Delete appointment"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
                       </div>
                     </td>
                   </tr>

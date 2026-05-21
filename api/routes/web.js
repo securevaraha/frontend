@@ -124,6 +124,9 @@ const handleError = (error, operation, res) => {
   });
 };
 
+// Max appointments allowed per time slot
+const MAX_SLOT_CAPACITY = 5;
+
 // Validate required fields
 const validateRequired = (fields, data) => {
   const missing = [];
@@ -430,6 +433,36 @@ router.get('/appointments/stats', async (req, res) => {
   }
 });
 
+// Delete appointment
+router.delete('/appointments/:id', async (req, res) => {
+  let connection;
+  try {
+    const { id } = req.params;
+    connection = await mysql.createConnection(dbConfig);
+    await connection.execute('DELETE FROM appointments WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Appointment deleted successfully' });
+  } catch (error) {
+    handleError(error, 'delete appointment', res);
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Delete enquiry
+router.delete('/enquiries/:id', async (req, res) => {
+  let connection;
+  try {
+    const { id } = req.params;
+    connection = await mysql.createConnection(dbConfig);
+    await connection.execute('DELETE FROM contact WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Enquiry deleted successfully' });
+  } catch (error) {
+    handleError(error, 'delete enquiry', res);
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
 // Update appointment status
 router.put('/appointments/:id', async (req, res) => {
   let connection;
@@ -497,10 +530,17 @@ router.get('/schedule', async (req, res) => {
       [date]
     );
 
-    const bookedMap = new Map();
+    // Count bookings per time slot
+    const bookingCountMap = new Map();
+    const bookingDetailsMap = new Map();
     for (const apt of appointments) {
       if (apt.appointment_time) {
-        bookedMap.set(apt.appointment_time, {
+        const count = bookingCountMap.get(apt.appointment_time) || 0;
+        bookingCountMap.set(apt.appointment_time, count + 1);
+        if (!bookingDetailsMap.has(apt.appointment_time)) {
+          bookingDetailsMap.set(apt.appointment_time, []);
+        }
+        bookingDetailsMap.get(apt.appointment_time).push({
           patientName: apt.patient_name,
           cro: apt.cro
         });
@@ -510,16 +550,19 @@ router.get('/schedule', async (req, res) => {
     let slots = reservedSlots.map((slot, index) => {
       const startTime = slot.reserv_start_time || '';
       const endTime = slot.reserv_end_time || '';
-      const bookedInfo = bookedMap.get(startTime);
+      const bookedCount = bookingCountMap.get(startTime) || 0;
+      const isFull = bookedCount >= MAX_SLOT_CAPACITY;
 
       return {
         id: slot.reserv_id || index + 1,
         date: slot.reserv_date,
         startTime: startTime,
         endTime: endTime,
-        status: bookedInfo ? 'booked' : 'available',
-        patientName: bookedInfo?.patientName || null,
-        cro: bookedInfo?.cro || null
+        status: isFull ? 'full' : bookedCount > 0 ? 'partially_booked' : 'available',
+        bookedCount: bookedCount,
+        maxCapacity: MAX_SLOT_CAPACITY,
+        availableSpots: MAX_SLOT_CAPACITY - bookedCount,
+        patients: bookingDetailsMap.get(startTime) || []
       };
     });
 
@@ -559,25 +602,38 @@ router.get('/schedule/stats', async (req, res) => {
 
     connection = await mysql.createConnection(dbConfig);
 
-    const [reservedCount] = await connection.execute(
-      'SELECT COUNT(*) as count FROM reseve_slot WHERE reserv_date = ?',
+    const [reservedSlots] = await connection.execute(
+      'SELECT reserv_start_time FROM reseve_slot WHERE reserv_date = ?',
       [date]
     );
 
-    const [bookedCount] = await connection.execute(
-      'SELECT COUNT(*) as count FROM appointments WHERE appointment_date = ? AND status = "scheduled"',
+    const [bookedPerSlot] = await connection.execute(
+      'SELECT appointment_time, COUNT(*) as count FROM appointments WHERE appointment_date = ? AND status = "scheduled" GROUP BY appointment_time',
       [date]
     );
 
-    const total = reservedCount[0]?.count || 0;
-    const booked = bookedCount[0]?.count || 0;
-    const available = total - booked;
+    const bookingCountMap = new Map();
+    for (const row of bookedPerSlot) {
+      if (row.appointment_time) bookingCountMap.set(row.appointment_time, row.count);
+    }
+
+    const totalSlots = reservedSlots.length;
+    let fullSlots = 0;
+    let totalBooked = 0;
+    for (const slot of reservedSlots) {
+      const count = bookingCountMap.get(slot.reserv_start_time) || 0;
+      totalBooked += count;
+      if (count >= MAX_SLOT_CAPACITY) fullSlots++;
+    }
 
     res.json({
       success: true,
-      available: available > 0 ? available : 0,
-      booked: booked,
-      blocked: 0
+      totalSlots,
+      available: totalSlots - fullSlots,
+      fullSlots,
+      totalBooked,
+      totalCapacity: totalSlots * MAX_SLOT_CAPACITY,
+      maxCapacityPerSlot: MAX_SLOT_CAPACITY
     });
 
   } catch (error) {
@@ -1016,30 +1072,43 @@ router.get('/available-slots', async (req, res) => {
     }
 
     const [bookedSlots] = await connection.execute(
-      'SELECT appointment_time FROM appointments WHERE appointment_date = ? AND status = "scheduled"',
+      'SELECT appointment_time, COUNT(*) as count FROM appointments WHERE appointment_date = ? AND status = "scheduled" GROUP BY appointment_time',
       [date]
     );
 
-    const bookedTimes = new Set(bookedSlots.map(slot => slot.appointment_time).filter(Boolean));
+    const bookingCountMap = new Map();
+    for (const slot of bookedSlots) {
+      if (slot.appointment_time) {
+        bookingCountMap.set(slot.appointment_time, slot.count);
+      }
+    }
 
     const availableSlots = reservedSlots
-      .filter(slot => !bookedTimes.has(slot.reserv_start_time))
-      .map(slot => ({
-        id: slot.reserv_id,
-        startTime: slot.reserv_start_time,
-        endTime: slot.reserv_end_time,
-        display: `${slot.reserv_start_time} - ${slot.reserv_end_time}`,
-        value: slot.reserv_start_time
-      }));
+      .filter(slot => {
+        const bookedCount = bookingCountMap.get(slot.reserv_start_time) || 0;
+        return bookedCount < MAX_SLOT_CAPACITY;
+      })
+      .map(slot => {
+        const bookedCount = bookingCountMap.get(slot.reserv_start_time) || 0;
+        return {
+          id: slot.reserv_id,
+          startTime: slot.reserv_start_time,
+          endTime: slot.reserv_end_time,
+          display: `${slot.reserv_start_time} - ${slot.reserv_end_time}`,
+          value: slot.reserv_start_time,
+          bookedCount: bookedCount,
+          availableSpots: MAX_SLOT_CAPACITY - bookedCount
+        };
+      });
 
     res.json({
       success: true,
       availableSlots,
       hasSlots: true,
       totalSlots: reservedSlots.length,
-      bookedSlots: bookedSlots.length,
       availableCount: availableSlots.length,
-      message: availableSlots.length === 0 ? 'All slots are booked for this date' : `${availableSlots.length} slots available`
+      maxCapacityPerSlot: MAX_SLOT_CAPACITY,
+      message: availableSlots.length === 0 ? 'All slots are fully booked for this date' : `${availableSlots.length} slots available`
     });
 
   } catch (error) {
@@ -1114,18 +1183,18 @@ router.post('/book-appointment', async (req, res) => {
 
     connection = await mysql.createConnection(dbConfig);
 
-    // Check if time slot is still available
-    const [existingBooking] = await connection.execute(
-      'SELECT id FROM appointments WHERE appointment_date = ? AND appointment_time = ? AND status = "scheduled"',
+    // Check if time slot has capacity
+    const [existingBookings] = await connection.execute(
+      'SELECT COUNT(*) as count FROM appointments WHERE appointment_date = ? AND appointment_time = ? AND status = "scheduled"',
       [appointmentDate, scheduleTime]
     );
 
-    if (existingBooking.length > 0) {
+    if (existingBookings[0].count >= MAX_SLOT_CAPACITY) {
       return res.status(409).json({
         success: false,
-        error: 'Time slot unavailable',
-        message: 'This time slot has already been booked. Please select another time.',
-        code: 'SLOT_UNAVAILABLE'
+        error: 'Time slot full',
+        message: `This time slot has reached maximum capacity (${MAX_SLOT_CAPACITY} appointments). Please select another time.`,
+        code: 'SLOT_FULL'
       });
     }
 

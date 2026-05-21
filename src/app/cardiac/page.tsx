@@ -44,7 +44,7 @@ export default function CardiacPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full flex items-center justify-center text-white">
         <Image
-          src="/images/HOME123.png"
+          src="/images/duelenergy.jpeg"
           alt="Cardiac Imaging"
           fill
           className="object-cover brightness-[0.4]"
