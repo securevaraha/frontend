@@ -962,17 +962,40 @@ router.get('/available-slots', async (req, res) => {
       });
     }
 
-    // Validate date is not in past
-    const requestedDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Validate date format (YYYY-MM-DD)
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(date)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid date format',
+        message: 'Date must be in YYYY-MM-DD format',
+        code: 'INVALID_DATE_FORMAT'
+      });
+    }
+
+    // Use IST timezone for consistent date comparison
+    const todayIST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
     
-    if (requestedDate < today) {
+    if (date < todayIST) {
       return res.status(400).json({
         success: false,
         error: 'Invalid date',
         message: 'Cannot book appointments for past dates',
         code: 'PAST_DATE'
+      });
+    }
+
+    // Validate date is not more than 90 days in future
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 90);
+    const maxDateStr = maxDate.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    
+    if (date > maxDateStr) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid date',
+        message: 'Cannot book appointments more than 90 days in advance',
+        code: 'DATE_TOO_FAR'
       });
     }
 
