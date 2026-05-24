@@ -157,11 +157,11 @@ async function generateDetailReport(connection, scanDate, selectedDate) {
     }
   }
   
-  // 5. Other Govt. Hospital All (excluding hospital_id 11 which is handled in UMAID section above)
+  // 5. Other Govt. Hospital All (excluding hospital_id 11, 14, 16 which are handled separately)
   const [otherGovtGroups] = await connection.execute(`
     SELECT category, scan_type, hospital_id, CONCAT(category, hospital_id) as ch    
     FROM patient_new 
-    WHERE scan_date = ? AND scan_status = 1 AND hospital_id IN (12,15,16,17,18,19,20) 
+    WHERE scan_date = ? AND scan_status = 1 AND hospital_id IN (12,15,17,18,19,20) 
           AND category IN ('RTA','IPD FREE','Chiranjeevi', 'RGHS', 'PRISONER') 
     GROUP BY category, scan_type  
     ORDER BY FIELD(category,'RTA','OPD FREE','IPD FREE','Chiranjeevi', 'RGHS', 'PRISONER') ASC,  
@@ -242,8 +242,8 @@ async function generateTableForGroup(connection, group, scanDate, selectedDate, 
     patientQuery += ' AND hospital_id = ?';
     queryParams.push(group.hospital_id);
   } else if (customHospitalName === 'Other GOVT. HOSPITAL') {
-    // For Other GOVT. HOSPITAL, filter by specific govt hospital IDs (excluding 10, 9, 11 which are handled separately)
-    patientQuery += ' AND hospital_id IN (12,15,16,17,18,19,20)';
+    // For Other GOVT. HOSPITAL, filter by specific govt hospital IDs (excluding 10, 9, 11, 14, 16 which are handled separately)
+    patientQuery += ' AND hospital_id IN (12,15,17,18,19,20)';
   } else if (customHospitalName === 'OTHER HOSPITAL') {
     // For OTHER HOSPITAL, filter by the specific hospital IDs
     patientQuery += ' AND hospital_id IN (14,16)';
