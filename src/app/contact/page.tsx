@@ -69,6 +69,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold mb-1 text-sm" style={{color: '#000000', fontFamily: 'Roboto, sans-serif', fontWeight: 600}}>Phone</h3>
                     <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>+91 8233338550</p>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>0291-2648121</p>
+                    <p className="text-sm" style={{color: '#586C80', fontFamily: 'Roboto, sans-serif'}}>0291-2648122</p>
                   </div>
                 </div>
 
@@ -164,6 +166,8 @@ export default function ContactPage() {
                   </div>
                   <h3 className="font-bold text-sm mb-1" style={{color: '#0056AE'}}>Call Now</h3>
                   <p className="text-xs" style={{color: '#586C80'}}>8233338550</p>
+                  <p className="text-xs" style={{color: '#586C80'}}>0291-2648121</p>
+                  <p className="text-xs" style={{color: '#586C80'}}>0291-2648122</p>
                 </div>
                 
                 <div className="bg-gradient-to-br from-green-50 to-white p-4 rounded-xl shadow-lg text-center border border-green-100">

@@ -327,7 +327,7 @@ async function generateSummaryReport(connection, scanDate, selectedDate) {
   const summaryData = [];
   let cIs = '';
   
-  // 1. Sn. CITIZEN and RTA categories
+  // 1. Sn. CITIZEN and RTA categories (all hospitals)
   const [seniorCitizenRTAGroups] = await connection.execute(`
     SELECT category, scan_type, hospital_id, CONCAT(category, hospital_id) as ch  
     FROM patient_new 
@@ -447,11 +447,11 @@ async function generateSummaryReport(connection, scanDate, selectedDate) {
   const [otherGovtGroups] = await connection.execute(`
     SELECT category, scan_type, hospital_id, CONCAT(category, hospital_id) as ch  
     FROM patient_new 
-    WHERE scan_date = ? AND scan_status = 1 AND category IN ('RTA', 'OPD FREE', 'IPD FREE', 'Chiranjeevi', 'RGHS','Destitute', 'PRISONER') 
+    WHERE scan_date = ? AND scan_status = 1 AND category IN ('OPD FREE', 'IPD FREE', 'Chiranjeevi', 'RGHS','Destitute', 'PRISONER') 
           AND hospital_id IN (12, 15, 16, 18, 19, 20) 
     GROUP BY hospital_id, category, scan_type 
     ORDER BY FIELD(hospital_id, 12, 15, 16, 18, 19, 20) ASC, 
-             FIELD(category, 'RTA', 'OPD FREE', 'IPD FREE', 'Chiranjeevi', 'RGHS','Destitute', 'PRISONER') ASC, 
+             FIELD(category, 'OPD FREE', 'IPD FREE', 'Chiranjeevi', 'RGHS','Destitute', 'PRISONER') ASC, 
              LENGTH(scan_type) DESC
   `, [scanDate]);
   
