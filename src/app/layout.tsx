@@ -3,6 +3,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import MaintenanceGate from "@/components/MaintenanceGate";
 
 export const metadata: Metadata = {
   title: {
@@ -103,7 +104,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#0056AE" />
       </head>
       <body className="antialiased">
-        <ClientLayout>{children}</ClientLayout>
+        <MaintenanceGate>
+          <ClientLayout>{children}</ClientLayout>
+        </MaintenanceGate>
         
         {/* Structured Data */}
         <script
