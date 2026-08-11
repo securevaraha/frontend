@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, Edit, Eye, FileText, Send, User, Calendar, Phone, MapPin, X } from 'lucide-react';
 import { useToastContext } from '@/context/ToastContext';
 import LastEnrolledPatient from '@/components/LastEnrolledPatient';
 import DateRangeFilter from '@/components/ui/DateRangeFilter';
 import { formatDate } from '@/utils/dateFormat';
+import AccessDenied from '@/components/AccessDenied';
+
+const ALLOWED_ROLES = ['reception'];
 
 interface Patient {
   patient_id: number;
@@ -30,6 +34,7 @@ interface SendToData {
 }
 
 export default function PatientRegistrationEdit() {
+  const router = useRouter();
   const toast = useToastContext();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,9 +46,31 @@ export default function PatientRegistrationEdit() {
   const [sendToData, setSendToData] = useState<SendToData>({ destination: 'Nursing', cro: '' });
   const [currentDateRange, setCurrentDateRange] = useState<{from: string, to: string} | null>(null);
 
+  const [accessStatus, setAccessStatus] = useState<'checking' | 'allowed' | 'denied'>('checking');
+  const [currentRole, setCurrentRole] = useState('');
+
   useEffect(() => {
-    fetchPatients();
-  }, []);
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      router.push('/vdc_login');
+      return;
+    }
+    try {
+      const parsedUser = JSON.parse(userData);
+      const role = parsedUser.role || parsedUser.admin_type || '';
+      setCurrentRole(role);
+      setAccessStatus(ALLOWED_ROLES.includes(role) ? 'allowed' : 'denied');
+    } catch (error) {
+      console.error('PatientRegistrationEdit - Error parsing user data:', error);
+      router.push('/vdc_login');
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (accessStatus === 'allowed') {
+      fetchPatients();
+    }
+  }, [accessStatus]);
 
   const fetchPatients = async (fromDate?: string, toDate?: string) => {
     try {
@@ -163,6 +190,26 @@ export default function PatientRegistrationEdit() {
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedPatients = filteredPatients.slice(startIndex, startIndex + itemsPerPage);
+
+  if (accessStatus === 'checking') {
+    return (
+      <div className="flex h-full min-h-[60vh] items-center justify-center">
+        <div className="text-center">
+          <div className="relative mb-8">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-75"></div>
+            <div className="relative w-32 h-32 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto">
+              <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+          <p className="text-gray-600 text-lg font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (accessStatus === 'denied') {
+    return <AccessDenied requiredRole="reception" currentRole={currentRole} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6 space-y-6">
