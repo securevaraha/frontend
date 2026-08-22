@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Search, Edit, Eye, FileText, Send, User, X } from 'lucide-react';
+import { Search, Eye, FileText, Send, User, X } from 'lucide-react';
 import { useToastContext } from '@/context/ToastContext';
 import LastEnrolledPatient from '@/components/LastEnrolledPatient';
 import DateRangeFilter from '@/components/ui/DateRangeFilter';
@@ -236,11 +236,6 @@ export default function PatientList() {
                       <div className="flex flex-col space-y-2">
                         {getStatusButton(patient)}
                         <div className="flex space-x-1">
-                          <a href={`/reception/patient-registration/new?edit=${patient.patient_id}`} title="Edit Patient Details">
-                            <button className="px-2 py-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs rounded-lg hover:from-blue-600 hover:to-indigo-700 font-medium transition-all duration-200 shadow-md" title="Edit Patient Details">
-                              <Edit className="h-4 w-4" />
-                            </button>
-                          </a>
                           <a href={`/reception/patient-registration/payment/${patient.patient_id}`} title="View Payment Details">
                             <button className="px-2 py-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs rounded-lg hover:from-indigo-600 hover:to-purple-700 font-medium transition-all duration-200 shadow-md" title="View Payment Details">
                               <FileText className="h-4 w-4" />
